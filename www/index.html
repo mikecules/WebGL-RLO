@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)http://webhelp.easi.utoronto.ca/mm/ -->
+<html class="global wide normal narrow"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1"><style type="text/css">html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}body{-webkit-text-size-adjust:none}</style><style type="text/css">*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}</style><meta name="viewport" content="initial-scale=1">
+		<title>Moncada's PONG</title>
+		
+		<meta name="description" content="">
+		<meta name="keywords" content="">
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<script src="./Moncada's PONG_files/jquery.min.js"></script>
+		<script src="./Moncada's PONG_files/jquery.scrolly.min.js"></script>
+		<script src="./Moncada's PONG_files/jquery.scrollzer.min.js"></script>
+		<style type="text/css">.row{border-bottom:solid 1px transparent}.row>*{float:left}.row:after,.row:before{content:"";display:block;clear:both;height:0}.row.uniform>*>:first-child{margin-top:0}.row.uniform>*>:last-child{margin-bottom:0}.\31 2u,.\31 2u\24{width:100%;clear:none;margin-left:0}.\31 1u,.\31 1u\24{width:91.6666666667%;clear:none;margin-left:0}.\31 0u,.\31 0u\24{width:83.3333333333%;clear:none;margin-left:0}.\39 u,.\39 u\24{width:75%;clear:none;margin-left:0}.\38 u,.\38 u\24{width:66.6666666667%;clear:none;margin-left:0}.\37 u,.\37 u\24{width:58.3333333333%;clear:none;margin-left:0}.\36 u,.\36 u\24{width:50%;clear:none;margin-left:0}.\35 u,.\35 u\24{width:41.6666666667%;clear:none;margin-left:0}.\34 u,.\34 u\24{width:33.3333333333%;clear:none;margin-left:0}.\33 u,.\33 u\24{width:25%;clear:none;margin-left:0}.\32 u,.\32 u\24{width:16.6666666667%;clear:none;margin-left:0}.\31 u,.\31 u\24{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24+*,.\31 1u\24+*,.\31 0u\24+*,.\39 u\24+*,.\38 u\24+*,.\37 u\24+*,.\36 u\24+*,.\35 u\24+*,.\34 u\24+*,.\33 u\24+*,.\32 u\24+*,.\31 u\24+*{clear:left;}.\-11u{margin-left:91.6666666667%}.\-10u{margin-left:83.3333333333%}.\-9u{margin-left:75%}.\-8u{margin-left:66.6666666667%}.\-7u{margin-left:58.3333333333%}.\-6u{margin-left:50%}.\-5u{margin-left:41.6666666667%}.\-4u{margin-left:33.3333333333%}.\-3u{margin-left:25%}.\-2u{margin-left:16.6666666667%}.\-1u{margin-left:8.3333333333%}</style><style type="text/css">.container{margin-left:auto;margin-right:auto;width:100%}.container.\31 25\25{width:100%;max-width:125%;min-width:100%}.container.\37 5\25{width:75%}.container.\35 0\25{width:50%}.container.\32 5\25{width:25%}</style><style type="text/css">.row>*{padding:20px 0 0 20px}.row{margin:-20px 0 -1px -20px}.row.uniform>*{padding:20px 0 0 20px}.row.uniform{margin:-20px 0 -1px -20px}.row.\32 00\25>*{padding:40px 0 0 40px}.row.\32 00\25{margin:-40px 0 -1px -40px}.row.uniform.\32 00\25>*{padding:40px 0 0 40px}.row.uniform.\32 00\25{margin:-40px 0 -1px -40px}.row.\31 50\25>*{padding:30px 0 0 30px}.row.\31 50\25{margin:-30px 0 -1px -30px}.row.uniform.\31 50\25>*{padding:30px 0 0 30px}.row.uniform.\31 50\25{margin:-30px 0 -1px -30px}.row.\35 0\25>*{padding:10px 0 0 10px}.row.\35 0\25{margin:-10px 0 -1px -10px}.row.uniform.\35 0\25>*{padding:10px 0 0 10px}.row.uniform.\35 0\25{margin:-10px 0 -1px -10px}.row.\32 5\25>*{padding:5px 0 0 5px}.row.\32 5\25{margin:-5px 0 -1px -5px}.row.uniform.\32 5\25>*{padding:5px 0 0 5px}.row.uniform.\32 5\25{margin:-5px 0 -1px -5px}.row.\30 \25>*{padding:0}.row.\30 \25{margin:0 0 -1px 0}</style><style type="text/css">.\31 2u\28 global\29,.\31 2u\24\28 global\29{width:100%;clear:none;margin-left:0}.\31 1u\28 global\29,.\31 1u\24\28 global\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 global\29,.\31 0u\24\28 global\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 global\29,.\39 u\24\28 global\29{width:75%;clear:none;margin-left:0}.\38 u\28 global\29,.\38 u\24\28 global\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 global\29,.\37 u\24\28 global\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 global\29,.\36 u\24\28 global\29{width:50%;clear:none;margin-left:0}.\35 u\28 global\29,.\35 u\24\28 global\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 global\29,.\34 u\24\28 global\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 global\29,.\33 u\24\28 global\29{width:25%;clear:none;margin-left:0}.\32 u\28 global\29,.\32 u\24\28 global\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 global\29,.\31 u\24\28 global\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 global\29+*,.\31 1u\24\28 global\29+*,.\31 0u\24\28 global\29+*,.\39 u\24\28 global\29+*,.\38 u\24\28 global\29+*,.\37 u\24\28 global\29+*,.\36 u\24\28 global\29+*,.\35 u\24\28 global\29+*,.\34 u\24\28 global\29+*,.\33 u\24\28 global\29+*,.\32 u\24\28 global\29+*,.\31 u\24\28 global\29+*{clear:left;}.\-11u\28 global\29{margin-left:91.6666666667%}.\-10u\28 global\29{margin-left:83.3333333333%}.\-9u\28 global\29{margin-left:75%}.\-8u\28 global\29{margin-left:66.6666666667%}.\-7u\28 global\29{margin-left:58.3333333333%}.\-6u\28 global\29{margin-left:50%}.\-5u\28 global\29{margin-left:41.6666666667%}.\-4u\28 global\29{margin-left:33.3333333333%}.\-3u\28 global\29{margin-left:25%}.\-2u\28 global\29{margin-left:16.6666666667%}.\-1u\28 global\29{margin-left:8.3333333333%}.\31 2u\28 wide\29,.\31 2u\24\28 wide\29{width:100%;clear:none;margin-left:0}.\31 1u\28 wide\29,.\31 1u\24\28 wide\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 wide\29,.\31 0u\24\28 wide\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 wide\29,.\39 u\24\28 wide\29{width:75%;clear:none;margin-left:0}.\38 u\28 wide\29,.\38 u\24\28 wide\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 wide\29,.\37 u\24\28 wide\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 wide\29,.\36 u\24\28 wide\29{width:50%;clear:none;margin-left:0}.\35 u\28 wide\29,.\35 u\24\28 wide\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 wide\29,.\34 u\24\28 wide\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 wide\29,.\33 u\24\28 wide\29{width:25%;clear:none;margin-left:0}.\32 u\28 wide\29,.\32 u\24\28 wide\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 wide\29,.\31 u\24\28 wide\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 wide\29+*,.\31 1u\24\28 wide\29+*,.\31 0u\24\28 wide\29+*,.\39 u\24\28 wide\29+*,.\38 u\24\28 wide\29+*,.\37 u\24\28 wide\29+*,.\36 u\24\28 wide\29+*,.\35 u\24\28 wide\29+*,.\34 u\24\28 wide\29+*,.\33 u\24\28 wide\29+*,.\32 u\24\28 wide\29+*,.\31 u\24\28 wide\29+*{clear:left;}.\-11u\28 wide\29{margin-left:91.6666666667%}.\-10u\28 wide\29{margin-left:83.3333333333%}.\-9u\28 wide\29{margin-left:75%}.\-8u\28 wide\29{margin-left:66.6666666667%}.\-7u\28 wide\29{margin-left:58.3333333333%}.\-6u\28 wide\29{margin-left:50%}.\-5u\28 wide\29{margin-left:41.6666666667%}.\-4u\28 wide\29{margin-left:33.3333333333%}.\-3u\28 wide\29{margin-left:25%}.\-2u\28 wide\29{margin-left:16.6666666667%}.\-1u\28 wide\29{margin-left:8.3333333333%}.\31 2u\28 normal\29,.\31 2u\24\28 normal\29{width:100%;clear:none;margin-left:0}.\31 1u\28 normal\29,.\31 1u\24\28 normal\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 normal\29,.\31 0u\24\28 normal\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 normal\29,.\39 u\24\28 normal\29{width:75%;clear:none;margin-left:0}.\38 u\28 normal\29,.\38 u\24\28 normal\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 normal\29,.\37 u\24\28 normal\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 normal\29,.\36 u\24\28 normal\29{width:50%;clear:none;margin-left:0}.\35 u\28 normal\29,.\35 u\24\28 normal\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 normal\29,.\34 u\24\28 normal\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 normal\29,.\33 u\24\28 normal\29{width:25%;clear:none;margin-left:0}.\32 u\28 normal\29,.\32 u\24\28 normal\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 normal\29,.\31 u\24\28 normal\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 normal\29+*,.\31 1u\24\28 normal\29+*,.\31 0u\24\28 normal\29+*,.\39 u\24\28 normal\29+*,.\38 u\24\28 normal\29+*,.\37 u\24\28 normal\29+*,.\36 u\24\28 normal\29+*,.\35 u\24\28 normal\29+*,.\34 u\24\28 normal\29+*,.\33 u\24\28 normal\29+*,.\32 u\24\28 normal\29+*,.\31 u\24\28 normal\29+*{clear:left;}.\-11u\28 normal\29{margin-left:91.6666666667%}.\-10u\28 normal\29{margin-left:83.3333333333%}.\-9u\28 normal\29{margin-left:75%}.\-8u\28 normal\29{margin-left:66.6666666667%}.\-7u\28 normal\29{margin-left:58.3333333333%}.\-6u\28 normal\29{margin-left:50%}.\-5u\28 normal\29{margin-left:41.6666666667%}.\-4u\28 normal\29{margin-left:33.3333333333%}.\-3u\28 normal\29{margin-left:25%}.\-2u\28 normal\29{margin-left:16.6666666667%}.\-1u\28 normal\29{margin-left:8.3333333333%}.\31 2u\28 narrow\29,.\31 2u\24\28 narrow\29{width:100%;clear:none;margin-left:0}.\31 1u\28 narrow\29,.\31 1u\24\28 narrow\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 narrow\29,.\31 0u\24\28 narrow\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 narrow\29,.\39 u\24\28 narrow\29{width:75%;clear:none;margin-left:0}.\38 u\28 narrow\29,.\38 u\24\28 narrow\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 narrow\29,.\37 u\24\28 narrow\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 narrow\29,.\36 u\24\28 narrow\29{width:50%;clear:none;margin-left:0}.\35 u\28 narrow\29,.\35 u\24\28 narrow\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 narrow\29,.\34 u\24\28 narrow\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 narrow\29,.\33 u\24\28 narrow\29{width:25%;clear:none;margin-left:0}.\32 u\28 narrow\29,.\32 u\24\28 narrow\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 narrow\29,.\31 u\24\28 narrow\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 narrow\29+*,.\31 1u\24\28 narrow\29+*,.\31 0u\24\28 narrow\29+*,.\39 u\24\28 narrow\29+*,.\38 u\24\28 narrow\29+*,.\37 u\24\28 narrow\29+*,.\36 u\24\28 narrow\29+*,.\35 u\24\28 narrow\29+*,.\34 u\24\28 narrow\29+*,.\33 u\24\28 narrow\29+*,.\32 u\24\28 narrow\29+*,.\31 u\24\28 narrow\29+*{clear:left;}.\-11u\28 narrow\29{margin-left:91.6666666667%}.\-10u\28 narrow\29{margin-left:83.3333333333%}.\-9u\28 narrow\29{margin-left:75%}.\-8u\28 narrow\29{margin-left:66.6666666667%}.\-7u\28 narrow\29{margin-left:58.3333333333%}.\-6u\28 narrow\29{margin-left:50%}.\-5u\28 narrow\29{margin-left:41.6666666667%}.\-4u\28 narrow\29{margin-left:33.3333333333%}.\-3u\28 narrow\29{margin-left:25%}.\-2u\28 narrow\29{margin-left:16.6666666667%}.\-1u\28 narrow\29{margin-left:8.3333333333%}</style><style type="text/css">.not-global,.not-wide,.not-normal,.not-narrow{display:none!important}.only-narrower,.only-mobile{display:none!important}</style><link rel="stylesheet" type="text/css" href="./Moncada's PONG_files/style.css"><link rel="stylesheet" type="text/css" href="./Moncada's PONG_files/style-wide.css"><link rel="stylesheet" type="text/css" href="./Moncada's PONG_files/style-normal.css"><link rel="stylesheet" type="text/css" href="./Moncada's PONG_files/style-narrow.css"><script src="./Moncada's PONG_files/skel.min.js"></script>
+		<script src="./Moncada's PONG_files/skel-layers.min.js"></script>
+		<script src="./Moncada's PONG_files/init.js"></script>
+		<noscript>
+			&lt;link rel="stylesheet" href="css/skel.css" /&gt;
+			&lt;link rel="stylesheet" href="css/style.css" /&gt;
+			&lt;link rel="stylesheet" href="css/style-wide.css" /&gt;
+		</noscript>
+		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+	</head>
+	<body class=""><div id="skel-layers-wrapper" style="position: relative; left: 0px; right: 0px; top: 0px; backface-visibility: hidden; transition: -webkit-transform 0.5s ease, opacity 0.5s ease; -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;">
+
+		<!-- Header -->
+			
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Intro -->
+					<section id="top" class="one dark cover">
+						<div class="container">
+
+							<header>
+								<h2 class="alt">Hi! I'm <strong>Michael Moncada</strong>, and my project <br>
+								is about reimagining the game of <a href="http://webhelp.easi.utoronto.ca/mm/www.ponggame.org/">PONG</a>.</h2>
+								<p>This project is a great opportunity to<br>
+								showcase my special skills and abilities.</p>
+							</header>
+							
+							<footer>
+								<a href="http://webhelp.easi.utoronto.ca/mm/#portfolio" class="button scrolly">More about my project</a>
+							</footer>
+
+						</div>
+					</section>
+					
+				<!-- Portfolio -->
+					<section id="portfolio" class="two">
+						<div class="container">
+					
+							<header>
+								<h2>Project</h2>
+							</header>
+							
+							<p>My project is about reimagining one of the earliest arcade video games. This is absolutely amazing stuff
+                            and by the end of my presentation, you will all stand in awe of my awesomeness.</p>
+						
+							<div class="row">
+								<div class="4u">
+									<article class="item">
+										<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic02.jpg" alt=""></a>
+										<header>
+											<h3>PONG Screenshot 1</h3>
+										</header>
+									</article>
+									<article class="item">
+										<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic03.jpg" alt=""></a>
+										<header>
+											<h3>PONG Screenshot 4</h3>
+										</header>
+									</article>
+								</div>
+								<div class="4u">
+									<article class="item">
+										<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic04.jpg" alt=""></a>
+										<header>
+											<h3>PONG Screenshot 2</h3>
+										</header>
+									</article>
+									<article class="item">
+										<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic05.jpg" alt=""></a>
+										<header>
+											<h3>PONG Screenshot 4</h3>
+										</header>
+									</article>
+								</div>
+								<div class="4u">
+									<article class="item">
+										<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic06.jpg" alt=""></a>
+										<header>
+											<h3>PONG Screenshot 3</h3>
+										</header>
+									</article>
+									<article class="item">
+										<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic07.jpg" alt=""></a>
+										<header>
+											<h3>PONG Screenshot 5</h3>
+										</header>
+									</article>
+								</div>
+							</div>
+
+						</div>
+					</section>
+
+				<!-- About Me -->
+					<section id="about" class="three">
+						<div class="container">
+
+							<header>
+								<h2>About Me</h2>
+							</header>
+
+							<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image featured"><img src="./Moncada's PONG_files/pic08.jpg" alt=""></a>
+							
+							<p>I'm a highly talented web and mobile application developer who leverages Web and Native Mobile Technologies to provide dynamic and enjoyable user experiences. I also provide architectural design and implementation strategies for mobile/desktop software deployment and maintenance.</p>
+
+						</div>
+					</section>
+			
+				<!-- Contact -->
+					<section id="contact" class="four">
+						<div class="container">
+
+							<header>
+								<h2>Contact</h2>
+							</header>
+
+							<p>You may contact me at my own and latest convenience by filling in
+							the form below. I am not available on weekends, weeknights, holidays, 
+							weekdays, or when I am otherwise busy with my numerous projects (which 
+							happens to be ALL the time.) But, if you insist, here's the contact form:</p>
+							
+							<form method="post" action="http://webhelp.easi.utoronto.ca/mm/#">
+								<div class="row 50%">
+									<div class="6u"><input type="text" name="name" placeholder="Name"></div>
+									<div class="6u"><input type="text" name="email" placeholder="Email"></div>
+								</div>
+								<div class="row 50%">
+									<div class="12u">
+										<textarea name="message" placeholder="Message"></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="12u">
+										<input type="submit" value="Send Message">
+									</div>
+								</div>
+							</form>
+
+						</div>
+					</section>
+			
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+				
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>© 2015</li><li>Design: My good friend Cris who shamelessly borrowed a template from <a href="http://html5up.net/">HTML5 UP</a></li>
+					</ul>
+				
+			</div>
+
+	
+</div><div id="skel-layers-hiddenWrapper" style="height: 100%;"></div><div id="skel-layers-visibleWrapper" style="position: relative;"><div id="header" class="skel-layers-fixed" style="backface-visibility: hidden; transition: -webkit-transform 0.5s ease, opacity 0.5s ease; -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<span class="image avatar48"><img src="./Moncada's PONG_files/mm.jpg" alt=""></span>
+							<h1 id="title">Michael Moncada</h1>
+							<p>Student No. 123456789</p>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<!--
+							
+								Prologue's nav expects links in one of two formats:
+								
+								1. Hash link (scrolls to a different section within the page)
+								
+								   <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
+
+								2. Standard link (sends the user to another page/site)
+
+								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
+							
+							-->
+							<ul>
+								<li><a href="http://webhelp.easi.utoronto.ca/mm/#top" id="top-link" class="skel-layers-ignoreHref active"><span class="icon fa-home">Intro</span></a></li>
+								<li><a href="http://webhelp.easi.utoronto.ca/mm/#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Project</span></a></li>
+								<li><a href="http://webhelp.easi.utoronto.ca/mm/#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
+								<li><a href="http://webhelp.easi.utoronto.ca/mm/#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+							</ul>
+						</nav>
+						
+				</div>
+				
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-github"><span class="label">Github</span></a></li>
+							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+				
+				</div>
+			
+			</div></div></body></html>
