@@ -1,0 +1,50 @@
+.modal-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 100000;
+}
+
+.modal-container-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.8;
+}
+
+.modal-container .modal-box {
+  position: relative;
+  top: 8%;
+  margin: auto auto;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: auto;
+  width:660px;
+  height:540px;
+}
+
+
+.modal-box .modal-container {
+  position: relative;
+  width: 640px;
+  height: 480px;
+  margin: 10px auto;
+}
+
+.modal-box .modal-container .modal-caption {
+  position: absolute;
+  bottom: -43px;
+  width: 100%;
+  color: #333;
+  text-shadow: 1px 1px #ccc;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modal-box .modal-body canvas {
+  position: absolute;
+  width: 640px;
+  height: 480px;
+  border: solid 1px #000;
+}
