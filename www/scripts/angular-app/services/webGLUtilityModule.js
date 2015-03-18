@@ -90,16 +90,16 @@ angular.module('webGLUtilityModule', [])
         }
       }
 
-
+      // run initializer for the object
       __initCanvas(id);
 
-
+      // public accessors for _Canvas
       this.getCanvasEl = function() {
         return __canvasEl;
       };
 
       this.getCanvasJQObj = function() {
-              return __canvasJQObj;
+        return __canvasJQObj;
       };
 
       this.getContext = function() {
