@@ -136,7 +136,7 @@ angular.module('webGLUtilityModule', [])
 
     function _CanvasModalWidget(id, anchorPoint) {
 
-      var _modalElement =  null,
+      var _modalJQObj =  null,
           _modalBox = null,
           _modalID = id,
           _modalHeight = 0,
@@ -145,7 +145,8 @@ angular.module('webGLUtilityModule', [])
           _canvas2D = null,
           _canvas3D = null,
           _modalCaptionElement = null,
-          _modalBody = null;
+          _modalBody = null,
+          _modalDetailBody = null;
 
 
       function __addCanvas(id, type) {
@@ -161,31 +162,42 @@ angular.module('webGLUtilityModule', [])
       function __initCanvasWidget() {
         var modalCanvasContainer =  _modalID + '-canvas-box';
 
-        if (_modalElement === null) {
+        if (_modalJQObj === null) {
 
-          _modalElement = $(
+          _modalJQObj = $(
             '<div id="' + _modalID + '-container">' +
               '<div class="modal-container-bg"></div>' +
               '<div id="' + modalCanvasContainer + '">' +
-                '<div class="modal-container">' +
-                  '<div class="modal-body"></div>' +
-                  '<div class="modal-caption"></div>' +
+                '<div class="modal-content-container">' +
+                  '<div class="modal-caption-body">' +
+
+                      //'<i class="fa fa-question-circle question-icon"></i>' +
+                      '<div class="modal-caption"></div>' +
+                      '<i class="fa fa-times close-icon"></i>' +
                   '</div>' +
+                  '<div class="modal-body"></div>' +
+                  '<div class="modal-detail-body"></div>' +
+                '</div>' +
               '</div>' +
             '</div>'
             );
 
 
-          if (! _modalElement.length) {
+          if (! _modalJQObj.length) {
             throw new Error('Could not create modal used for the canvas!');
           }
 
-          $(anchorPoint || 'body').prepend(_modalElement.addClass('modal-container'));
+          $(anchorPoint || 'body').prepend(_modalJQObj.addClass('modal-container'));
 
 
          _modalBox = $('#' + modalCanvasContainer);
          _modalCaptionElement = _modalBox.find('.modal-caption');
          _modalBody = _modalBox.find('.modal-body');
+         _modalDetailBody = _modalBox.find('.modal-detail-body');
+
+         _modalBox.find('.close-icon').click(__hide);
+         _modalBox.click(function(e) { e.stopPropagation(); })
+         _modalJQObj.click(__hide);
 
 
          _modalBox.addClass('modal-box');
@@ -196,7 +208,7 @@ angular.module('webGLUtilityModule', [])
 
        }
 
-       __initCanvases();
+
 
       }
 
@@ -207,7 +219,7 @@ angular.module('webGLUtilityModule', [])
 
         if (_canvas2D && _canvas3D) {
           _modalBody
-            .append(_canvas2D.getCanvasJQObj().addClass('canvas canvas-hud'))
+            .append(_canvas2D.getCanvasJQObj().addClass('canvas canvas-hud').css({zIndex: 1}))
             .append(_canvas3D.getCanvasJQObj().addClass('canvas canvas-gl'));
         }
 
@@ -216,23 +228,50 @@ angular.module('webGLUtilityModule', [])
       }
 
       function __resetCanvasWidget() {
-        _canvas2D.destroy();
-        _canvas3D.destroy();
+        if (_canvas2D) {
+          _canvas2D.destroy();
+        }
+
+        if (_canvas3D) {
+          _canvas3D.destroy();
+        }
 
         __initCanvases();
 
         return true;
       }
 
+      function __show(callback) {
+        var callbackFn = typeof callback === 'function' ? callback : function(){};
+
+        _modalJQObj.show();
+
+        _modalBox.show('fast', function() {
+          __resetCanvasWidget();
+          callbackFn.call(this);
+        });
+
+
+        return this;
+      }
+
+      function __hide(callback) {
+        var callbackFn = typeof callback === 'function' ? callback : function(){};
+
+        _modalBox.hide('fast', function() {
+          _modalJQObj.hide();
+            callbackFn.apply(this);
+        });
+
+        return this;
+
+      }
+
 
       // Publically accessible Canvas Modal API
-      this.show = function() {
-        return this;
-      };
+      this.show = __show;
 
-      this.hide = function() {
-        return this;
-      };
+      this.hide = __hide;
 
       this.setWidth = function(width) {
         return this;
@@ -252,6 +291,10 @@ angular.module('webGLUtilityModule', [])
 
       this.setCaption = function(caption) {
         _modalCaptionElement.text(caption);
+      };
+
+      this.setDetailText = function(details) {
+        _modalDetailBody.text(details);
       };
 
 

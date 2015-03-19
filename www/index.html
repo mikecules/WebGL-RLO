@@ -31,13 +31,13 @@
 
 	</head>
 	<body>
-		<div id="skel-layers-wrapper" style="position: relative; left: 0px; right: 0px; top: 0px; backface-visibility: hidden; transition: -webkit-transform 0.5s ease, opacity 0.5s ease; -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;">
+		<div ng-app="WebGLRLOApp" ng-controller="WebGLMainController" id="skel-layers-wrapper">
 
 		<!-- Header -->
 
 
 		<!-- Main -->
-		<div id="main" ng-app="WebGLRLOApp" ng-controller="WebGLMainController">
+		<div id="main">
 			{{welcome}}
 
 			<!-- Intro -->
@@ -63,7 +63,7 @@
 					<div class="container">
 
 						<header>
-							<h2>Project</h2>
+							<h2>Demos</h2>
 						</header>
 
 						<p>My project is about reimagining one of the earliest arcade video games. This is absolutely amazing stuff
@@ -72,10 +72,11 @@
 						<div class="row">
 							<div class="4u">
 								<article class="item">
-									<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic02.jpg" alt=""></a>
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(0)" class="image fit"><img src="./Moncada's PONG_files/pic02.jpg" alt="">
 									<header>
-										<h3>PONG Screenshot 1</h3>
+										<h3>Example 1 Screenshot</h3>
 									</header>
+									</a>
 								</article>
 								<article class="item">
 									<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image fit"><img src="./Moncada's PONG_files/pic03.jpg" alt=""></a>
@@ -122,10 +123,10 @@
 					<div class="container">
 
 						<header>
-							<h2>About Me</h2>
+							<h2>Demos</h2>
 						</header>
 
-						<a href="http://webhelp.easi.utoronto.ca/mm/#" class="image featured"><img src="./Moncada's PONG_files/pic08.jpg" alt=""></a>
+						<a href="#" class="image featured"><img src="./Moncada's PONG_files/pic08.jpg" alt=""></a>
 
 						<p>I'm a highly talented web and mobile application developer who leverages Web and Native Mobile Technologies to provide dynamic and enjoyable user experiences. I also provide architectural design and implementation strategies for mobile/desktop software deployment and maintenance.</p>
 
@@ -133,7 +134,7 @@
 				</section>
 
 			<!-- Contact -->
-				<section id="contact" class="four">
+				<!-- section id="contact" class="four">
 					<div class="container">
 
 						<header>
@@ -163,7 +164,7 @@
 						</form>
 
 					</div>
-				</section>
+				</section -->
 
 		</div>
 
@@ -172,9 +173,9 @@
 
 				<!-- Copyright -->
 					<ul class="copyright">
-						<li>&copy; 2015</li>
+						<li>&copy; 2015 Michael Moncada</li>
 						<li>
-							Original CSS Design: My good friend Cris D. who shamelessly borrowed a template from <a href="http://html5up.net/">HTML5 UP</a>
+							Basic skeletal template shamelessly borrowed from <a href="http://html5up.net/">HTML5 UP</a> which is under the CC 3.0 License
 						</li>
 					</ul>
 
@@ -190,7 +191,7 @@
 						<div id="logo">
 							<span class="image avatar48"><img src="./styles/images/mm.jpg" alt=""></span>
 							<h1 id="title">Michael Moncada</h1>
-							<p>Student No. 123456789</p>
+							<p><a href="mailto:michael.moncada@gmail.com">michael.moncada@gmail.com</a></p>
 						</div>
 
 					<!-- Nav -->
@@ -210,9 +211,11 @@
 							-->
 							<ul>
 								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref active"><span class="icon fa-home">Intro</span></a></li>
-								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Project</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
-								<li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+								<li><a href="#top" id="" class="skel-layers-ignoreHref"><span class="icon fa-graduation-cap">Prerequisites</span></a></li>
+								<li><a href="#top" id="" class="skel-layers-ignoreHref"><span class="icon fa-gavel">Why WebGL?</span></a></li>
+								<li><a href="#top" id="" class="skel-layers-ignoreHref"><span class="icon fa-history">History</span></a></li>
+								<li><a href="#top" id="" class="skel-layers-ignoreHref"><span class="icon fa-arrows">Math 101</span></a></li>
+								<li><a href="#portfolio" id="portfolio-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Demos</span></a></li>
 							</ul>
 						</nav>
 
@@ -222,9 +225,9 @@
 
 					<!-- Social Icons -->
 						<ul class="icons">
-							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-github"><span class="label">Github</span></a></li>
-							<li><a href="http://webhelp.easi.utoronto.ca/mm/#" class="icon fa-envelope"><span class="label">Email</span></a></li>
+							<li><a href="https://www.facebook.com/mikey.moncada" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="https://github.com/mikecules" class="icon fa-github"><span class="label">Github</span></a></li>
+							<li><a href="mailto:michael.moncada@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li>
 						</ul>
 
 				</div>
