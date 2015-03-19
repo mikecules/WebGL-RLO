@@ -38,8 +38,6 @@ angular.module('webGLUtilityModule', [])
            }
 
 
-           __context.attachShader(__glProgram, fragmentShader);
-
            // link the program.
            __context.linkProgram(__glProgram);
 
