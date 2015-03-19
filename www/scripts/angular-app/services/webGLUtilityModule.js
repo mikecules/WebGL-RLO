@@ -69,15 +69,15 @@ angular.module('webGLUtilityModule', [])
       }
 
 
-      function __setShaders(vertexShader, fragmentShader) {
+      function __setShaders(vertexShaderStr, fragmentShaderStr) {
 
         if (! __context || typeof vertexShader !== 'string' || typeof fragmentShader !== 'string' || __canvasType !== ___Canvas.prototype.CANVAS_TYPES.CANVAS_3D) {
           throw new Error('Could not set the vertex/fragment shaders!\nYou sent vertex shader contents: ' +
                             vertexShader + '\nYou sent fragment shader contents: ' + fragmentShader);
         }
 
-        var vsContents = __getShaderContentsHelper(vertexShader),
-            fsContents = __getShaderContentsHelper(fragmentShader);
+        var vsContents = __getShaderContentsHelper(vertexShaderStr),
+            fsContents = __getShaderContentsHelper(fragmentShaderStr);
 
 
         compiledVertexShader = __compileShader(vsContents, __context.VERTEX_SHADER);
