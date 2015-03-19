@@ -223,6 +223,7 @@ angular.module('webGLUtilityModule', [])
 
 
       this.setVertexAndFragmentShaders = __setShaders;
+      this.getShaders = __getVShadersObj;
 
       this.updateViewportSize = __updateViewportSize;
 
@@ -233,6 +234,9 @@ angular.module('webGLUtilityModule', [])
 
           __canvasJQObj = null;
           __canvasEl = null;
+          __shaders = null;
+          __glProgram = null;
+          __context = null;
         }
       };
 
