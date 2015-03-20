@@ -110,20 +110,12 @@
 						<p>Blah</p>
 
 						<div class="row">
-							<div class="4u">
+							<div class="4u" ng-repeat="demo in demoRunner.getDemos()">
 								<article class="item">
-									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(0)" class="image fit">
-										<img src="styles/app/images/demo1.png" alt="">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run($index)" class="image fit">
+										<img ng-src="{{demo.screenShotURL}}" alt="">
 										<header>
-											<h3>Drawing Pixels</h3>
-										</header>
-									</a>
-								</article>
-								<article class="item">
-									<a href="javascript:void(0)" class="image fit">
-										<img src="#" alt="">
-										<header>
-											<h3>Example 2 Screenshot</h3>
+											<h3 ng-bind="demo.caption"></h3>
 										</header>
 									</a>
 								</article>
@@ -142,7 +134,7 @@
 							<h2>Demos Explained</h2>
 						</header>
 
-						<a href="#" class="image featured"><img src="./Moncada's PONG_files/pic08.jpg" alt=""></a>
+						<a href="#" class="image featured"><img src="#" alt=""></a>
 
 						<p>I'm a highly talented web and mobile application developer who leverages Web and Native Mobile Technologies to provide dynamic and enjoyable user experiences. I also provide architectural design and implementation strategies for mobile/desktop software deployment and maintenance.</p>
 
@@ -157,7 +149,7 @@
 							<h2>References</h2>
 						</header>
 
-						<a href="#" class="image featured"><img src="./Moncada's PONG_files/pic08.jpg" alt=""></a>
+						<a href="#" class="image featured"><img src="#" alt=""></a>
 
 						<p>I'm a highly talented web and mobile application developer who leverages Web and Native Mobile Technologies to provide dynamic and enjoyable user experiences. I also provide architectural design and implementation strategies for mobile/desktop software deployment and maintenance.</p>
 
@@ -286,6 +278,8 @@
 		<script src="./scripts/app/angular-aria.min.js"></script>
 		<script src="./scripts/app/angular-touch.min.js"></script>
 
+		<!-- 3rd Party Matrix Library -->
+		<script src="./scripts/app/gl-matrix-min.js"></script>
 
 		<!-- Custom Modules -->
 		<script src="./scripts/angular-app/services/webGLUtilityModule.js"></script>

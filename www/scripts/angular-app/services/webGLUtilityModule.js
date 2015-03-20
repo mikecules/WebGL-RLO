@@ -350,7 +350,7 @@ angular.module('webGLUtilityModule', [])
 
         if (_canvas2D && _canvas3D) {
           _modalBody
-            .append(_canvas2D.getCanvasJQObj().addClass('canvas canvas-hud').css({zIndex: 1}))
+            .append(_canvas2D.getCanvasJQObj().hide().addClass('canvas canvas-hud'))
             .append(_canvas3D.getCanvasJQObj().addClass('canvas canvas-gl'));
         }
 
@@ -422,6 +422,23 @@ angular.module('webGLUtilityModule', [])
 
       this.getGLContext = function() {
         return _canvas3D.getContext();
+      };
+
+      this.getGLCanvasEl = function() {
+        return _canvas3D.getCanvasJQObj();
+      };
+
+      this.get2DCanvasEl = function() {
+        return _canvas2D.getCanvasJQObj();
+      };
+
+      this.showHUDCanvas = function() {
+        _canvas2D.getCanvasJQObj().show().css({'zIndex': 1});
+      };
+
+      this.hideHUDCanvas = function() {
+        _canvas2D.getCanvasJQObj().hide().css({'zIndex': 0});
+        _canvas3D.getCanvasJQObj().css({'zIndex': 1});
       };
 
       this.setGLVertexAndFragmentShaders = function(vertexShaderStrOrID, fragmentShaderStrOrID) {
