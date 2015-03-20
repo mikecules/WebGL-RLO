@@ -68,7 +68,7 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
              -1.0,-1.0, 0.0,
              -1.0, 1.0, 0.0,
               1.0,-1.0, 0.0,
-              0.0, -1.0, 0.0
+              0.0,-1.0, 0.0
             ]);
 
           var NUM_OF_COORDS = 3,
@@ -92,7 +92,7 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
           // Clear the color buffer.
           gl.clear(gl.COLOR_BUFFER_BIT);
 
-          // draw the point
+          // Draw the points
           gl.drawArrays(gl.POINTS, 0, vertices.length / NUM_OF_COORDS);
 
       }
