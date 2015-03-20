@@ -15,9 +15,9 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
 
         var __demos = [
           {
-            caption: 'Clear Screen Example',
-            details: 'Clears the screen with a black colour...',
-            appFn: clearScreenExample
+            caption: 'Draw Point Example',
+            details: 'Draw a 30 pixel dimensioned point on screen...',
+            appFn: drawPointExample
           }
         ];
 
@@ -45,19 +45,52 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
 
 
 
-      function clearScreenExample() {
-          var HUDContext = canvasModalWidget.getHUDContext(),
-              glContext = canvasModalWidget.getGLContext();
+      function drawPointExample() {
+          var gl = canvasModalWidget.getGLContext();
 
-          if (glContext) {
-            glContext.clearColor(0.0, 0.0, 0.0, 1.0);                      // Set clear color to black, fully opaque
-            glContext.enable(glContext.DEPTH_TEST);                               // Enable depth testing
-            glContext.depthFunc(glContext.LEQUAL);                                // Near things obscure far things
-            glContext.clear(glContext.COLOR_BUFFER_BIT | glContext.DEPTH_BUFFER_BIT);      // Clear the color as well as the depth buffer.
+          if (! gl) {
+            throw new Error('Could not run drawPointExample() WebGL Demo!');
           }
 
-          canvasModalWidget.setCaption('Clear Screen Example');
-          canvasModalWidget.setDetailText('Clears the screen with a black colour...');
+
+          var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo1', '#f-shader-demo1');
+
+
+
+
+          // create vertex data and the buffer (bind them!)
+          var vertices = new Float32Array([
+              0.0, 0.0, 0.0, // x , y, z coordinatates
+              1.0, 0.0, 0.0,
+              0.0, 1.0, 0.0,
+              1.0, 1.0, 0.0,
+             -1.0, 0.0, 0.0,
+             -1.0,-1.0, 0.0,
+             -1.0, 1.0, 0.0,
+              1.0,-1.0, 0.0,
+              0.0, -1.0, 0.0
+            ]),
+              vertexBuffer = gl.createBuffer();
+          gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+          gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+          // Bind the position to the first attribute in the program
+          gl.bindAttribLocation(program, 0, 'a_Position');
+
+          // Assign the pointer
+          gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+          gl.enableVertexAttribArray(0);
+
+
+          // Set clear color to black, fully opaque
+          gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+          // Clear the color buffer.
+          gl.clear(gl.COLOR_BUFFER_BIT);
+
+          // draw the point
+          gl.drawArrays(gl.POINTS, 0, vertices.length / 3);
+
       }
 
 

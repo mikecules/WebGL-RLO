@@ -64,7 +64,6 @@
   position: relative;
   width: 640px;
   height: 480px;
-  border: solid 1px #000;
 }
 
 .modal-box .modal-body canvas {

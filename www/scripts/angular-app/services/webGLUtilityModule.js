@@ -30,7 +30,7 @@ angular.module('webGLUtilityModule', [])
                 fragmentShaderResource = __shaders[_Canvas.prototype.SHADER_TYPES.FRAGMENT].resource;
 
            if (vertexShaderResource) {
-            __context.attachShader(__glProgram, vertexShader);
+            __context.attachShader(__glProgram, vertexShaderResource);
            }
 
            if (fragmentShaderResource) {
@@ -50,6 +50,8 @@ angular.module('webGLUtilityModule', [])
            }
 
            __context.useProgram(__glProgram);
+
+           return __glProgram;
       }
 
 
@@ -71,27 +73,27 @@ angular.module('webGLUtilityModule', [])
 
       function __setShaders(vertexShaderStr, fragmentShaderStr) {
 
-        if (! __context || typeof vertexShader !== 'string' || typeof fragmentShader !== 'string' || __canvasType !== ___Canvas.prototype.CANVAS_TYPES.CANVAS_3D) {
+        if (! __context || typeof vertexShaderStr !== 'string' || typeof fragmentShaderStr !== 'string' || __canvasType !== _Canvas.prototype.CANVAS_TYPES.CANVAS_3D) {
+
           throw new Error('Could not set the vertex/fragment shaders!\nYou sent vertex shader contents: ' +
-                            vertexShader + '\nYou sent fragment shader contents: ' + fragmentShader);
+                            vertexShaderStr + '\nYou sent fragment shader contents: ' + fragmentShaderStr);
         }
 
         var vsContents = __getShaderContentsHelper(vertexShaderStr),
             fsContents = __getShaderContentsHelper(fragmentShaderStr);
 
 
-        compiledVertexShader = __compileShader(vsContents, __context.VERTEX_SHADER);
-        compiledFragmentShader = __compileShader(fsContents, __context.FRAGMENT_SHADER);
+        var compiledVertexShader = __compileShader(vsContents, __context.VERTEX_SHADER),
+            compiledFragmentShader = __compileShader(fsContents, __context.FRAGMENT_SHADER);
 
 
-        var vs = shaders[_Canvas.prototype.SHADER_TYPES.VERTEX],
-            fs = shaders[_Canvas.prototype.SHADER_TYPES.FRAGMENT];
+        var vs = __shaders[_Canvas.prototype.SHADER_TYPES.VERTEX],
+            fs = __shaders[_Canvas.prototype.SHADER_TYPES.FRAGMENT];
 
         vs.src = vsContents, vs.resource = compiledVertexShader;
         fs.src = fsContents, fs.resource = compiledFragmentShader;
 
-        __initProgram();
-
+        return __initProgram();
       }
 
 
@@ -101,10 +103,9 @@ angular.module('webGLUtilityModule', [])
           return null;
         }
 
-        var realShaderType = ((shaderType === _Canvas.prototype.SHADER_TYPES.VERTEX) ? __context.VERTEX_SHADER : __context.FRAGMENT_SHADER);
 
         // Create the shader object
-        var shader = __context.createShader(realShaderType);
+        var shader = __context.createShader(shaderType);
 
         // Set the shader source code.
         __context.shaderSource(shader, shaderSource);
@@ -189,13 +190,13 @@ angular.module('webGLUtilityModule', [])
       function __setHeight(h) {
         __height = h;
         __viewportNeedsUpdate = true;
-        __canvasJQObj.height(h);
+        __canvasJQObj.attr('height', h);
       }
 
       function __setWidth(w) {
         __width = w;
         __viewportNeedsUpdate = true;
-        __canvasJQObj.width(w);
+        __canvasJQObj.attr('width', w);
       }
 
       function __updateViewportSize() {
@@ -219,6 +220,10 @@ angular.module('webGLUtilityModule', [])
 
       this.getContext = function() {
         return __context;
+      };
+
+      this.getGLProgram = function() {
+        return __glProgram;
       };
 
 
@@ -394,6 +399,10 @@ angular.module('webGLUtilityModule', [])
       }
 
 
+      // initialize the Canvas Widget
+      __initCanvasWidget();
+
+
       // Publically accessible Canvas Modal API
       this.show = __show;
 
@@ -415,6 +424,14 @@ angular.module('webGLUtilityModule', [])
         return _canvas3D.getContext();
       };
 
+      this.setGLVertexAndFragmentShaders = function(vertexShaderStrOrID, fragmentShaderStrOrID) {
+        return _canvas3D.setVertexAndFragmentShaders(vertexShaderStrOrID, fragmentShaderStrOrID);
+      };
+
+      this.getGLProgram = function() {
+        return _canvas3D.getGLProgram();
+      }
+
       this.setCaption = function(caption) {
         _modalCaptionElement.text(caption);
       };
@@ -424,8 +441,7 @@ angular.module('webGLUtilityModule', [])
       };
 
 
-      // initialize the Canvas Widget
-      __initCanvasWidget();
+
 
       // Canvas Widget Public API
       this.resetCanvasWidget = __resetCanvasWidget;

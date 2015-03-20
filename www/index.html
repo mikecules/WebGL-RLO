@@ -319,5 +319,25 @@
 		<!-- Angular App Main Application -->
 		<script src="./scripts/angular-app/app.js"></script>
 
+
+		<script id="v-shader-demo1" type="x-shader/x-vertex">
+		  attribute vec4 a_Position;
+
+		  void main() {
+		    gl_Position = a_Position;
+		    gl_PointSize = 20.0;
+		  }
+	  </script>
+
+	  <script id="f-shader-demo1" type="x-shader/x-fragment">
+		  #ifdef GL_ES
+		    precision highp float;
+		  #endif
+
+		  void main() {
+		      gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+		  }
+		</script>
+
 	</body>
 	</html>
