@@ -42,23 +42,27 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
       }
 
 
+      
 
-
-
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Demo 1: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
       function drawPointExample() {
+
+          // get the gl context from our modal widget
           var gl = canvasModalWidget.getGLContext();
 
           if (! gl) {
             throw new Error('Could not run drawPointExample() WebGL Demo!');
           }
 
-
+          // get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
           var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo1', '#f-shader-demo1');
 
 
 
 
-          // create vertex data and the buffer (bind them!)
+          // create vertex data and the buffer then bind them!
           var vertices = new Float32Array([
               0.0, 0.0, 0.0, // x , y, z coordinatates
               1.0, 0.0, 0.0,
@@ -94,6 +98,10 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
 
           // Draw the points
           gl.drawArrays(gl.POINTS, 0, vertices.length / NUM_OF_COORDS);
+
+      }
+
+      function drawSimpleShapeWithMouseExample() {
 
       }
 

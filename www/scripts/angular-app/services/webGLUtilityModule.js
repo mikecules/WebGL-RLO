@@ -471,4 +471,13 @@ angular.module('webGLUtilityModule', [])
     };
 
     return this;
-  }]);
+  }])
+.service('webGLDrawUtilities', [function() {
+
+  // generate square vertices
+  // generate 3D-Cube vertices
+  // generate Sphere vertices
+
+  return this;
+
+}]);
