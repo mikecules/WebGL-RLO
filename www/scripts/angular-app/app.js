@@ -69,8 +69,12 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
              -1.0, 1.0, 0.0,
               1.0,-1.0, 0.0,
               0.0, -1.0, 0.0
-            ]),
+            ]);
+
+          var NUM_OF_COORDS = 3,
               vertexBuffer = gl.createBuffer();
+
+
           gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
           gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
@@ -78,7 +82,7 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
           gl.bindAttribLocation(program, 0, 'a_Position');
 
           // Assign the pointer
-          gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 0, 0);
+          gl.vertexAttribPointer(0, NUM_OF_COORDS, gl.FLOAT, false, 0, 0);
           gl.enableVertexAttribArray(0);
 
 
@@ -89,7 +93,7 @@ angular.module('WebGLRLOApp', ['ngAria', 'ngTouch', 'webGLUtilityModule'])
           gl.clear(gl.COLOR_BUFFER_BIT);
 
           // draw the point
-          gl.drawArrays(gl.POINTS, 0, vertices.length / 3);
+          gl.drawArrays(gl.POINTS, 0, vertices.length / NUM_OF_COORDS);
 
       }
 
