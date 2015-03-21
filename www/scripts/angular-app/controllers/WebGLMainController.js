@@ -17,46 +17,24 @@ angular.module('WebGLRLOApp')
           details: 'Freeform draw large pixels on screen...',
           appFn: drawSimpleShapeWithMouseExample,
           screenShotURL: 'styles/app/images/demo2.png'
+        },
+         {
+          caption: 'Draw Modes and Translations Example',
+          details: 'Draw some trinagles using different draw modes and do uniform translations to position 1 shape 3 different ways.',
+          appFn: shapesExample,
+          screenShotURL: 'styles/app/images/demo3.png'
+        },
+         {
+          caption: 'Fragment Shader Interpolation Example',
+          details: ' ',
+          appFn: shapesFragmentVaryingExample,
+          screenShotURL: 'styles/app/images/demo3.png'
         }
       ];
 
-      function _DemoRunner() {
+      
 
 
-
-
-        this.run = function(index) {
-
-          var demoObject = demos[index];
-
-          if (typeof demoObject === 'undefined') {
-            throw new Error('Could not find the demo app you were refering too...');
-          }
-
-          canvasModalWidget.setCaption(demoObject.caption || null)
-          	.setDetailText(demoObject.details || null)
-          	.show(demoObject.appFn);
-
-        };
-
-
-        this.getDemos = function(index) {
-
-          if (typeof index === 'number') {
-            if (index < demos.length) {
-              return demos[index];
-            }
-            else if (index >= demos.length) {
-              return false;
-            }
-          }
-
-          return demos;
-
-        };
-
-        return this;
-      }
 
 
 
@@ -259,14 +237,159 @@ angular.module('WebGLRLOApp')
       }
 
 
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Demo 3: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      function shapesExample() {
+      	// get the gl context from our modal widget
+        var gl = canvasModalWidget.getGLContext();
+
+        if (! gl) {
+          throw new Error('Could not run shapesExample() WebGL Demo!');
+        }
+
+        // get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
+        var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo3', '#f-shader-demo3');
+
+
+
+
+        // create vertex data and the buffer then bind them!
+        var vertices = new Float32Array([
+           	-0.5, 0.0, 0.0, // x , y, z coordinatates
+            0.5, 0.0, 0.0,
+        	0.0, 1.0, 0.0
+          ]);
+
+        var NUM_OF_COORDS = 3,
+            vertexBuffer = gl.createBuffer();
+
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+
+        // get the location of the a_Position attribute in the vertex shader
+        var a_Position = gl.getAttribLocation(program, 'a_Position');
+        var u_Translation = gl.getUniformLocation(program, 'u_Translation');
+        var u_FragColour =  gl.getUniformLocation(program, 'u_FragColour'); 
+
+        // Assign the pointer
+        gl.vertexAttribPointer(a_Position, NUM_OF_COORDS, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(a_Position);
+
+
+        // Set clear color to black, fully opaque
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+        // Clear the color buffer.
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+
+        var translations = [
+        	{x: 0, y: 0, z: 0, drawMode: gl.TRIANGLES, colour: [1.0, 0.0, 0.0, 1.0]},
+        	{x: -0.5, y: -1.0, z: 0, drawMode: gl.LINE_LOOP, colour: [0.0, 1.0, 0.0, 1.0]},
+        	{x: 0.5, y: -1.0, z: 0, drawMode: gl.TRIANGLE_STRIP,  colour: [0.0, 0.0, 1.0, 1.0]}
+        ];
+
+        for (var i = 0; i < translations.length; i++) {
+        	var t = translations[i],
+        		RGBComponent = t.colour;
+
+        	gl.uniform4f(u_Translation, t.x, t.y, t.z, 0.0);
+        	gl.uniform4f(u_FragColour, RGBComponent[0], RGBComponent[1], RGBComponent[2], 1.0);
+
+
+        	// Draw the points
+        	gl.drawArrays(t.drawMode, 0, 3);	
+        }
+
+        
+
+
+      
+
+      }
+
+       ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Demo 4: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      function shapesFragmentVaryingExample() {
+      	// get the gl context from our modal widget
+        var gl = canvasModalWidget.getGLContext();
+
+        if (! gl) {
+          throw new Error('Could not run shapesExample() WebGL Demo!');
+        }
+
+        // get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
+        var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo3', '#f-shader-demo3');
+
+
+
+
+        // create vertex data and the buffer then bind them!
+        var vertices = new Float32Array([
+           	-0.5, 0.0, 0.0, // x , y, z coordinatates
+            0.5, 0.0, 0.0,
+        	0.0, 1.0, 0.0
+          ]);
+
+        var NUM_OF_COORDS = 3,
+            vertexBuffer = gl.createBuffer();
+
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+
+        // get the location of the a_Position attribute in the vertex shader
+        var a_Position = gl.getAttribLocation(program, 'a_Position');
+        var u_Translation = gl.getUniformLocation(program, 'u_Translation');
+        var u_FragColour =  gl.getUniformLocation(program, 'u_FragColour'); 
+
+        // Assign the pointer
+        gl.vertexAttribPointer(a_Position, NUM_OF_COORDS, gl.FLOAT, false, 0, 0);
+        gl.enableVertexAttribArray(a_Position);
+
+
+        // Set clear color to black, fully opaque
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+        // Clear the color buffer.
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+
+        var translations = [
+        	{x: 0, y: 0, z: 0, drawMode: gl.TRIANGLES, colour: [1.0, 0.0, 0.0, 1.0]},
+        	{x: -0.5, y: -1.0, z: 0, drawMode: gl.LINE_LOOP, colour: [0.0, 1.0, 0.0, 1.0]},
+        	{x: 0.5, y: -1.0, z: 0, drawMode: gl.TRIANGLE_STRIP,  colour: [0.0, 0.0, 1.0, 1.0]}
+        ];
+
+        for (var i = 0; i < translations.length; i++) {
+        	var t = translations[i],
+        		RGBComponent = t.colour;
+
+        	gl.uniform4f(u_Translation, t.x, t.y, t.z, 0.0);
+        	gl.uniform4f(u_FragColour, RGBComponent[0], RGBComponent[1], RGBComponent[2], 1.0);
+
+
+        	// Draw the points
+        	gl.drawArrays(t.drawMode, 0, 3);	
+        }
+
+        
+
+
+      
+
+      }
 
 
 
 
 
-
-
-      $scope.demoRunner = new _DemoRunner();
+      
 
 
 
@@ -275,6 +398,43 @@ angular.module('WebGLRLOApp')
 
 
       // Only continue if WebGL is available and working
+
+      function _DemoRunner() {
+
+        this.run = function(index) {
+
+          var demoObject = demos[index];
+
+          if (typeof demoObject === 'undefined') {
+            throw new Error('Could not find the demo app you were refering too...');
+          }
+
+          canvasModalWidget.setCaption(demoObject.caption || null)
+          	.setDetailText(demoObject.details || null)
+          	.show(demoObject.appFn);
+
+        };
+
+
+        this.getDemos = function(index) {
+
+          if (typeof index === 'number') {
+            if (index < demos.length) {
+              return demos[index];
+            }
+            else if (index >= demos.length) {
+              return false;
+            }
+          }
+
+          return demos;
+
+        };
+
+        return this;
+      }
+
+      $scope.demoRunner = new _DemoRunner();
 
 
   }]);

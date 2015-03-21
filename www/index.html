@@ -156,39 +156,6 @@
 					</div>
 				</section>
 
-			<!-- Contact -->
-				<!-- section id="contact" class="four">
-					<div class="container">
-
-						<header>
-							<h2>Contact</h2>
-						</header>
-
-						<p>You may contact me at my own and latest convenience by filling in
-						the form below. I am not available on weekends, weeknights, holidays,
-						weekdays, or when I am otherwise busy with my numerous projects (which
-						happens to be ALL the time.) But, if you insist, here's the contact form:</p>
-
-						<form method="post" action="http://webhelp.easi.utoronto.ca/mm/#">
-							<div class="row 50%">
-								<div class="6u"><input type="text" name="name" placeholder="Name"></div>
-								<div class="6u"><input type="text" name="email" placeholder="Email"></div>
-							</div>
-							<div class="row 50%">
-								<div class="12u">
-									<textarea name="message" placeholder="Message"></textarea>
-								</div>
-							</div>
-							<div class="row">
-								<div class="12u">
-									<input type="submit" value="Send Message">
-								</div>
-							</div>
-						</form>
-
-					</div>
-				</section -->
-
 		</div>
 
 		<!-- Footer -->
@@ -251,18 +218,16 @@
 				</div>
 
 				<div class="bottom">
-
 					<!-- Social Icons -->
-						<ul class="icons">
-							<li><a href="https://www.facebook.com/mikey.moncada" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="https://github.com/mikecules" class="icon fa-github"><span class="label">Github</span></a></li>
-							<li><a href="mailto:michael.moncada@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li>
-						</ul>
-
+					<ul class="icons">
+						<li><a href="https://www.facebook.com/mikey.moncada" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="https://github.com/mikecules" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="mailto:michael.moncada@gmail.com" class="icon fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
 				</div>
-
 			</div>
 		</div>
+
 		<script src="./scripts/app/jquery.min.js"></script>
 		<script src="./scripts/app/jquery.scrolly.min.js"></script>
 		<script src="./scripts/app/jquery.scrollzer.min.js"></script>
@@ -293,8 +258,11 @@
 		<!-- WebGL AngularJS Service -->
 		<script src="./scripts/angular-app/services/webGLUtilityModule.js"></script>
 
+		<!-- ******************************************************************************** -->
+		<!-- * Vertex and Fragment Shader Section 											* -->
+		<!-- ******************************************************************************** -->
 
-		<!-- Vertex and Fragment Shader Section -->
+		<!-- Shaders for Demos 1 & 2 -->
 		<script id="v-shader-demo1" type="x-shader/x-vertex">
 		  attribute vec4 a_Position;
 
@@ -313,6 +281,54 @@
 		      gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
 		  }
 		</script>
+		<!--  -->
+
+		<!-- Shaders for Demo 3 -->
+		
+		<script id="v-shader-demo3" type="x-shader/x-vertex">
+		  attribute vec4 a_Position;
+		  uniform vec4 u_Translation;
+
+		  void main() {
+		    gl_Position = a_Position + u_Translation;
+		    gl_PointSize = 1.0;
+		  }
+	  	</script>
+
+	  	<script id="f-shader-demo3" type="x-shader/x-fragment">
+		  uniform mediump vec4 u_FragColour;
+
+		  void main() {
+		      gl_FragColor = u_FragColour;
+		  }
+		</script>
+		<!--  -->
+
+		<!-- Shaders for Demo 4 -->
+
+		<script id="v-shader-demo4" type="x-shader/x-vertex">
+		  attribute vec4 a_Position;
+		  attribute vec4 a_Colour;
+
+		  void main() {
+		    gl_Position = a_Position;
+		    gl_PointSize = 1.0;
+
+		    // giving this variable same name as the variable in the fragment shader effectively passes on the argument
+		   	v_Color = a_Color;
+		  }
+	  	</script>
+
+	  	<script id="f-shader-demo4" type="x-shader/x-fragment">
+		  varying vec4 v_Colour;
+
+		  void main() {
+		      gl_FragColor = v_Colour;
+		  }
+		</script>
+		<!--  -->
+
+		
 
 	</body>
 	</html>
