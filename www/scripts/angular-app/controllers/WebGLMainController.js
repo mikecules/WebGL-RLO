@@ -28,7 +28,7 @@ angular.module('WebGLRLOApp')
           caption: 'Fragment Shader Interpolation Example',
           details: ' ',
           appFn: shapesFragmentVaryingExample,
-          screenShotURL: 'styles/app/images/demo3.png'
+          screenShotURL: 'styles/app/images/demo4.png'
         }
       ];
 
@@ -369,34 +369,42 @@ angular.module('WebGLRLOApp')
         }
 
         // get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
-        var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo3', '#f-shader-demo3');
+        var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo4', '#f-shader-demo4');
 
 
 
 
         // create vertex data and the buffer then bind them!
-        var vertices = new Float32Array([
-           	-0.5, 0.0, 0.0, // x , y, z coordinatates
-            0.5, 0.0, 0.0,
-        	0.0, 1.0, 0.0
+        var verticesWithColours = new Float32Array([
+           	-1.0, -1.0, 0.0, /* Colors (RGB) --> */ 1.0, 0.0, 0.0, // x , y, z, r, g, b, a coordinatates
+            1.0, -1.0, 0.0, /* Colors (RGB) --> */ 0.0, 1.0, 0.0,
+        	0.0, 1.0, 0.0, /* Colors (RGB) --> */ 0.0, 0.0, 1.0
           ]);
 
         var NUM_OF_COORDS = 3,
             vertexBuffer = gl.createBuffer();
 
-
+        // create vertex buffer
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, verticesWithColours, gl.STATIC_DRAW);
 
+        // create colour buffer
+		var vertexColourBuffer = gl.createBuffer();
+		gl.bufferData(gl.ARRAY_BUFFER, verticesWithColours, gl.STATIC_DRAW);
 
         // get the location of the a_Position attribute in the vertex shader
         var a_Position = gl.getAttribLocation(program, 'a_Position');
-        var u_Translation = gl.getUniformLocation(program, 'u_Translation');
-        var u_FragColour =  gl.getUniformLocation(program, 'u_FragColour'); 
+        var a_Colour = gl.getAttribLocation(program, 'a_Colour');
+       
+
+		var SIZE_OF_ELEMENT = verticesWithColours.BYTES_PER_ELEMENT;
 
         // Assign the pointer
-        gl.vertexAttribPointer(a_Position, NUM_OF_COORDS, gl.FLOAT, false, 0, 0);
+        gl.vertexAttribPointer(a_Position, NUM_OF_COORDS, gl.FLOAT, false, SIZE_OF_ELEMENT * 6, 0);
         gl.enableVertexAttribArray(a_Position);
+
+        gl.vertexAttribPointer(a_Colour, NUM_OF_COORDS, gl.FLOAT, false,  SIZE_OF_ELEMENT * 6, SIZE_OF_ELEMENT * NUM_OF_COORDS);
+        gl.enableVertexAttribArray(a_Colour); 
 
 
         // Set clear color to black, fully opaque
@@ -406,28 +414,11 @@ angular.module('WebGLRLOApp')
         gl.clear(gl.COLOR_BUFFER_BIT);
 
 
-        var translations = [
-        	{x: 0, y: 0, z: 0, drawMode: gl.TRIANGLES, colour: [1.0, 0.0, 0.0, 1.0]},
-        	{x: -0.5, y: -1.0, z: 0, drawMode: gl.LINE_LOOP, colour: [0.0, 1.0, 0.0, 1.0]},
-        	{x: 0.5, y: -1.0, z: 0, drawMode: gl.TRIANGLE_STRIP,  colour: [0.0, 0.0, 1.0, 1.0]}
-        ];
-
-        for (var i = 0; i < translations.length; i++) {
-        	var t = translations[i],
-        		RGBComponent = t.colour;
-
-        	gl.uniform4f(u_Translation, t.x, t.y, t.z, 0.0);
-        	gl.uniform4f(u_FragColour, RGBComponent[0], RGBComponent[1], RGBComponent[2], 1.0);
+        // Draw the points
+        gl.drawArrays(gl.TRIANGLES, 0, NUM_OF_COORDS);	
+       
 
 
-        	// Draw the points
-        	gl.drawArrays(t.drawMode, 0, 3);	
-        }
-
-        
-
-
-      
 
       }
 

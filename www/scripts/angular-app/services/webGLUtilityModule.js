@@ -118,7 +118,7 @@ angular.module('webGLUtilityModule', [])
 
         if (! success ) {
           // Something went wrong during compilation; get the error
-          throw new Error('Could not compile ' + shaderType +  ' shader: ' + __context.getShaderInfoLog(shader));
+          throw new Error('Could not compile ' + (shaderType === __context.VERTEX_SHADER ? 'vertex' : 'fragment') +  ' shader: ' + __context.getShaderInfoLog(shader));
         }
 
         return shader;
