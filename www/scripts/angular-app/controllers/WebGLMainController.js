@@ -8,7 +8,7 @@ angular.module('WebGLRLOApp')
       var demos = [
         [
 	        {
-	          caption: 'Draw Fixed Point Example',
+	          caption: 'Draw Fixed Points',
 	          details: 'Draw a 30 pixel dimensioned point on screen...',
 	          appFn: drawPointExample,
 	          screenShotURL: 'styles/app/images/demo1.png'
@@ -22,13 +22,13 @@ angular.module('WebGLRLOApp')
         ],
         [
 	        {
-	          caption: 'Draw Modes and Translations Example',
+	          caption: 'Draw Modes and Translations',
 	          details: 'Draw some trinagles using different draw modes and do uniform translations to position 1 shape 3 different ways.',
 	          appFn: shapesExample,
 	          screenShotURL: 'styles/app/images/demo3.png'
 	        },
 	         {
-	          caption: 'Fragment Shader Interpolation Example',
+	          caption: 'Fragment Shader Interpolation',
 	          details: ' ',
 	          appFn: shapesFragmentVaryingExample,
 	          screenShotURL: 'styles/app/images/demo4.png'
@@ -36,9 +36,23 @@ angular.module('WebGLRLOApp')
 	     ],
 	     [
 	         {
-	          caption: 'Fragment Shader Interpolation Example',
+	          caption: 'Animation of 3D Primitives',
 	          details: ' ',
-	          appFn: shapesFragmentVaryingExample,
+	          appFn: animating3DPrimativesExample,
+	          screenShotURL: 'styles/app/images/demo4.png'
+	        },
+	        {
+	          caption: 'Lighting Example',
+	          details: ' ',
+	          appFn: lightingExample,
+	          screenShotURL: 'styles/app/images/demo4.png'
+	        }
+        ],
+        [
+        	{
+	          caption: 'PongGL!',
+	          details: ' ',
+	          appFn: PongGLGame,
 	          screenShotURL: 'styles/app/images/demo4.png'
 	        }
         ]
@@ -46,13 +60,9 @@ angular.module('WebGLRLOApp')
 
       
 
-      
        
     
-       
-
-
-
+     
 
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////
       // Demo 1: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
@@ -434,10 +444,20 @@ angular.module('WebGLRLOApp')
 
       }
 
+	function animating3DPrimativesExample() {
+
+	}
 
 
 
+  	function lightingExample() {
 
+	}
+	
+      	
+  	function PongGLGame() {
+
+  	}
       
 
 
