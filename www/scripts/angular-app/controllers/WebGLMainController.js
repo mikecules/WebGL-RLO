@@ -1,6 +1,6 @@
 // Declare app level module which depends on views, and components
 angular.module('WebGLRLOApp')  
-  .controller('WebGLMainController', ['$scope', 'webGLUtilities', function($scope, webGLUtilities) {
+  .controller('WebGLMainController', ['$scope', 'webGLUtilities', 'webGLDrawUtilities', function($scope, webGLUtilities, webGLDrawUtilities) {
     console.log('Main Controller Instantiated!');
     webGLUtilities.initCanvasModalWidget('canvas-modal-widget');
       var canvasModalWidget = webGLUtilities.getCanvasModalWidget();
@@ -34,7 +34,10 @@ angular.module('WebGLRLOApp')
 
       
 
-
+      
+       
+    
+       
 
 
 
@@ -54,7 +57,7 @@ angular.module('WebGLRLOApp')
         // get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
         var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo1', '#f-shader-demo1');
 
-
+        
 
 
         // create vertex data and the buffer then bind them!
@@ -95,7 +98,50 @@ angular.module('WebGLRLOApp')
         // Draw the points
         gl.drawArrays(gl.POINTS, 0, vertices.length / NUM_OF_COORDS);
 
+        a();
+
+
+        function a() {
+      	//render sphere
+
+       	//var sphereData = webGLDrawUtilities.createSphereVertexData(0.5); 
+       	var sphereData = webGLDrawUtilities.createCubeVertexData(0.5, 0.5);
+      	/*var sphereVertexNormalBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexNormalBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(sphereData.normalData), gl.STATIC_DRAW);
+        sphereVertexNormalBuffer.itemSize = 3;
+        sphereVertexNormalBuffer.numItems = sphereData.normalData.length / sphereVertexNormalBuffer.itemSize;*/
+
+
+        var sphereVertexPositionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexPositionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(sphereData.vertexPositionData), gl.STATIC_DRAW);
+        sphereVertexPositionBuffer.itemSize = 3;
+        sphereVertexPositionBuffer.numItems = sphereData.vertexPositionData.length / sphereVertexPositionBuffer.itemSize;
+
+        var sphereVertexIndexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphereVertexIndexBuffer);
+        gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(sphereData.vertexIndexData), gl.STATIC_DRAW);
+        sphereVertexIndexBuffer.itemSize = 1;
+        sphereVertexIndexBuffer.numItems = sphereData.vertexIndexData.length;
+
+
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexPositionBuffer);
+        gl.vertexAttribPointer(a_Position, sphereVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+
+        //gl.bindBuffer(gl.ARRAY_BUFFER, sphereVertexNormalBuffer);
+        //gl.vertexAttribPointer(shaderProgram.vertexNormalAttribute, sphereVertexNormalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, sphereVertexIndexBuffer);
+   
+        gl.drawElements(gl.LINE_LOOP, sphereVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
       }
+
+      }
+
+      
 
 
 
