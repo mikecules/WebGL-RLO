@@ -275,19 +275,26 @@
 
 		<!-- Angular App  -->
 		<script src="./scripts/app/angular.min.js"></script>
-		<script src="./scripts/app/angular-aria.min.js"></script>
-		<script src="./scripts/app/angular-touch.min.js"></script>
+		<!-- script src="./scripts/app/angular-aria.min.js"></script -->
+		<!-- script src="./scripts/app/angular-touch.min.js"></script -->
 
 		<!-- 3rd Party Matrix Library -->
 		<script src="./scripts/app/gl-matrix-min.js"></script>
 
-		<!-- Custom Modules -->
-		<script src="./scripts/angular-app/services/webGLUtilityModule.js"></script>
+		
+		
 
 		<!-- Angular App Main Application -->
 		<script src="./scripts/angular-app/app.js"></script>
 
+		<!-- WebGL Controller - contains JS WebGL Examples -->
+		<script src="./scripts/angular-app/controllers/WebGLMainController.js"></script>
+		
+		<!-- WebGL AngularJS Service -->
+		<script src="./scripts/angular-app/services/webGLUtilityModule.js"></script>
 
+
+		<!-- Vertex and Fragment Shader Section -->
 		<script id="v-shader-demo1" type="x-shader/x-vertex">
 		  attribute vec4 a_Position;
 
@@ -295,9 +302,9 @@
 		    gl_Position = a_Position;
 		    gl_PointSize = 20.0;
 		  }
-	  </script>
+	  	</script>
 
-	  <script id="f-shader-demo1" type="x-shader/x-fragment">
+	  	<script id="f-shader-demo1" type="x-shader/x-fragment">
 		  #ifdef GL_ES
 		    precision highp float;
 		  #endif

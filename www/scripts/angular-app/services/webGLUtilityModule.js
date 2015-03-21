@@ -277,7 +277,8 @@ angular.module('webGLUtilityModule', [])
           _canvas3D = null,
           _modalCaptionElement = null,
           _modalBody = null,
-          _modalDetailBody = null;
+          _modalDetailBody = null,
+          _modalHideCallbackFn = null;
 
 
       function __addCanvas(id, type) {
@@ -337,6 +338,8 @@ angular.module('webGLUtilityModule', [])
            throw new Error('Could not create modal box used for the canvas!');
          }
 
+         __initCanvases();
+
        }
 
 
@@ -369,29 +372,40 @@ angular.module('webGLUtilityModule', [])
 
         __initCanvases();
 
-        return true;
+        return this;
       }
 
-      function __show(callback) {
-        var callbackFn = typeof callback === 'function' ? callback : function(){};
-
-        _modalJQObj.show();
+      function __show(callbackFn) {
+        
+        _modalJQObj.fadeIn('fast', function() {
 
         _modalBox.show('fast', function() {
-          __resetCanvasWidget();
-          callbackFn.call(this);
+          if (typeof callbackFn === 'function') {
+            callbackFn.call(this);
+          }
         });
+      });
 
 
         return this;
       }
 
-      function __hide(callback) {
-        var callbackFn = typeof callback === 'function' ? callback : function(){};
+      function __hide(callbackFn) {
 
         _modalBox.hide('fast', function() {
-          _modalJQObj.hide();
-            callbackFn.apply(this);
+          _modalJQObj.fadeOut('fast', function() {
+
+            if (typeof callbackFn === 'function') {
+              callbackFn.apply(this);
+            }
+
+            if (typeof _modalHideCallbackFn === 'function') {
+              _modalHideCallbackFn.apply(this);
+            }
+
+            _modalHideCallbackFn = null;
+            __resetCanvasWidget();
+          });
         });
 
         return this;
@@ -434,11 +448,13 @@ angular.module('webGLUtilityModule', [])
 
       this.showHUDCanvas = function() {
         _canvas2D.getCanvasJQObj().show().css({'zIndex': 1});
+        return this;
       };
 
       this.hideHUDCanvas = function() {
         _canvas2D.getCanvasJQObj().hide().css({'zIndex': 0});
         _canvas3D.getCanvasJQObj().css({'zIndex': 1});
+        return this;
       };
 
       this.setGLVertexAndFragmentShaders = function(vertexShaderStrOrID, fragmentShaderStrOrID) {
@@ -451,33 +467,39 @@ angular.module('webGLUtilityModule', [])
 
       this.setCaption = function(caption) {
         _modalCaptionElement.text(caption);
+        return this;
       };
 
       this.setDetailText = function(details) {
         _modalDetailBody.text(details);
+        return this;
       };
 
+      this.onHide = function(callbackFn) {
+        if (typeof callbackFn === 'function') {
+          _modalHideCallbackFn = callbackFn;
+        }
 
+        return this;
+      };
 
 
       // Canvas Widget Public API
       this.resetCanvasWidget = __resetCanvasWidget;
 
 
-
-
-
       return this;
 
     };
 
+    /////////////////////////////////////////////////////////////////////////////
 
     function _initCanvasModalWidget(id) {
       var canvasID = (typeof id === 'string' && id.length) ? id : 'canvas-modal-container';
       _canvasModalWidget = new _CanvasModalWidget(canvasID);
     }
 
-
+    // public API To Utility Service
     var _canvasModalWidget = null;
 
     this.initCanvasModalWidget = _initCanvasModalWidget;
