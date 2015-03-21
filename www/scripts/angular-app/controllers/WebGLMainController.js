@@ -98,7 +98,7 @@ angular.module('WebGLRLOApp')
         // Draw the points
         gl.drawArrays(gl.POINTS, 0, vertices.length / NUM_OF_COORDS);
 
-        a();
+        //a();
 
 
         function a() {
