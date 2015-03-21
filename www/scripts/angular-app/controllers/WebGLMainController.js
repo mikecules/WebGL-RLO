@@ -6,30 +6,42 @@ angular.module('WebGLRLOApp')
       var canvasModalWidget = webGLUtilities.getCanvasModalWidget();
 
       var demos = [
-        {
-          caption: 'Draw Fixed Point Example',
-          details: 'Draw a 30 pixel dimensioned point on screen...',
-          appFn: drawPointExample,
-          screenShotURL: 'styles/app/images/demo1.png'
-        },
-        {
-          caption: 'Free Draw Example',
-          details: 'Freeform draw large pixels on screen...',
-          appFn: drawSimpleShapeWithMouseExample,
-          screenShotURL: 'styles/app/images/demo2.png'
-        },
-         {
-          caption: 'Draw Modes and Translations Example',
-          details: 'Draw some trinagles using different draw modes and do uniform translations to position 1 shape 3 different ways.',
-          appFn: shapesExample,
-          screenShotURL: 'styles/app/images/demo3.png'
-        },
-         {
-          caption: 'Fragment Shader Interpolation Example',
-          details: ' ',
-          appFn: shapesFragmentVaryingExample,
-          screenShotURL: 'styles/app/images/demo4.png'
-        }
+        [
+	        {
+	          caption: 'Draw Fixed Point Example',
+	          details: 'Draw a 30 pixel dimensioned point on screen...',
+	          appFn: drawPointExample,
+	          screenShotURL: 'styles/app/images/demo1.png'
+	        },
+	        {
+	          caption: 'Free Draw Example',
+	          details: 'Freeform draw large pixels on screen...',
+	          appFn: drawSimpleShapeWithMouseExample,
+	          screenShotURL: 'styles/app/images/demo2.png'
+	        }
+        ],
+        [
+	        {
+	          caption: 'Draw Modes and Translations Example',
+	          details: 'Draw some trinagles using different draw modes and do uniform translations to position 1 shape 3 different ways.',
+	          appFn: shapesExample,
+	          screenShotURL: 'styles/app/images/demo3.png'
+	        },
+	         {
+	          caption: 'Fragment Shader Interpolation Example',
+	          details: ' ',
+	          appFn: shapesFragmentVaryingExample,
+	          screenShotURL: 'styles/app/images/demo4.png'
+	        }
+	     ],
+	     [
+	         {
+	          caption: 'Fragment Shader Interpolation Example',
+	          details: ' ',
+	          appFn: shapesFragmentVaryingExample,
+	          screenShotURL: 'styles/app/images/demo4.png'
+	        }
+        ]
       ];
 
       
@@ -438,9 +450,9 @@ angular.module('WebGLRLOApp')
 
       function _DemoRunner() {
 
-        this.run = function(index) {
+        this.run = function(demo) {
 
-          var demoObject = demos[index];
+          var demoObject = demo;
 
           if (typeof demoObject === 'undefined') {
             throw new Error('Could not find the demo app you were refering too...');

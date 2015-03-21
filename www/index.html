@@ -111,11 +111,19 @@
 
 						<div class="row">
 							<div class="4u" ng-repeat="demo in demoRunner.getDemos()">
-								<article class="item">
-									<a ng-href="javascript:void(0)" ng-click="demoRunner.run($index)" class="image fit">
-										<img ng-src="{{demo.screenShotURL}}" alt="">
+								<article class="item" ng-init="demo1 = demo[0]">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
+										<img ng-src="{{demo1.screenShotURL}}" alt="">
 										<header>
-											<h3 ng-bind="demo.caption"></h3>
+											<h3 ng-bind="demo1.caption"></h3>
+										</header>
+									</a>
+								</article>
+								<article class="item" ng-if="demo[1]" ng-init="demo2 = demo[1]">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo2)" class="image fit">
+										<img ng-src="{{demo2.screenShotURL}}" alt="">
+										<header>
+											<h3 ng-bind="demo2.caption"></h3>
 										</header>
 									</a>
 								</article>
