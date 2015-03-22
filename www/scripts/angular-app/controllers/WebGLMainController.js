@@ -632,13 +632,14 @@ angular.module('WebGLRLOApp')
 			 // Set clear color to black, fully opaque
         	_gl.clearColor(0.0, 0.0, 0.0, 1.0);	
 
+        	// dealing with 3D space geometry so make sure this feature is enabled
         	_gl.enable(_gl.DEPTH_TEST);
 
 			// get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
         	_glProgram = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo5', '#f-shader-demo5');
         	_glProgram.customAttribs = {};
 		
-			// Get the storage locations of u_ViewMatrix and u_ModelMatrix 
+			// Get the storage locations of all the customizable shader variables 
 			_glProgram.customAttribs.a_PositionRef = _gl.getAttribLocation(_glProgram, 'a_Position'),
 			_glProgram.customAttribs.u_FragColourRef = _gl.getUniformLocation(_glProgram, 'u_FragColour'),
 			_glProgram.customAttribs.u_ViewMatrixRef = _gl.getUniformLocation(_glProgram,'u_ViewMatrix'),
@@ -677,8 +678,8 @@ angular.module('WebGLRLOApp')
 			_gl.uniformMatrix4fv(_glProgram.customAttribs.u_PerspectiveRef, false, _glProgram.customAttribs.perspectiveMatrix);
 
 
-			_sphere = new _Sphere();
-			
+			// create some primitives that can keep track of their own orientation and draw themselves
+			_sphere = new _Sphere();			
 			_sphere.translate(-1.6,0,0);
 
 			_quad = new _Quad(2, 0.5, 0.5);
@@ -686,30 +687,23 @@ angular.module('WebGLRLOApp')
 
 			_tick();
 
-		
-      	
+		      	
       }
 
       
-      var count = 0;
-      var xInc = 0.01,
-      	  yInc = 0.001,
-      	  zInc = 0.005;
+    var count = 0,
+   		xInc = 0.01,
+  	  	yInc = 0.001,
+  	  	zInc = 0.005;
 
-      function _tick() {
-      	var now = (new Date()).getTime();
-      	var dt = now - _lastDrawTime;
-
-      
-      	_lastDrawTime = now;
-      	
-      	// Clear the color buffer.
+    function _tick() {
+           	
+      	// Clear the color and depth buffer because now we are dealing with perspective and camera space.
+      	// and we want everything to look natural...
         _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
 
-       
 
-       
-
+        // show some arbitrary movement along 3D space and do some rotations while we are at it
        	_sphere
        		.rotateOnAxisByDegrees(1,1,0)
 			.translate(xInc, yInc, zInc)
@@ -719,7 +713,9 @@ angular.module('WebGLRLOApp')
        		.rotateOnAxisByDegrees(-1,-1,0)
        		.draw();
 
+       	// counter used to create a pattern for the primitives to move and rotate along the screen
        	count++;
+
 
        	if (count >= 220) {
        		xInc = -xInc;
@@ -728,13 +724,15 @@ angular.module('WebGLRLOApp')
        		count = 0;
        	}
        	
+       	// stop calling the browser's animate when ready callback function when the modal has closed
        	if (_isAppRunning) {
        		requestAnimationFrame(_tick);
        	}
-      }
+    }
 
 
-		_init();
+     // start this demo up!
+	_init();
 
 
 	}
