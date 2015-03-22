@@ -12,6 +12,7 @@ angular.module('webGLUtilityModule', [])
           __canvasType = ((type === _Canvas.prototype.CANVAS_TYPES.CANVAS_3D) ? _Canvas.prototype.CANVAS_TYPES.CANVAS_3D : _Canvas.prototype.CANVAS_TYPES.CANVAS_2D),
           __height = 480,
           __width = 640,
+          __viewportAspectRatio = 0.0,
           __viewportNeedsUpdate = true,
           __glProgram = null,
           __shaders = {};
@@ -140,6 +141,7 @@ angular.module('webGLUtilityModule', [])
         __initContext();
         __updateViewportSize();
 
+
         __shaders[_Canvas.prototype.SHADER_TYPES.VERTEX] = {src: '', resource: null};
         __shaders[_Canvas.prototype.SHADER_TYPES.FRAGMENT] = {src: '', resource: null};
 
@@ -202,6 +204,7 @@ angular.module('webGLUtilityModule', [])
       function __updateViewportSize() {
         if (__canvasType === _Canvas.prototype.CANVAS_TYPES.CANVAS_3D && __context && __viewportNeedsUpdate) {
           __context.viewport(0, 0, __width, __height);
+          __viewportAspectRatio = __width / __height;
           __viewportNeedsUpdate = false;
         }
       }
@@ -220,6 +223,10 @@ angular.module('webGLUtilityModule', [])
 
       this.getContext = function() {
         return __context;
+      };
+
+      this.getViewportAspectRatio = function() {
+        return __viewportAspectRatio;
       };
 
       this.getGLProgram = function() {
@@ -442,6 +449,10 @@ angular.module('webGLUtilityModule', [])
         return _canvas3D.getCanvasJQObj();
       };
 
+      this.getGLViewportAspectRatio = function() {
+        return _canvas3D.getViewportAspectRatio();
+      };
+
       this.get2DCanvasEl = function() {
         return _canvas2D.getCanvasJQObj();
       };
@@ -508,6 +519,7 @@ angular.module('webGLUtilityModule', [])
     this.getCanvasModalWidget = function() {
       return _canvasModalWidget;
     };
+
 
     return this;
   }])

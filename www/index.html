@@ -345,10 +345,8 @@
 
 		<!-- Shaders for Demo 5 -->
 
-		<script id="v-shader-demo4" type="x-shader/x-vertex">
+		<script id="v-shader-demo5" type="x-shader/x-vertex">
 		  attribute vec4 a_Position;
-		  attribute vec4 a_Colour;
-		  varying vec4 v_Colour;
 
 		  uniform mat4 u_ModelMatrix; // rotations, translations, scales at the object level
 		  uniform mat4 u_ViewMatrix; // where are view is in 3D-space
@@ -358,16 +356,14 @@
 		    gl_Position = u_PerspectiveMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
 		    gl_PointSize = 1.0;
 
-		    // giving this variable same name as the variable in the fragment shader effectively passes on the argument
-		   	v_Colour = a_Colour;
 		  }
 	  	</script>
 
-	  	<script id="f-shader-demo4" type="x-shader/x-fragment">
-		  varying mediump vec4 v_Colour; \
+	  	<script id="f-shader-demo5" type="x-shader/x-fragment">
+		   uniform mediump vec4 u_FragColour; 
 
 		  void main() {
-		      gl_FragColor = v_Colour;
+		      gl_FragColor = u_FragColour;
 		  }
 		</script>
 		<!--  -->
