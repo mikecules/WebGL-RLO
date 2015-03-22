@@ -272,11 +272,11 @@
 
 		<!-- Shaders for Demos 1 & 2 -->
 		<script id="v-shader-demo1" type="x-shader/x-vertex">
-		  attribute vec4 a_Position;
+		  attribute vec4 a_Position; // this is a comment - we manipulate this variable from javascript
 
 		  void main() {
-		    gl_Position = a_Position;
-		    gl_PointSize = 20.0;
+		    gl_Position = a_Position; // set position via javascript (this is a predefined variable in the vertex shader)
+		    gl_PointSize = 20.0; // every pixel drawn has a height and width of 30 pixel on the canvas
 		  }
 	  	</script>
 
@@ -286,7 +286,7 @@
 		  #endif
 
 		  void main() {
-		      gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);
+		      gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0); // set the color in red, green, blue and alpha transparency values
 		  }
 		</script>
 		<!--  -->
@@ -295,16 +295,18 @@
 		
 		<script id="v-shader-demo3" type="x-shader/x-vertex">
 		  attribute vec4 a_Position;
-		  uniform vec4 u_Translation;
+		  uniform vec4 u_Translation; // this translation is uniformly applies to all vertices 
 
 		  void main() {
-		    gl_Position = a_Position + u_Translation;
-		    gl_PointSize = 1.0;
+		    gl_Position = a_Position + u_Translation; // shift the pixel by the (x,y,z) units specified by u_Translation
+		    gl_PointSize = 1.0; // let's make a pixel 1:1 now
 		  }
 	  	</script>
 
 	  	<script id="f-shader-demo3" type="x-shader/x-fragment">
-		  uniform mediump vec4 u_FragColour;
+	  	 // we have to specify the "precision" or how accurate our floating point data is here
+	  	 // since the fragment shader does not have a default...
+		  uniform mediump vec4 u_FragColour; 
 
 		  void main() {
 		      gl_FragColor = u_FragColour;
@@ -317,7 +319,7 @@
 		<script id="v-shader-demo4" type="x-shader/x-vertex">
 		  attribute vec4 a_Position;
 		  attribute vec4 a_Colour;
-		  varying vec4 v_Colour;
+		  varying vec4 v_Colour; // this represents the colour value we want to interpolate by (between each vertex)
 
 		  void main() {
 		    gl_Position = a_Position;
@@ -329,7 +331,40 @@
 	  	</script>
 
 	  	<script id="f-shader-demo4" type="x-shader/x-fragment">
-		  varying mediump vec4 v_Colour;
+		  /* 
+		  	New comment multi-line style shown here -
+		  	because we specified the same variable name in the 
+		  */
+		  varying mediump vec4 v_Colour; 
+
+		  void main() {
+		      gl_FragColor = v_Colour;
+		  }
+		</script>
+		<!--  -->
+
+		<!-- Shaders for Demo 5 -->
+
+		<script id="v-shader-demo4" type="x-shader/x-vertex">
+		  attribute vec4 a_Position;
+		  attribute vec4 a_Colour;
+		  varying vec4 v_Colour;
+
+		  uniform mat4 u_ModelMatrix; // rotations, translations, scales at the object level
+		  uniform mat4 u_ViewMatrix; // where are view is in 3D-space
+		  uniform mat4 u_PerspectiveMatrix;	// how near/far the object looks in 3D space	  
+
+		  void main() {
+		    gl_Position = u_PerspectiveMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+		    gl_PointSize = 1.0;
+
+		    // giving this variable same name as the variable in the fragment shader effectively passes on the argument
+		   	v_Colour = a_Colour;
+		  }
+	  	</script>
+
+	  	<script id="f-shader-demo4" type="x-shader/x-fragment">
+		  varying mediump vec4 v_Colour; \
 
 		  void main() {
 		      gl_FragColor = v_Colour;
