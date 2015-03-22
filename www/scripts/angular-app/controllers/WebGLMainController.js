@@ -382,7 +382,10 @@ angular.module('WebGLRLOApp')
         	_isAppRunning = true;
         	
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        //	_Sphere(radius) Constructor method is used to represent and Sphere with a radius
+        //  this sphere can draw itself and adjust its orientation on the canvas via the accessor methods.
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
         function _Sphere(radius) {
         	var __sphereData = null,
         		__sphereVertexPositionBuffer = null,
@@ -497,7 +500,11 @@ angular.module('WebGLRLOApp')
        		return this; 		
         }
 
-        //////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //	_Quad(x, y, z) Constructor method is used to represent and Quadrilateral (rectangle) with 
+        //  width, height and depth (x, y ,z) dimensions respectively.ß
+        //  This quadrilateral can draw itself and adjust its orientation on the canvas via the accessor methods.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         function _Quad(x, y, z) {
 
         	var __quadData = null,
@@ -691,10 +698,10 @@ angular.module('WebGLRLOApp')
       }
 
       
-    var count = 0,
-   		xInc = 0.01,
-  	  	yInc = 0.001,
-  	  	zInc = 0.005;
+    var _frameCount = 0,
+   		_xInc = 0.01,
+  	  	_yInc = 0.001,
+  	  	_zInc = 0.005;
 
     function _tick() {
            	
@@ -706,7 +713,7 @@ angular.module('WebGLRLOApp')
         // show some arbitrary movement along 3D space and do some rotations while we are at it
        	_sphere
        		.rotateOnAxisByDegrees(1,1,0)
-			.translate(xInc, yInc, zInc)
+			.translate(_xInc, _yInc, _zInc)
        		.draw();
 
        	_quad
@@ -714,14 +721,14 @@ angular.module('WebGLRLOApp')
        		.draw();
 
        	// counter used to create a pattern for the primitives to move and rotate along the screen
-       	count++;
+       	_frameCount++;
 
 
-       	if (count >= 220) {
-       		xInc = -xInc;
-       		yInc = -yInc;
-       		zInc = -zInc;
-       		count = 0;
+       	if (_frameCount >= 220) {
+       		_xInc = -_xInc;
+       		_yInc = -_yInc;
+       		_zInc = -_zInc;
+       		_count = 0;
        	}
        	
        	// stop calling the browser's animate when ready callback function when the modal has closed
