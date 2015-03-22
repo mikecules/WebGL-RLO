@@ -725,10 +725,10 @@ angular.module('WebGLRLOApp')
 
 
        	if (_frameCount >= 220) {
-       		_xInc = -_xInc;
-       		_yInc = -_yInc;
-       		_zInc = -_zInc;
-       		_count = 0;
+       		_xInc = - _xInc;
+       		_yInc = - _yInc;
+       		_zInc = - _zInc;
+       		_frameCount = 0;
        	}
        	
        	// stop calling the browser's animate when ready callback function when the modal has closed
