@@ -383,7 +383,7 @@ angular.module('webGLUtilityModule', [])
       }
 
       function __show(callbackFn) {
-        
+
         _modalJQObj.fadeIn('fast', function() {
 
         _modalBox.show('fast', function() {
@@ -573,12 +573,29 @@ angular.module('webGLUtilityModule', [])
     ];
 
     var indexData = [
-      0, 1, 2,      0, 2, 3,    // Front face
-      4, 5, 6,      4, 6, 7,    // Back face
-      8, 9, 10,     8, 10, 11,  // Top face
-      12, 13, 14,   12, 14, 15, // Bottom face
-      16, 17, 18,   16, 18, 19, // Right face
-      20, 21, 22,   20, 22, 23  // Left face
+      // Front face
+      0, 1, 2,
+      0, 2, 3,
+
+      // Back face
+      4, 5, 6,
+      4, 6, 7,
+
+      // Top face
+      8, 9, 10,
+      8, 10, 11,
+
+      // Bottom face
+      12, 13, 14,
+      12, 14, 15,
+
+      // Right face
+      16, 17, 18,
+      16, 18, 19,
+
+      // Left face
+      20, 21, 22,
+      20, 22, 23
     ];
 
     var vertexNormals = [
@@ -620,17 +637,17 @@ angular.module('webGLUtilityModule', [])
     ];
 
      return {
-      'vertexIndexData': indexData, 
+      'vertexIndexData': indexData,
       'vertexPositionData': vertexPositionData,
-      'normalData': vertexNormals
+      'vertexNormals': vertexNormals
     };
 
 
   }
 
   this.createSphereVertexData = function(r, latBands, longBands) {
-      
-    /* Algorithm accredited to "WebGL Lesson 11 – spheres, rotation matrices, and mouse events | Learning WebGL" 
+
+    /* Algorithm accredited to "WebGL Lesson 11 – spheres, rotation matrices, and mouse events | Learning WebGL"
     from http://learningwebgl.com/blog/?p=1253, Retrieved: March 21, 2015 */
     var latitudeBands = latBands ? latBands : 30;
     var longitudeBands = longBands ? longBands : 30;
@@ -670,16 +687,16 @@ angular.module('webGLUtilityModule', [])
     var indexData = [];
 
     /* first ----- first + 1
-        |         /| 
+        |         /|
         |        / |
         |       /  |
-        |      /   |  
+        |      /   |
         |     /    |
         |    /     |
-        |   /      |  
+        |   /      |
         |  /       |
         | /        |
-        |/         | 
+        |/         |
       second ----- second + 1
     */
     for (var latNumber = 0; latNumber < latitudeBands; latNumber++) {
@@ -697,9 +714,9 @@ angular.module('webGLUtilityModule', [])
     }
 
     return {
-      'vertexIndexData': indexData, 
-      'vertexPositionData': vertexPositionData, 
-      'vertexNormals': vertexNormals, 
+      'vertexIndexData': indexData,
+      'vertexPositionData': vertexPositionData,
+      'vertexNormals': vertexNormals,
       'textureCoordData': textureCoordData
     };
 

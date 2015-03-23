@@ -252,17 +252,17 @@
 		<!-- script src="./scripts/app/angular-touch.min.js"></script -->
 
 		<!-- 3rd Party Matrix Library -->
-		<script src="./scripts/app/gl-matrix-min.js"></script>
+		<script src="./scripts/app/gl-matrix.js"></script>
 
-		
-		
+
+
 
 		<!-- Angular App Main Application -->
 		<script src="./scripts/angular-app/app.js"></script>
 
 		<!-- WebGL Controller - contains JS WebGL Examples -->
 		<script src="./scripts/angular-app/controllers/WebGLMainController.js"></script>
-		
+
 		<!-- WebGL AngularJS Service -->
 		<script src="./scripts/angular-app/services/webGLUtilityModule.js"></script>
 
@@ -292,10 +292,10 @@
 		<!--  -->
 
 		<!-- Shaders for Demo 3 -->
-		
+
 		<script id="v-shader-demo3" type="x-shader/x-vertex">
 		  attribute vec4 a_Position;
-		  uniform vec4 u_Translation; // this translation is uniformly applies to all vertices 
+		  uniform vec4 u_Translation; // this translation is uniformly applies to all vertices
 
 		  void main() {
 		    gl_Position = a_Position + u_Translation; // shift the pixel by the (x,y,z) units specified by u_Translation
@@ -306,7 +306,7 @@
 	  	<script id="f-shader-demo3" type="x-shader/x-fragment">
 	  	 // we have to specify the "precision" or how accurate our floating point data is here
 	  	 // since the fragment shader does not have a default...
-		  uniform mediump vec4 u_FragColour; 
+		  uniform mediump vec4 u_FragColour;
 
 		  void main() {
 		      gl_FragColor = u_FragColour;
@@ -331,11 +331,11 @@
 	  	</script>
 
 	  	<script id="f-shader-demo4" type="x-shader/x-fragment">
-		  /* 
+		  /*
 		  	New comment multi-line style shown here -
-		  	because we specified the same variable name in the 
+		  	because we specified the same variable name in the
 		  */
-		  varying mediump vec4 v_Colour; 
+		  varying mediump vec4 v_Colour;
 
 		  void main() {
 		      gl_FragColor = v_Colour;
@@ -350,14 +350,14 @@
 
 		  uniform mat4 u_ModelMatrix; // rotations, translations, scales at the object level
 		  uniform mat4 u_ViewMatrix; // where are view is in 3D-space
-		  uniform mat4 u_PerspectiveMatrix;	// how near/far the object looks in 3D space	  
+		  uniform mat4 u_PerspectiveMatrix;	// how near/far the object looks in 3D space
 
 		  void main() {
-		  	/* 
-		  	 * Note that the below calculation is inefficient if you never intend to modify the 
-		  	 * perspective/view matrices. The below approach is only done to illustrate the 
-			 * math involved at each vertex. To optimize this code you could multiply the perspective
-			 * and view matrices together and pass it in as one uniform variable as we will do for the
+		  /*
+		   * Note that the below matrix multiplication statement is extremely inefficient.
+		   * The below approach is only done to illustrate the math involved at each vertex.
+			 * To optimize this code you could multiply the perspective, view and model
+			 * matrices together and pass it in as one uniform variable as we will do for the
 			 * 6th demo.
 			*/
 		    gl_Position = u_PerspectiveMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
@@ -367,7 +367,7 @@
 	  	</script>
 
 	  	<script id="f-shader-demo5" type="x-shader/x-fragment">
-		   uniform mediump vec4 u_FragColour; 
+		   uniform mediump vec4 u_FragColour;
 
 		  void main() {
 		      gl_FragColor = u_FragColour;
@@ -382,26 +382,26 @@
 		  attribute vec3 a_VertexNormal; // this is the orginal (non-transformed) normal
 
 		  uniform vec3 u_AmbientColour; // what is the ambient light colour in the 3D space - notice we do not need a vector for this!
-		  
-  		  uniform vec3 u_DirectionalColour; // what colour the directional light will be
-  		  uniform vec3 u_LightingDirection; // what direction will the light be coming from
 
-  		  // used to influence the colour chosen by the fragment shader
-  		  varying vec3 v_LightWeightFactor;
+		  uniform vec3 u_DirectionalColour; // what colour the directional light will be
+		  uniform vec3 u_LightingDirection; // what direction will the light be coming from
 
-		  uniform mat4 u_ModelMatrix; // rotations, translations, scales at the object level
-		  uniform mat4 u_PVMatrix; // where are view is in 3D-space ---> Perspective * View
-		  
+		  // used to influence the colour chosen by the fragment shader
+		  varying vec3 v_LightWeightFactor;
+
+
+		  uniform mat4 u_PVMMatrix; // Perspective * View * Model
+		  uniform mat3 u_NormalMatrix;
 
 		  void main() {
-		    gl_Position = u_PVMatrix * u_ModelMatrix * a_Position;
+		    gl_Position = u_PVMMatrix * a_Position;
 		    gl_PointSize = 1.0;
 
 		    // when we transform the vertex we want to ensure that the surface normal at that
 		    // vertex location is also adjusted --> make sure we get some value 0 <= transformedSurfaceNormal <= 1
 		    // since a negative color ref makes no sense (in this case we would want to make the colour at that surface black)!
-
-		    float transformedSurfaceNormal = max(0.0, dot(a_VertexNormal, u_LightingDirection));
+		    vec3 transformedNormal = u_NormalMatrix * a_VertexNormal;
+		    float transformedSurfaceNormal = max(0.0, dot(transformedNormal, u_LightingDirection));
 
       		v_LightWeightFactor = u_AmbientColour + u_DirectionalColour * transformedSurfaceNormal;
 
@@ -412,7 +412,7 @@
 	  	   // a shortcut so we don't have to keep specifying the lighting direction
 	  	   precision mediump float;
 
-		   uniform vec4 u_FragColour; 
+		   uniform vec4 u_FragColour;
 		   varying vec3 v_LightWeightFactor;
 
 		  void main() {
@@ -424,7 +424,7 @@
 		</script>
 		<!--  -->
 
-		
+
 
 	</body>
 	</html>
