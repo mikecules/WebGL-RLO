@@ -579,11 +579,50 @@ angular.module('webGLUtilityModule', [])
       12, 13, 14,   12, 14, 15, // Bottom face
       16, 17, 18,   16, 18, 19, // Right face
       20, 21, 22,   20, 22, 23  // Left face
-    ]
+    ];
+
+    var vertexNormals = [
+      // Front face
+       0.0,  0.0,  1.0,
+       0.0,  0.0,  1.0,
+       0.0,  0.0,  1.0,
+       0.0,  0.0,  1.0,
+
+      // Back face
+       0.0,  0.0, -1.0,
+       0.0,  0.0, -1.0,
+       0.0,  0.0, -1.0,
+       0.0,  0.0, -1.0,
+
+      // Top face
+       0.0,  1.0,  0.0,
+       0.0,  1.0,  0.0,
+       0.0,  1.0,  0.0,
+       0.0,  1.0,  0.0,
+
+      // Bottom face
+       0.0, -1.0,  0.0,
+       0.0, -1.0,  0.0,
+       0.0, -1.0,  0.0,
+       0.0, -1.0,  0.0,
+
+      // Right face
+       1.0,  0.0,  0.0,
+       1.0,  0.0,  0.0,
+       1.0,  0.0,  0.0,
+       1.0,  0.0,  0.0,
+
+      // Left face
+      -1.0,  0.0,  0.0,
+      -1.0,  0.0,  0.0,
+      -1.0,  0.0,  0.0,
+      -1.0,  0.0,  0.0,
+    ];
 
      return {
       'vertexIndexData': indexData, 
-      'vertexPositionData': vertexPositionData
+      'vertexPositionData': vertexPositionData,
+      'normalData': vertexNormals
     };
 
 
@@ -598,7 +637,7 @@ angular.module('webGLUtilityModule', [])
     var radius = r ? r : 1.0;
 
     var vertexPositionData = [];
-    var normalData = [];
+    var vertexNormals = [];
     var textureCoordData = [];
 
     for (var latNumber = 0; latNumber <= latitudeBands; latNumber++) {
@@ -617,9 +656,9 @@ angular.module('webGLUtilityModule', [])
         var u = 1 - (longNumber / longitudeBands);
         var v = 1 - (latNumber / latitudeBands);
 
-        normalData.push(x);
-        normalData.push(y);
-        normalData.push(z);
+        vertexNormals.push(x);
+        vertexNormals.push(y);
+        vertexNormals.push(z);
         textureCoordData.push(u);
         textureCoordData.push(v);
         vertexPositionData.push(radius * x);
@@ -660,7 +699,7 @@ angular.module('webGLUtilityModule', [])
     return {
       'vertexIndexData': indexData, 
       'vertexPositionData': vertexPositionData, 
-      'normalData': normalData, 
+      'vertexNormals': vertexNormals, 
       'textureCoordData': textureCoordData
     };
 

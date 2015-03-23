@@ -353,6 +353,13 @@
 		  uniform mat4 u_PerspectiveMatrix;	// how near/far the object looks in 3D space	  
 
 		  void main() {
+		  	/* 
+		  	 * Note that the below calculation is inefficient if you never intend to modify the 
+		  	 * perspective/view matrices. The below approach is only done to illustrate the 
+			 * math involved at each vertex. To optimize this code you could multiply the perspective
+			 * and view matrices together and pass it in as one uniform variable as we will do for the
+			 * 6th demo.
+			*/
 		    gl_Position = u_PerspectiveMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
 		    gl_PointSize = 1.0;
 
@@ -364,6 +371,55 @@
 
 		  void main() {
 		      gl_FragColor = u_FragColour;
+		  }
+		</script>
+		<!--  -->
+
+		<!-- Shaders for Demo 6 -->
+
+		<script id="v-shader-demo6" type="x-shader/x-vertex">
+		  attribute vec4 a_Position;
+		  attribute vec3 a_VertexNormal; // this is the orginal (non-transformed) normal
+
+		  uniform vec3 u_AmbientColour; // what is the ambient light colour in the 3D space - notice we do not need a vector for this!
+		  
+  		  uniform vec3 u_DirectionalColour; // what colour the directional light will be
+  		  uniform vec3 u_LightingDirection; // what direction will the light be coming from
+
+  		  // used to influence the colour chosen by the fragment shader
+  		  varying vec3 v_LightWeightFactor;
+
+		  uniform mat4 u_ModelMatrix; // rotations, translations, scales at the object level
+		  uniform mat4 u_PVMatrix; // where are view is in 3D-space ---> Perspective * View
+		  
+
+		  void main() {
+		    gl_Position = u_PVMatrix * u_ModelMatrix * a_Position;
+		    gl_PointSize = 1.0;
+
+		    // when we transform the vertex we want to ensure that the surface normal at that
+		    // vertex location is also adjusted --> make sure we get some value 0 <= transformedSurfaceNormal <= 1
+		    // since a negative color ref makes no sense (in this case we would want to make the colour at that surface black)!
+
+		    float transformedSurfaceNormal = max(0.0, dot(a_VertexNormal, u_LightingDirection));
+
+      		v_LightWeightFactor = u_AmbientColour + u_DirectionalColour * transformedSurfaceNormal;
+
+		  }
+	  	</script>
+
+	  	<script id="f-shader-demo6" type="x-shader/x-fragment">
+	  	   // a shortcut so we don't have to keep specifying the lighting direction
+	  	   precision mediump float;
+
+		   uniform vec4 u_FragColour; 
+		   varying vec3 v_LightWeightFactor;
+
+		  void main() {
+		  	  // This uses vector swizzling http://en.wikipedia.org/wiki/Swizzling_%28computer_graphics%29 to
+		  	  // provide a code shortcode to multiplying each component of the vector components (x,y,z) with
+		  	  // one another.
+		      gl_FragColor = vec4(u_FragColour.xyz * v_LightWeightFactor.xyz, u_FragColour.w) ;
 		  }
 		</script>
 		<!--  -->

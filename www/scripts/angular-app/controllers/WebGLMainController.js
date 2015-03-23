@@ -744,11 +744,392 @@ angular.module('WebGLRLOApp')
 
 	}
 
+	//////////////////////////////////////////////////
+
+
+
+
+
+
+	
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Demo 6: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
   	function lightingExample() {
+  		// get the gl context from our modal widget
+        var _gl = null,
+        	_glProgram = null,
+        	_sphere = null,
+        	_quad = null,
+        	_lastDrawTime = 0,
+        	_isAppRunning = true;
+        	
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        //	_Sphere(radius) Constructor method is used to represent and Sphere with a radius
+        //  this sphere can draw itself and adjust its orientation on the canvas via the accessor methods.
+        ///////////////////////////////////////////////////////////////////////////////////////////////////
+        function _Sphere(radius) {
+        	var __sphereData = null,
+        		__sphereVertexPositionBuffer = null,
+        		__sphereVertexIndexBuffer = null,
+        		__sphereVertexNormal = null,
+        		
+        		__colour = {r: 0.8, g: 0.8, b: 0.8, a: 1.0},
+        		__radius = radius || 1.0,
+        		__modelMatrix = mat4.create(),
+        		__rotationMatrix = mat4.create(),
+        		__translationMatrix = mat4.create(),
+        		__scaleMatrix = mat4.create();
+
+        	function __init() {
+        		__sphereData = webGLDrawUtilities.createSphereVertexData(__radius);
+
+        		// create the buffer for vertex positions and assign it to that buffer to use for later
+        		__sphereVertexPositionBuffer = _gl.createBuffer();        		
+        		__sphereVertexPositionBuffer.itemSize = 3;
+        		__sphereVertexPositionBuffer.numItems = __sphereData.vertexPositionData.length / __sphereVertexPositionBuffer.itemSize;
+        		__sphereVertexPositionBuffer.items = new Float32Array(__sphereData.vertexPositionData);
+
+        		// create the buffer for vertex positions indexes and assign it to that buffer to use for later
+        		__sphereVertexIndexBuffer = _gl.createBuffer();
+        		__sphereVertexIndexBuffer.itemSize = 1;
+        		__sphereVertexIndexBuffer.numItems = __sphereData.vertexIndexData.length;
+        		__sphereVertexIndexBuffer.items = new Uint16Array(__sphereData.vertexIndexData);
+
+
+        	}
+
+        	function __draw() {
+        		mat4.multiply(__modelMatrix, __translationMatrix, __rotationMatrix);
+        		mat4.multiply(__modelMatrix, __modelMatrix, __scaleMatrix);
+        		
+        		_gl.uniformMatrix4fv(_glProgram.customAttribs.u_ModelMatrixRef, false, __modelMatrix);
+
+        		_gl.bindBuffer(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer);
+        		_gl.bufferData(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer.items, _gl.STATIC_DRAW);
+
+        		_gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer);
+        		_gl.bufferData(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer.items, _gl.STATIC_DRAW);
+        		
+        		_gl.vertexAttribPointer(_glProgram.customAttribs.a_PositionRef, __sphereVertexPositionBuffer.itemSize, _gl.FLOAT, false, 0, 0);
+        		_gl.enableVertexAttribArray(_glProgram.customAttribs.a_PositionRef); 
+
+
+        		_gl.uniform4f(_glProgram.customAttribs.u_FragColourRef, __colour.r, __colour.g, __colour.b, __colour.a);
+        	
+        		_gl.drawElements(_gl.LINE_LOOP, __sphereVertexIndexBuffer.numItems, _gl.UNSIGNED_SHORT, 0);
+
+        	}
+
+
+        	function __rotateOnAxisByDegrees(x, y, z) {
+
+        		if (typeof x === 'number') {	
+      				mat4.rotateX(__rotationMatrix, __rotationMatrix, glMatrix.toRadian(x));
+        		}
+        		
+        		if (typeof y === 'number') {
+        			mat4.rotateY(__rotationMatrix, __rotationMatrix, glMatrix.toRadian(y)); 
+        		}
+
+        		if (typeof z === 'number') {
+        			mat4.rotateZ(__rotationMatrix, __rotationMatrix, glMatrix.toRadian(z)); 
+        		}
+
+        		return this;
+
+        	}
+
+
+        	function __scale(s) {
+        		if (typeof s === 'number') {
+        			mat4.scale(__scaleMatrix, __scaleMatrix, vec3.fromValues(s, s, s));
+        		}
+
+        		return this;
+        	}
+
+        	function __translate(x, y, z) {
+        		
+        		mat4.translate(__translationMatrix, __translationMatrix, vec3.fromValues(x, y, z));
+        		
+        		return this;
+        	}
+
+        	__init();
+
+        	
+        	
+        	this.rotateOnAxisByDegrees = __rotateOnAxisByDegrees;
+
+        	this.draw = __draw;
+
+        	this.scale = __scale;
+
+        	this.translate = __translate;
+
+        	this.setColour = function(r, g, b, a) {
+        		__colour.r = r;
+        		__colour.g = g;
+        		__colour.b = b;
+        		__colour.a = a;
+        	};
+
+        	this.getRadius = function() {
+        		return __radius;
+        	};
+
+
+       		return this; 		
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //	_Quad(x, y, z) Constructor method is used to represent and Quadrilateral (rectangle) with 
+        //  width, height and depth (x, y ,z) dimensions respectively.ß
+        //  This quadrilateral can draw itself and adjust its orientation on the canvas via the accessor methods.
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function _Quad(x, y, z) {
+
+        	var __quadData = null,
+        		__quadVertexPositionBuffer = null,
+        		__quadVertexIndexBuffer = null,
+        		__quadVertexNormal = null,
+        		
+        		__colour = {r: 1.0, g: 0.0, b: 1.0, a: 1.0},
+        		
+        		__modelMatrix = mat4.create(),
+        		__rotationMatrix = mat4.create(),
+        		__translationMatrix = mat4.create(),
+        		__scaleMatrix = mat4.create();
+
+        	function __init() {
+        		__quadData = webGLDrawUtilities.createCubeVertexData(x, y, z);
+
+        		// create the buffer for vertex positions and assign it to that buffer to use for later
+        		__quadVertexPositionBuffer = _gl.createBuffer();        		
+        		__quadVertexPositionBuffer.itemSize = 3;
+        		__quadVertexPositionBuffer.numItems = __quadData.vertexPositionData.length / __quadVertexPositionBuffer.itemSize;
+        		__quadVertexPositionBuffer.items = new Float32Array(__quadData.vertexPositionData);
+
+        		// create the buffer for vertex positions indexes and assign it to that buffer to use for later
+        		__quadVertexIndexBuffer = _gl.createBuffer();
+        		__quadVertexIndexBuffer.itemSize = 1;
+        		__quadVertexIndexBuffer.numItems = __quadData.vertexIndexData.length;
+        		__quadVertexIndexBuffer.items = new Uint16Array(__quadData.vertexIndexData);
+
+
+        	}
+
+        	function __draw() {
+        		mat4.multiply(__modelMatrix, __translationMatrix, __rotationMatrix);
+        		mat4.multiply(__modelMatrix, __modelMatrix, __scaleMatrix);
+        		
+        		_gl.uniformMatrix4fv(_glProgram.customAttribs.u_ModelMatrixRef, false, __modelMatrix);
+
+        		_gl.bindBuffer(_gl.ARRAY_BUFFER, __quadVertexPositionBuffer);
+        		_gl.bufferData(_gl.ARRAY_BUFFER, __quadVertexPositionBuffer.items, _gl.STATIC_DRAW);
+
+        		_gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __quadVertexIndexBuffer);
+        		_gl.bufferData(_gl.ELEMENT_ARRAY_BUFFER, __quadVertexIndexBuffer.items, _gl.STATIC_DRAW);
+        		
+        		_gl.vertexAttribPointer(_glProgram.customAttribs.a_PositionRef, __quadVertexPositionBuffer.itemSize, _gl.FLOAT, false, 0, 0);
+        		_gl.enableVertexAttribArray(_glProgram.customAttribs.a_PositionRef); 
+
+        		_gl.uniform4f(_glProgram.customAttribs.u_FragColourRef, __colour.r, __colour.g, __colour.b, __colour.a);
+        		
+
+        		_gl.drawElements(_gl.LINE_LOOP, __quadVertexIndexBuffer.numItems, _gl.UNSIGNED_SHORT, 0);
+
+        	}
+
+
+        	function __rotateOnAxisByDegrees(x, y, z) {
+
+        		if (typeof x === 'number') {	
+      				mat4.rotateX(__rotationMatrix, __rotationMatrix, glMatrix.toRadian(x));
+        		}
+        		
+        		if (typeof y === 'number') {
+        			mat4.rotateY(__rotationMatrix, __rotationMatrix, glMatrix.toRadian(y)); 
+        		}
+
+        		if (typeof z === 'number') {
+        			mat4.rotateZ(__rotationMatrix, __rotationMatrix, glMatrix.toRadian(z)); 
+        		}
+
+        		return this;
+
+        	}
+
+
+        	function __scale(s) {
+        		if (typeof s === 'number') {
+        			mat4.scale(__scaleMatrix, __scaleMatrix, vec3.fromValues(s, s, s));
+        		}
+
+        		return this;
+        	}
+
+        	function __translate(x, y, z) {
+        		
+        		mat4.translate(__translationMatrix, __translationMatrix, vec3.fromValues(x, y, z));
+        		
+        		return this;
+        	}
+
+        	__init();
+
+        	
+        	
+        	this.rotateOnAxisByDegrees = __rotateOnAxisByDegrees;
+
+        	this.draw = __draw;
+
+        	this.scale = __scale;
+
+        	this.translate = __translate;
+
+        	this.setColour = function(r, g, b, a) {
+        		__colour.r = r;
+        		__colour.g = g;
+        		__colour.b = b;
+        		__colour.a = a;
+        	};
+
+
+
+
+       		return this;
+
+
+        } 
+
+        
+
+		function _init() {
+
+			var glCanvas  = webGLUtilities;
+
+			_gl = canvasModalWidget.getGLContext();
+
+		 	if (! _gl) {
+          		throw new Error('Could not run lightingExample() WebGL Demo!');
+        	}
+
+			canvasModalWidget.onHide(function() {
+				_isAppRunning = false;
+				//console.log('cancel request animation');
+			});
+
+
+
+			 // Set clear color to black, fully opaque
+        	_gl.clearColor(0.0, 0.0, 0.0, 1.0);	
+
+        	// dealing with 3D space geometry so make sure this feature is enabled
+        	_gl.enable(_gl.DEPTH_TEST);
+
+			// get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
+        	_glProgram = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo6', '#f-shader-demo6');
+        	_glProgram.customAttribs = {};
+	
+		
+			// Get the storage locations of all the customizable shader variables 
+			_glProgram.customAttribs.a_PositionRef = _gl.getAttribLocation(_glProgram, 'a_Position'),
+			_glProgram.customAttribs.a_VertexNormalRef = _gl.getAttribLocation(_glProgram, 'a_VertexNormal'),
+
+			_glProgram.customAttribs.u_FragColourRef = _gl.getUniformLocation(_glProgram, 'u_FragColour'),
+			_glProgram.customAttribs.u_PVMatrixRef = _gl.getUniformLocation(_glProgram, 'u_PVMatrix'),
+
+			_glProgram.customAttribs.u_AmbientColourRef = _gl.getUniformLocation(_glProgram, 'u_AmbientColour'),
+			_glProgram.customAttribs.u_LightingDirectionRef = _gl.getUniformLocation(_glProgram, 'u_LightingDirection'),
+			_glProgram.customAttribs.u_DirectionalColourRef = _gl.getUniformLocation(_glProgram, 'u_DirectionalColour');
+			
+
+
+			var perspectiveMatrix = mat4.create(), // get the identity matrix
+				viewMatrix = mat4.create(),
+				modelMatrix = mat4.create(),
+				PVMatrix = mat4.create();
+
+	
+			mat4.perspective(perspectiveMatrix, glMatrix.toRadian(45.0), canvasModalWidget.getGLViewportAspectRatio(), 1, 1000);
+			mat4.lookAt(viewMatrix, vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, -50), vec3.fromValues(0, 1, 0));
+
+			_glProgram.customAttribs.viewMatrix = viewMatrix;
+			_glProgram.customAttribs.modelMatrix = modelMatrix;
+			_glProgram.customAttribs.PViewMatrix = mat4.multiply(PVMatrix, perspectiveMatrix, _glProgram.customAttribs.viewMatrix);
+
+			_gl.uniformMatrix4fv(_glProgram.customAttribs.u_ModelMatrixRef, false, _glProgram.customAttribs.modelMatrix);
+			_gl.uniformMatrix4fv(_glProgram.customAttribs.u_PVMatrixRef, false, _glProgram.customAttribs.PViewMatrix);
+
+
+			_gl.uniform3f(_glProgram.customAttribs.u_LightingDirectionRef, -1.0, 1.0, 3.0);
+			_gl.uniform3f(_glProgram.customAttribs.u_AmbientColourRef, 1.0, 1.0, 1.0);
+
+			_gl.uniform3f(_glProgram.customAttribs.u_DirectionalColourRef, 1.0, 1.0, 1.0);
+			
+
+
+
+
+			// create some primitives that can keep track of their own orientation and draw themselves
+			_sphere = new _Sphere();			
+			_sphere.translate(-1.6,0,0);
+
+			_quad = new _Quad(2, 0.5, 0.5);
+			_quad.translate(0, 0, 2).scale(0.5);
+
+			_tick();
+
+		      	
+      }
+
+      
+    var _frameCount = 0,
+   		_xInc = 0.01,
+  	  	_yInc = 0.001,
+  	  	_zInc = 0.005;
+
+    function _tick() {
+           	
+      	// Clear the color and depth buffer because now we are dealing with perspective and camera space.
+      	// and we want everything to look natural...
+        _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
+
+
+        // show some arbitrary movement along 3D space and do some rotations while we are at it
+       	_sphere
+       		.rotateOnAxisByDegrees(1,1,0)
+			.translate(_xInc, _yInc, _zInc)
+       		.draw();
+
+       	_quad
+       		.rotateOnAxisByDegrees(-1,-1,0)
+       		.draw();
+
+       	// counter used to create a pattern for the primitives to move and rotate along the screen
+       	_frameCount++;
+
+
+       	if (_frameCount >= 220) {
+       		_xInc = - _xInc;
+       		_yInc = - _yInc;
+       		_zInc = - _zInc;
+       		_frameCount = 0;
+       	}
+       	
+       	// stop calling the browser's animate when ready callback function when the modal has closed
+       	if (_isAppRunning) {
+       		requestAnimationFrame(_tick);
+       	}
+    }
+
+
+     // start this demo up!
+	_init();
 
 	}
 
