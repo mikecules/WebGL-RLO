@@ -424,18 +424,21 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
       // Game object
       ////////////////////////////////////////////////////////////////////////////////////////
       function _Game() {
-         var __GAME_STATES = {RUNNING: 0, PAUSED: 1, INTRO_SCREEN: 2},
-          //__game = {ball: null, isRunning: true, players: [], map: null, status: __GAME_STATES.INTRO_SCREEN},
-          __map = null,
-          __players = [],
-          __ball = null,
-          __gameStatus =  __GAME_STATES.INTRO_SCREEN,
-          __HUDContext = null,
-          __lastDrawTime = 0,
-          __frameCounter = 0,
-          __lastFrameDisplayDeltaTime = 0,
-          __isAppRunning = true,
-          __keyPressed = {};
+         var  __GAME_STATES = {RUNNING: 0, PAUSED: 1},
+              __DIRECTIONS = {NORTH: 2, EAST: 4, SOUTH: 8, WEST: 16, NONE: 0},
+              __map = null,
+              __players = [],
+              __thePlayer = null,
+              __ball = null,
+              __gameStatus =  __GAME_STATES.PAUSED,
+              __hasGameStarted = false,
+              __HUDContext = null,
+              __lastDrawTime = 0,
+              __frameCounter = 0,
+              __lastFrameDisplayDeltaTime = 0,
+              __isAppRunning = true,
+              __keyPressed = {},
+              __keyReleased = {};
 
         function __showTitleScreen(isGamePaused) {
           var HUDEl = canvasModalWidget.get2DCanvasEl();
@@ -453,8 +456,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           __HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)'; 
           __HUDContext.font = '18px "Verdana"';
 
-          if (isGamePaused === true) {
+          if (isGamePaused === true && __hasGameStarted) {
             __HUDContext.fillText('Press Space Bar to unpause...', 190, 210);
+            __HUDContext.fillStyle = 'rgba(219, 204, 255, 1.0)';
+            __HUDContext.fillText('Your Score: ' + __thePlayer.getScore(), 10, 20);
+            __HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)';
+            __HUDContext.fillText('Robot Score: ' + __players[1].getScore(), 10, 40);
           }
           else {
             __HUDContext.fillText('Press Space Bar to start...', 200, 210);
@@ -464,11 +471,33 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           canvasModalWidget.showHUDCanvas();
         }
 
-        function __Player(tx, ty, tz, playerType) {
+        function __Rect(x, y, width, height) {
+          this.x1 = x || 0;
+          this.y1 = y || 0;
+          this.width = width || 0;
+          this.height = height || 0;
+          this.x2 = this.x1 + this.width; 
+          this.y2 = this.y1 + this.height;
+
+          return this;
+        }
+
+        function __Position(x, y, z) {
+          this.x = x || 0;
+          this.y = y || 0;
+          this.z = z || 0;
+
+          return this;
+        }
+
+        function __Player(position, boundingRect, playerType) {
           var ___paddle = null,
               ___score = 0,
               ___playerType = playerType === __Player.prototype.PLAYER_TYPE.HUMAN ? playerType : __Player.prototype.PLAYER_TYPE.ROBOT,
-              ___playerPosition = {x: (tx || 0.0), y: (ty || 0.0), z: (tz || 0.0)};
+              ___playerPosition = position || new __Position(),
+              ___playerBoundingRect = boundingRect,
+              ___velocity = {x: 0.003, y: 0},
+              ___movingDirection = __DIRECTIONS.NONE;
 
 
           function ___init() {
@@ -482,8 +511,53 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             ___paddle.draw();
           }
 
-          function ___update(tickMS) {
+          function ___update(tickDeltaMS) {
 
+            var shouldUpdatePosition = true,
+                playerVelocityX = ___velocity.x;
+
+            if (___movingDirection === __DIRECTIONS.NONE) {
+              return;
+            }
+
+            
+            switch (___movingDirection) {
+              case __DIRECTIONS.EAST:
+                playerVelocityX = -playerVelocityX;
+              break;
+
+              case __DIRECTIONS.WEST:
+              break;
+
+              default:
+                shouldUpdatePosition = false;
+              break;
+            }
+
+            if (! shouldUpdatePosition) {
+              return;
+            }
+
+            var distance = tickDeltaMS * playerVelocityX;
+
+            var newXPosition = ___playerPosition.x + distance;
+
+            console.log(newXPosition, ___playerBoundingRect.x2);
+
+            if ((newXPosition < - ___playerBoundingRect.x2) || (newXPosition > ___playerBoundingRect.x2)) {
+              return;
+            }
+            
+             ___playerPosition.x += distance;
+             
+             ___paddle.translate(distance , 0, 0);
+
+
+
+          }
+
+          function ___setDirection(direction) {
+            ___movingDirection = direction;
           }
 
 
@@ -493,9 +567,9 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             return ___score;
           }
 
-
           this.draw = ___draw;
           this.update = ___update;
+          this.setDirection = ___setDirection;
 
 
           this.setColour = function(r, g, b) {
@@ -512,9 +586,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
 
         ////////////////////////////////
-        function __Ball(tx, ty, tz) {
+        function __Ball(position, boundingRect) {
           var   ___ball = null,
-                ___ballPosition = {x: (tx || 0.0), y: (ty || 0.0), z: (tz || 0.0)};
+                ___ballPosition = position || new __Position(),
+                ___ballBoundingRect = boundingRect,
+                ___velocity = {x: 0.003, y: 0.003},
+                ___movingDirection = __DIRECTIONS.NONE;
 
 
           function ___init() {
@@ -526,14 +603,77 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             ___ball.draw();
           }
 
-          function ___update(tickMS) {
+      
 
+          function ___update(tickDeltaMS) {
+
+            var ballVelocityX = ___velocity.x,
+                ballVelocityY = ___velocity.y;
+
+            if (___movingDirection === __DIRECTIONS.NONE) {
+              return;
+            }
+
+            
+            
+            if (___movingDirection & __DIRECTIONS.WEST) {
+              ballVelocityX = -ballVelocityX;
+            }
+
+
+            if (___movingDirection & __DIRECTIONS.SOUTH) {
+              ballVelocityY = -ballVelocityY;
+            }
+            
+                
+
+            var distanceX = tickDeltaMS * ballVelocityX;
+            var distanceY = tickDeltaMS * ballVelocityY;
+
+            var newXPosition = ___ballPosition.x + distanceX;
+            var newYPosition = ___ballPosition.y + distanceY;
+
+
+            console.log('x ', newXPosition, ___ballBoundingRect.x2);
+            console.log('y' , newYPosition, ___ballBoundingRect.y2);
+
+
+            if (newXPosition < - ___ballBoundingRect.x2) { 
+              ___movingDirection = __DIRECTIONS.EAST;
+            }
+            else if (newXPosition > ___ballBoundingRect.x2) {
+               distanceX = -distanceX;
+               ___movingDirection = __DIRECTIONS.WEST;
+            }
+/*
+            if (newYPosition < - ___ballBoundingRect.y2) {
+              distanceY = -distanceY;
+              ___movingDirection = __DIRECTIONS.NORTH;
+            }
+            else if (newYPosition > ___ballBoundingRect.y2) {
+               ___movingDirection = __DIRECTIONS.SOUTH; 
+            }*/
+            
+             ___ballPosition.x += distanceX;
+             ___ballPosition.y += distanceY;
+             
+             ___ball.translate(distanceX, 0, 0);
+
+
+
+          
+
+          }
+
+          function ___setDirection(direction) {
+            ___movingDirection = direction;
           }
 
           ___init();
 
           this.draw = ___draw;
           this.update = ___update;
+          this.setDirection = ___setDirection;
 
 
           return this;
@@ -604,6 +744,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         return __gameStatus;
       }
 
+      function __isGamePaused() {
+        return __getGameStatus() === __GAME_STATES.PAUSED;
+      }
+
 
 
       function __initGame() {
@@ -618,12 +762,16 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         __map = new __Map();
 
-        __ball = new __Ball();
+        __ball = new __Ball(null, new __Rect(0, 0, 2.5, 2));
 
-        __players.push(new __Player(playerPosition.x, playerPosition.y, playerPosition.z,  __Player.prototype.PLAYER_TYPE.HUMAN).setColour(0,0,1));
-        __players.push(new __Player(playerPosition.x, -playerPosition.y, playerPosition.z,  __Player.prototype.PLAYER_TYPE.ROBOT).setColour(0,1,0));
+        __players.push(new __Player(new __Position(playerPosition.x, playerPosition.y, playerPosition.z),  new __Rect(playerPosition.x, playerPosition.y, 2.08, 1), __Player.prototype.PLAYER_TYPE.HUMAN).setColour(0,0,1));
+        __players.push(new __Player(new __Position(playerPosition.x, -playerPosition.y, playerPosition.z),  new __Rect(playerPosition.x, -playerPosition.y, 2.08, 1), __Player.prototype.PLAYER_TYPE.ROBOT).setColour(0,1,0));
+
+        __thePlayer = __players[0];
 
         __bindKeyEvents();
+
+        __ball.setDirection(__DIRECTIONS.EAST );
 
         __tick();
       }
@@ -655,23 +803,34 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
       }
 
     function __bindKeyEvents() {
-      var KEY_PRESS_EVENT = 'keypress.pong3D',
+      var KEY_PRESS_EVENT = 'keydown.pong3D',
+          KEY_RELEASE_EVENT = 'keyup.pong3D',
           __window = $(window);
 
       __window
         .on(KEY_PRESS_EVENT, function(event) {
-          event.stopPropagation();
-          event.preventDefault();
+          //event.stopPropagation();
+          //event.preventDefault();
           __keyPressed[event.which] = true;
+          //console.log('key down' + event.which);
+        });
 
-
-          //console.log(event);
-
-      });
+      __window
+        .on(KEY_RELEASE_EVENT, function(event) {
+          //event.stopPropagation();
+          //event.preventDefault();
+          __keyReleased[event.which] = true;
+          //console.log(event.which);
+        });
 
       canvasModalWidget.onHide(function() {
         __isAppRunning = false;
-        __window.unbind(KEY_PRESS_EVENT);
+
+        __window
+          .unbind(KEY_PRESS_EVENT);
+
+        __window
+          .unbind(KEY_RELEASE_EVENT);
         //console.log('cancel request animation');
       });
 
@@ -680,6 +839,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
     function __processInput() {
       var degreeInc = 2.0;
       //console.log(_keyPressed);
+
+    
       for (var keyCode in __keyPressed) {
 
         if (! __keyPressed[keyCode]) {
@@ -690,34 +851,62 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
 
         switch(key) {
-          case 87: // rotate up
+          case 87: // rotate up keys = (w, W)
           case 119:
             __rotateMap(degreeInc);
           break;
 
-          case 83:  // rotate down
+          case 83:  // rotate down keys = (s, S)
           case 115:
             __rotateMap(-degreeInc);
           break;
 
-          case 65: // rotate left
+          case 65: // rotate left keys = (a, A)
           case 97:
             __rotateMap(null, degreeInc);
           break;
 
-          case 68: // rotate right
+          case 68: // rotate right keys = (d, D)
           case 100:
             __rotateMap(null, -degreeInc);
           break;
-          case 32:
+          case 32: // space bar
+            __hasGameStarted = true;
             __setGamePauseStatus(! __getGameStatus());
           break;
+          case 37: // move player left
+            if (! __isGamePaused()) {
+              __thePlayer.setDirection(__DIRECTIONS.EAST);
+            }
+          break;
+
+          case 39: // move player right
+            if (! __isGamePaused()) {
+              __thePlayer.setDirection(__DIRECTIONS.WEST);
+            }
+          break;
+
           default:
             console.log('Did not recognize key with code: ' + keyCode)
           break;
         }
 
-        __keyPressed[keyCode] = false;
+        if (key === 32 || (__keyPressed[keyCode] && __keyReleased[keyCode])) {
+
+          switch (key) {
+            case 37: // stop player
+            case 39: 
+                  __thePlayer.setDirection(__DIRECTIONS.NONE); 
+              break;
+
+            default:
+            break;
+          }
+
+          __keyPressed[keyCode] = false;
+          __keyReleased[keyCode] = false;
+          //console.log(__keyReleased);
+        }
 
       }
     }
@@ -759,12 +948,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         __processInput();
 
-        if (__getGameStatus() !== __GAME_STATES.PAUSED) {
-          __ball.update();
+        if (! __isGamePaused()) {
+          __ball.update(dt);
 
            for (count = 0; count < __players.length; count++) {
             player = __players[count];
-            player.update();
+            player.update(dt);
           }
         }
 
