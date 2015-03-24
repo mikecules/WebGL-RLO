@@ -36,7 +36,9 @@ $demos.lightingExample = function lightingExample(canvasModalWidget, webGLDrawUt
             __shouldUpdateMatrices = true;
 
         	function __init() {
-        		__sphereData = webGLDrawUtilities.createSphereVertexData(__radius);
+        		// Up the number of vertices so the lighting artifacts caused by shading at the vertex are reduced -
+        		// this is way fragment level lighting is desired even though it's more GPU intensive
+        		__sphereData = webGLDrawUtilities.createSphereVertexData(__radius, 60, 60);
 
         		// create the buffer for vertex positions and assign it to that buffer to use for later
         		__sphereVertexPositionBuffer = _gl.createBuffer();

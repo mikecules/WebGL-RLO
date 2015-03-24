@@ -477,12 +477,12 @@ angular.module('webGLUtilityModule', [])
       }
 
       this.setCaption = function(caption) {
-        _modalCaptionElement.text(caption);
+        _modalCaptionElement.html(caption);
         return this;
       };
 
       this.setDetailText = function(details) {
-        _modalDetailBody.text(details);
+        _modalDetailBody.html(details);
         return this;
       };
 

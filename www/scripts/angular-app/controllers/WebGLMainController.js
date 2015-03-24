@@ -726,6 +726,7 @@ angular.module('WebGLRLOApp')
 
 
   	////////////////////////////////////////////////////
+  	// End of examples
   	////////////////////////////////////////////////////
 
   	var demos = [
@@ -738,7 +739,7 @@ angular.module('WebGLRLOApp')
 	        },
 	        {
 	          caption: 'Free Draw Example',
-	          details: 'Freeform draw large pixels on screen...',
+	          details: 'Hold down the mouse button to draw.',
 	          appFn: drawSimpleShapeWithMouseExample,
 	          screenShotURL: 'styles/app/images/demo2.png'
 	        }
@@ -746,13 +747,14 @@ angular.module('WebGLRLOApp')
         [
 	        {
 	          caption: 'Draw Modes and Translations',
-	          details: 'Draw some trinagles using different draw modes and do uniform translations to position 1 shape 3 different ways.',
+	          details: 	'Draw some trinagles using different draw modes and do some uniform translations to position the ' +
+	          			' vertices of a single triangle in 3 different locations in space.',
 	          appFn: shapesExample,
 	          screenShotURL: 'styles/app/images/demo3.png'
 	        },
 	         {
 	          caption: 'Fragment Shader Interpolation',
-	          details: ' ',
+	          details: 'Using the Fragment shader\'s colour interpolation abilities we render a triangle.',
 	          appFn: shapesFragmentVaryingExample,
 	          screenShotURL: 'styles/app/images/demo4.png'
 	        }
@@ -760,13 +762,14 @@ angular.module('WebGLRLOApp')
 	     [
 	         {
 	          caption: 'Animation of 3D Primitives',
-	          details: ' ',
+	          details: 'Here we finally show you some 3D primitive models moving around in 3D-space.',
 	          appFn: animating3DPrimativesExample,
 	          screenShotURL: 'styles/app/images/demo5.png'
 	        },
 	        {
 	          caption: 'Lighting Example',
-	          details: ' ',
+	          details: 	'An ambient and directional lighting example. The directional lighting is rotating around the ' +
+	          			' Y and Z axis as the 3D primitives move around in virtual 3D space.',
 	          appFn: lightingExample,
 	          screenShotURL: 'styles/app/images/demo6.png'
 	        }
@@ -774,7 +777,13 @@ angular.module('WebGLRLOApp')
         [
         	{
 	          caption: 'PongGL!',
-	          details: ' ',
+	          details: '<strong>Instructions</strong>: <ul>' + 
+	          				'<li>Press &quot;Space Bar&quot; to pause the game.</li>' +
+	          				'<li>The left and right arrow keys to move your player.</li>' +
+	          				'<li>&quot;w&quot;, &quot;s&quot; keys to rotate the camera on the X-Axis (Up and Down)</li>' + 
+	          				'<li>&quot;a&quot;, &quot;d&quot; keys to rotate the camera on the Y-Axis (Left and Right)</li>' + 
+	          				'<li>&quot;Up&quot;, &quot;Down&quot; keys to move the camera on the Z-Axis (In and Out)</li>' + 
+	          			'</ul>', 
 	          appFn: Pong,
 	          screenShotURL: 'styles/app/images/demo4.png'
 	        }
