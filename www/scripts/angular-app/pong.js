@@ -8,6 +8,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       // get the gl context from our modal widget
       var _gl = null,
+          _HUDContext = null,
           _glProgram = null,
           _lastDrawTime = 0,
           _isAppRunning = true,
@@ -365,6 +366,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
     function _init() {
 
       _gl = canvasModalWidget.getGLContext();
+      _HUDContext = canvasModalWidget.getHUDContext();
 
       if (! _gl) {
               throw new Error('Could not run lightingExample() WebGL Demo!');
@@ -451,7 +453,30 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         return n;
       }
 
+
       ///////////////////////////////////////////////////////////////////////
+
+
+      function _showTitleScreen() {
+        var HUDEl = canvasModalWidget.get2DCanvasEl();
+        
+        canvasModalWidget.clearHUDCanvas();
+
+        _HUDContext.font = '24px "Verdana"';
+        _HUDContext.fillStyle = 'rgba(255, 255, 255, 1.0)'; // Set the font colour
+        _HUDContext.fillText('Pong', 270, 180);
+
+        _HUDContext.fillStyle = 'rgba(204, 229, 255, 1.0)'; 
+        _HUDContext.fillText('GL', 330, 180);
+
+        _HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)'; 
+        _HUDContext.font = '18px "Verdana"';
+        _HUDContext.fillText('Press Space Bar to begin...', 200, 210);
+       
+
+        canvasModalWidget.showHUDCanvas();
+      }
+
       function _Player(tx, ty, tz, playerType) {
         var __paddle = null,
             __score = 0,
@@ -565,6 +590,9 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
 
       function _initGame() {
+        _showTitleScreen();
+
+        canvasModalWidget.setFPSVal(1000);
 
         var playerPosition = {x: 0.0, y: -1.9, z: 0.0};
 

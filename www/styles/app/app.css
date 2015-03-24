@@ -34,17 +34,22 @@
   margin: 10px auto;
 }
 
+
+.modal-box .modal-caption-body {
+  line-height: 20px;
+  
+}
+
 .modal-box .modal-content-container .modal-caption {
   position: relative;
   display: inline-block;
-  width: 600px;
+  width: 500px;
   color: #333;
   text-shadow: 1px 1px #ccc;
   font-weight: bold;
   margin: auto;
   text-align: center;
   vertical-align: super;
-  line-height: 20px;
 }
 
 .modal-box .modal-detail-body {
@@ -80,11 +85,15 @@
 }
 
 
-.modal-box .modal-content-container .question-icon {
+.modal-box .modal-content-container .fps-container {
   float: left;
+  height: 100%;
+  width: 80px;
+  font-size: 14px;
+  overflow: hidden;
 }
 
-.modal-box .modal-content-container .question-icon:hover, .modal-box .modal-content-container .close-icon:hover {
+.modal-box .modal-content-container .close-icon:hover {
   cursor: pointer;
   color: #000;
 }

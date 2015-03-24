@@ -229,6 +229,14 @@ angular.module('webGLUtilityModule', [])
         return __viewportAspectRatio;
       };
 
+      this.getWidth = function() {
+        return __width;
+      };
+
+      this.getHeight = function() {
+        return __height;
+      };
+
       this.getGLProgram = function() {
         return __glProgram;
       };
@@ -285,6 +293,7 @@ angular.module('webGLUtilityModule', [])
           _modalCaptionElement = null,
           _modalBody = null,
           _modalDetailBody = null,
+          _modalFPSContainer = null,
           _modalHideCallbackFn = null;
 
 
@@ -309,8 +318,7 @@ angular.module('webGLUtilityModule', [])
               '<div id="' + modalCanvasContainer + '">' +
                 '<div class="modal-content-container">' +
                   '<div class="modal-caption-body">' +
-
-                      //'<i class="fa fa-question-circle question-icon"></i>' +
+                      '<div class="fps-container">&nbsp;</div>' +
                       '<div class="modal-caption"></div>' +
                       '<i class="fa fa-times close-icon"></i>' +
                   '</div>' +
@@ -333,6 +341,7 @@ angular.module('webGLUtilityModule', [])
          _modalCaptionElement = _modalBox.find('.modal-caption');
          _modalBody = _modalBox.find('.modal-body');
          _modalDetailBody = _modalBox.find('.modal-detail-body');
+         _modalFPSContainer = _modalBox.find('.fps-container');
 
          _modalBox.find('.close-icon').click(__hide);
          _modalBox.click(function(e) { e.stopPropagation(); })
@@ -401,6 +410,7 @@ angular.module('webGLUtilityModule', [])
 
         _modalBox.hide('fast', function() {
           _modalJQObj.fadeOut('fast', function() {
+            __modalFPSHide();
 
             if (typeof callbackFn === 'function') {
               callbackFn.apply(this);
@@ -417,6 +427,11 @@ angular.module('webGLUtilityModule', [])
 
         return this;
 
+      }
+
+
+      function __modalFPSHide() {
+        _modalFPSContainer.html('&nbsp;');
       }
 
 
@@ -458,14 +473,21 @@ angular.module('webGLUtilityModule', [])
       };
 
       this.showHUDCanvas = function() {
-        _canvas2D.getCanvasJQObj().show().css({'zIndex': 1});
+        _canvas3D.getCanvasJQObj().css({'zIndex': 0});
+        _canvas2D.getCanvasJQObj().fadeIn('fast').css({'zIndex': 1});
         return this;
       };
 
       this.hideHUDCanvas = function() {
-        _canvas2D.getCanvasJQObj().hide().css({'zIndex': 0});
         _canvas3D.getCanvasJQObj().css({'zIndex': 1});
+        _canvas2D.getCanvasJQObj().hide('fast').css({'zIndex': 0});
         return this;
+      };
+
+      this.clearHUDCanvas = function() {      
+        _canvas2D
+          .getContext()
+          .clearRect(0, 0, _canvas2D.getWidth(), _canvas2D.getHeight()); 
       };
 
       this.setGLVertexAndFragmentShaders = function(vertexShaderStrOrID, fragmentShaderStrOrID) {
@@ -484,6 +506,13 @@ angular.module('webGLUtilityModule', [])
       this.setDetailText = function(details) {
         _modalDetailBody.html(details);
         return this;
+      };
+
+
+      this.FPSHide = __modalFPSHide;
+
+      this.setFPSVal = function(fps) {
+        _modalFPSContainer.text('FPS: ' + fps);
       };
 
       this.onHide = function(callbackFn) {
