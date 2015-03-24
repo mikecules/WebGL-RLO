@@ -1,3 +1,5 @@
+'use strict';
+
 var $demos = $demos || {};
   
 
@@ -430,6 +432,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           __gameStatus =  __GAME_STATES.INTRO_SCREEN,
           __HUDContext = null,
           __lastDrawTime = 0,
+          __frameCounter = 0,
+          __lastFrameDisplayDeltaTime = 0,
           __isAppRunning = true,
           __keyPressed = {};
 
@@ -608,7 +612,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         __showTitleScreen();
 
-        canvasModalWidget.setFPSVal(1000);
+        canvasModalWidget.setFPSVal(0);
 
         var playerPosition = {x: 0.0, y: -1.9, z: 0.0};
 
@@ -721,8 +725,32 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
     function __tick() {
 
+
+
         var player = null,
-            count = 0;
+            count = 0,
+            tickTime = (new Date()).getTime(),
+            dt = 0;
+
+
+        if (__lastDrawTime === 0) {
+          __lastDrawTime = tickTime;
+        }
+
+        dt = tickTime - __lastDrawTime;
+
+        __lastFrameDisplayDeltaTime += dt;
+        __frameCounter++;
+
+        if (__lastFrameDisplayDeltaTime >= 1000)  {
+           canvasModalWidget.setFPSVal(__frameCounter);
+          __frameCounter = 0;
+          __lastFrameDisplayDeltaTime = 0;
+        }
+       
+
+        //console.log(__lastFrameDisplayDeltaTime)
+
 
         // Clear the color and depth buffer because now we are dealing with perspective and camera space.
         // and we want everything to look natural...
@@ -750,6 +778,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           player.draw();
         }
 
+        __lastDrawTime = tickTime;
 
         // stop calling the browser's animate when ready callback function when the modal has closed
         if (__isAppRunning) {
