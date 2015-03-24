@@ -8,11 +8,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       // get the gl context from our modal widget
       var _gl = null,
-          _HUDContext = null,
-          _glProgram = null,
-          _lastDrawTime = 0,
-          _isAppRunning = true,
-          _keyPressed = {};
+          _glProgram = null;
 
 
 
@@ -337,36 +333,11 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         }
 
 
-    //////////
-    function _bindKeyEvents() {
-      var KEY_PRESS_EVENT = 'keypress.pong3D',
-          _window = $(window);
-
-      _window
-        .on(KEY_PRESS_EVENT, function(event) {
-          event.stopPropagation();
-          _keyPressed[event.which] = true;
-
-
-          //console.log(event);
-
-      });
-
-      canvasModalWidget.onHide(function() {
-        _isAppRunning = false;
-        _window.unbind(KEY_PRESS_EVENT);
-        //console.log('cancel request animation');
-      });
-
-
-  }
-
 
     ///////////////////////
     function _init() {
 
       _gl = canvasModalWidget.getGLContext();
-      _HUDContext = canvasModalWidget.getHUDContext();
 
       if (! _gl) {
               throw new Error('Could not run lightingExample() WebGL Demo!');
@@ -431,15 +402,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       _gl.uniform3f(_glProgram.customAttribs.u_DirectionalColourRef, 1.0, 1.0, 1.0);
 
-
-
-
-
-      _initGame();
-
-
-      //_tick();
-
+      // start the game!!
+      (new _Game()).start();
 
       }
 
@@ -454,163 +418,216 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
       }
 
 
-      ///////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////
+      // Game object
+      ////////////////////////////////////////////////////////////////////////////////////////
+      function _Game() {
+         var __GAME_STATES = {RUNNING: 0, PAUSED: 1, INTRO_SCREEN: 2},
+          //__game = {ball: null, isRunning: true, players: [], map: null, status: __GAME_STATES.INTRO_SCREEN},
+          __map = null,
+          __players = [],
+          __ball = null,
+          __gameStatus =  __GAME_STATES.INTRO_SCREEN,
+          __HUDContext = null,
+          __lastDrawTime = 0,
+          __isAppRunning = true,
+          __keyPressed = {};
 
+        function __showTitleScreen(isGamePaused) {
+          var HUDEl = canvasModalWidget.get2DCanvasEl();
 
-      function _showTitleScreen() {
-        var HUDEl = canvasModalWidget.get2DCanvasEl();
-        
-        canvasModalWidget.clearHUDCanvas();
+          
+          canvasModalWidget.clearHUDCanvas();
 
-        _HUDContext.font = '24px "Verdana"';
-        _HUDContext.fillStyle = 'rgba(255, 255, 255, 1.0)'; // Set the font colour
-        _HUDContext.fillText('Pong', 270, 180);
+          __HUDContext.font = '24px "Verdana"';
+          __HUDContext.fillStyle = 'rgba(255, 255, 255, 1.0)'; // Set the font colour
+          __HUDContext.fillText('Pong', 270, 180);
 
-        _HUDContext.fillStyle = 'rgba(204, 229, 255, 1.0)'; 
-        _HUDContext.fillText('GL', 330, 180);
+          __HUDContext.fillStyle = 'rgba(204, 229, 255, 1.0)'; 
+          __HUDContext.fillText('GL', 330, 180);
 
-        _HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)'; 
-        _HUDContext.font = '18px "Verdana"';
-        _HUDContext.fillText('Press Space Bar to begin...', 200, 210);
-       
+          __HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)'; 
+          __HUDContext.font = '18px "Verdana"';
 
-        canvasModalWidget.showHUDCanvas();
-      }
+          if (isGamePaused === true) {
+            __HUDContext.fillText('Press Space Bar to unpause...', 190, 210);
+          }
+          else {
+            __HUDContext.fillText('Press Space Bar to start...', 200, 210);
+          }
+         
 
-      function _Player(tx, ty, tz, playerType) {
-        var __paddle = null,
-            __score = 0,
-            __playerType = playerType === _Player.prototype.PLAYER_TYPE.HUMAN ? playerType : _Player.prototype.PLAYER_TYPE.ROBOT,
-            __playerPosition = {x: (tx || 0.0), y: (ty || 0.0), z: (tz || 0.0)};
-
-
-        function __init() {
-          var paddleDimensions = {x: 0.5, y: 0.05, z: 0.1}
-          __paddle = new _Quad(paddleDimensions.x, paddleDimensions.y, paddleDimensions.z);
-          __paddle.translate(__playerPosition.x, __playerPosition.y, __playerPosition.z);
+          canvasModalWidget.showHUDCanvas();
         }
 
-
-        function __draw(tickMS) {
-          __paddle.draw();
-        }
-
-
-        __init();
-
-        this.getScore = function() {
-          return __score;
-        }
+        function __Player(tx, ty, tz, playerType) {
+          var ___paddle = null,
+              ___score = 0,
+              ___playerType = playerType === __Player.prototype.PLAYER_TYPE.HUMAN ? playerType : __Player.prototype.PLAYER_TYPE.ROBOT,
+              ___playerPosition = {x: (tx || 0.0), y: (ty || 0.0), z: (tz || 0.0)};
 
 
-        this.draw = __draw;
+          function ___init() {
+            var paddleDimensions = {x: 0.5, y: 0.05, z: 0.1}
+            ___paddle = new _Quad(paddleDimensions.x, paddleDimensions.y, paddleDimensions.z);
+            ___paddle.translate(___playerPosition.x, ___playerPosition.y, ___playerPosition.z);
+          }
 
-        this.setColour = function(r, g, b) {
-          __paddle.setColour(r, g, b, 1);
+
+          function ___draw() {
+            ___paddle.draw();
+          }
+
+          function ___update(tickMS) {
+
+          }
+
+
+          ___init();
+
+          this.getScore = function() {
+            return ___score;
+          }
+
+
+          this.draw = ___draw;
+          this.update = ___update;
+
+
+          this.setColour = function(r, g, b) {
+            ___paddle.setColour(r, g, b, 1);
+            return this;
+          };
+
+
           return this;
-        };
 
-
-        return this;
-
-      }
-
-      _Player.prototype.PLAYER_TYPE = {ROBOT: 0, HUMAN: 1};
-
-
-      ////////////////////////////////
-      function _Ball(tx, ty, tz) {
-        var   __ball = null,
-              __ballPosition = {x: (tx || 0.0), y: (ty || 0.0), z: (tz || 0.0)};
-
-
-        function __init() {
-          __ball = new _Sphere(0.1);
-          __ball.translate(__ballPosition.x, __ballPosition.y, __ballPosition.z);
         }
 
-        function __draw(tickMS) {
-          __ball.draw();
+        __Player.prototype.PLAYER_TYPE = {ROBOT: 0, HUMAN: 1};
+
+
+        ////////////////////////////////
+        function __Ball(tx, ty, tz) {
+          var   ___ball = null,
+                ___ballPosition = {x: (tx || 0.0), y: (ty || 0.0), z: (tz || 0.0)};
+
+
+          function ___init() {
+            ___ball = new _Sphere(0.1);
+            ___ball.translate(___ballPosition.x, ___ballPosition.y, ___ballPosition.z);
+          }
+
+          function ___draw() {
+            ___ball.draw();
+          }
+
+          function ___update(tickMS) {
+
+          }
+
+          ___init();
+
+          this.draw = ___draw;
+          this.update = ___update;
+
+
+          return this;
         }
 
-        __init();
 
-        this.draw = __draw;
+      function __Map() {
+        var ___leftWall = null,
+            ___rightWall = null;
 
-
-        return this;
-      }
-
-
-      function _Map() {
-        var __leftWall = null,
-            __rightWall = null;
-
-        function __init() {
+        function ___init() {
           var wallDimensions = {x: 0.05, y: 2, z: 0.1},
               wallColour = {r:0.4, g:0.4, b:0.5},
               translate = {x: 2.6, y: 0, z: 0};
 
 
-          __leftWall = new _Quad(wallDimensions.x, wallDimensions.y, wallDimensions.z);
-          __leftWall
+          ___leftWall = new _Quad(wallDimensions.x, wallDimensions.y, wallDimensions.z);
+          ___leftWall
             .setColour(wallColour.r, wallColour.g , wallColour.b, 1)
             .translate(-translate.x, translate.y, translate.z);
 
-         __rightWall = new _Quad(wallDimensions.x, wallDimensions.y, wallDimensions.z);
-         __rightWall
+         ___rightWall = new _Quad(wallDimensions.x, wallDimensions.y, wallDimensions.z);
+         ___rightWall
             .setColour(wallColour.r, wallColour.g , wallColour.b, 1)
             .translate(translate.x, translate.y, translate.z);
         }
 
-        function __draw(tickMS) {
-          __leftWall.draw();
-          __rightWall.draw();
+        function ___draw() {
+          ___leftWall.draw();
+          ___rightWall.draw();
         }
 
-        function __start() {
+        function ___update(tickMS) {
 
         }
 
 
-        __init();
 
-        this.draw = __draw;
-        this.start = __start;
+        ___init();
+
+        this.draw = ___draw;
+        this.update = ___update;
 
         return this;
       }
 
 
+      function __setGamePauseStatus(state) {
+        var newGameStatus = (state === true ? __GAME_STATES.PAUSED : __GAME_STATES.RUNNING);
+       
+
+        if (newGameStatus === __gameStatus) {
+          return;
+        }
+
+        __gameStatus = newGameStatus;
+
+        if (__gameStatus === __GAME_STATES.PAUSED) {
+          __showTitleScreen(true);
+        }
+        else {
+          canvasModalWidget.hideHUDCanvas();
+        }
+             
+      }
+
+      function __getGameStatus() {
+        return __gameStatus;
+      }
 
 
-      var _GAME_STATES = {RUNNING: 0, PAUSED: 1, INTRO_SCREEN: 2},
-          _game = {ball: null, isRunning: true, players: [], map: null, status: _GAME_STATES.INTRO_SCREEN};
 
+      function __initGame() {
 
+        __HUDContext = canvasModalWidget.getHUDContext();
 
-      function _initGame() {
-        _showTitleScreen();
+        __showTitleScreen();
 
         canvasModalWidget.setFPSVal(1000);
 
         var playerPosition = {x: 0.0, y: -1.9, z: 0.0};
 
-        _game.map = new _Map();
+        __map = new __Map();
 
-        _game.ball = new _Ball();
+        __ball = new __Ball();
 
-        _game.players.push(new _Player(playerPosition.x, playerPosition.y, playerPosition.z,  _Player.prototype.PLAYER_TYPE.HUMAN).setColour(0,0,1));
-        _game.players.push(new _Player(playerPosition.x, -playerPosition.y, playerPosition.z,  _Player.prototype.PLAYER_TYPE.ROBOT).setColour(0,1,0));
+        __players.push(new __Player(playerPosition.x, playerPosition.y, playerPosition.z,  __Player.prototype.PLAYER_TYPE.HUMAN).setColour(0,0,1));
+        __players.push(new __Player(playerPosition.x, -playerPosition.y, playerPosition.z,  __Player.prototype.PLAYER_TYPE.ROBOT).setColour(0,1,0));
 
-        _bindKeyEvents();
+        __bindKeyEvents();
 
-        _tick();
+        __tick();
       }
 
 
 
-      function _rotateMap(rotationX, rotationY) {
+      function __rotateMap(rotationX, rotationY) {
+        __setGamePauseStatus(true);
 
         var viewMatrix = mat4.create();
 
@@ -633,13 +650,35 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       }
 
+    function __bindKeyEvents() {
+      var KEY_PRESS_EVENT = 'keypress.pong3D',
+          __window = $(window);
 
-    function _processInput() {
+      __window
+        .on(KEY_PRESS_EVENT, function(event) {
+          event.stopPropagation();
+          event.preventDefault();
+          __keyPressed[event.which] = true;
+
+
+          //console.log(event);
+
+      });
+
+      canvasModalWidget.onHide(function() {
+        __isAppRunning = false;
+        __window.unbind(KEY_PRESS_EVENT);
+        //console.log('cancel request animation');
+      });
+
+    }
+
+    function __processInput() {
       var degreeInc = 2.0;
       //console.log(_keyPressed);
-      for (var keyCode in _keyPressed) {
+      for (var keyCode in __keyPressed) {
 
-        if (! _keyPressed[keyCode]) {
+        if (! __keyPressed[keyCode]) {
           continue;
         }
 
@@ -649,62 +688,80 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         switch(key) {
           case 87: // rotate up
           case 119:
-            _rotateMap(degreeInc);
+            __rotateMap(degreeInc);
           break;
 
           case 83:  // rotate down
           case 115:
-            _rotateMap(-degreeInc);
+            __rotateMap(-degreeInc);
           break;
 
           case 65: // rotate left
           case 97:
-            _rotateMap(null, degreeInc);
+            __rotateMap(null, degreeInc);
           break;
 
           case 68: // rotate right
           case 100:
-            _rotateMap(null, -degreeInc);
+            __rotateMap(null, -degreeInc);
+          break;
+          case 32:
+            __setGamePauseStatus(! __getGameStatus());
           break;
           default:
             console.log('Did not recognize key with code: ' + keyCode)
           break;
         }
 
-        _keyPressed[keyCode] = false;
+        __keyPressed[keyCode] = false;
 
       }
     }
 
 
-    function _tick() {
+    function __tick() {
+
+        var player = null,
+            count = 0;
 
         // Clear the color and depth buffer because now we are dealing with perspective and camera space.
         // and we want everything to look natural...
         _gl.clear(_gl.COLOR_BUFFER_BIT | _gl.DEPTH_BUFFER_BIT);
 
-        //vec3.rotateY(_glProgram.customAttribs.lightingDirection, _glProgram.customAttribs.lightingDirection, vec3.fromValues(0,0,0), glMatrix.toRadian(0.5));
-        //vec3.rotateZ(_glProgram.customAttribs.lightingDirection, _glProgram.customAttribs.lightingDirection, vec3.fromValues(0,0,0), glMatrix.toRadian(0.5));
-        //console.log(vec3.str(_glProgram.customAttribs.lightingDirection))
-        //_gl.uniform3fv(_glProgram.customAttribs.u_LightingDirectionRef, _glProgram.customAttribs.lightingDirection);
 
-        _processInput();
+        __processInput();
 
-        _game.map.draw();
-        _game.ball.draw();
+        if (__getGameStatus() !== __GAME_STATES.PAUSED) {
+          __ball.update();
 
-        for (var i = 0; i < _game.players.length; i++) {
-          var player = _game.players[i];
+           for (count = 0; count < __players.length; count++) {
+            player = __players[count];
+            player.update();
+          }
+        }
+
+
+        // draw the game objects...
+        __map.draw();
+        __ball.draw();
+
+        for (count = 0; count < __players.length; count++) {
+          player = __players[count];
           player.draw();
         }
 
 
         // stop calling the browser's animate when ready callback function when the modal has closed
-        if (_isAppRunning) {
-          requestAnimationFrame(_tick);
+        if (__isAppRunning) {
+          requestAnimationFrame(__tick);
         }
     }
 
+    this.start = __initGame;
+
+    return this;
+  }
+  // End of Game Class
 
 
 
