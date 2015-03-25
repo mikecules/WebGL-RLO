@@ -438,7 +438,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               __lastFrameDisplayDeltaTime = 0,
               __isAppRunning = true,
               __keyPressed = {},
-              __keyReleased = {};
+              __keyReleased = {},
+              __robotErrorPercentage = 25; // make the robot mess up 25% of the time
 
         function __showTitleScreen() {
           var HUDEl = canvasModalWidget.get2DCanvasEl();
@@ -1095,6 +1096,15 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
                 y2 = playerPosition.y + playerDimensions.y;
             
             if (player  !== __thePlayer) {
+
+              // is the robot going to screw up
+              var willRobotWillMessUpThisFrame = (1 + Math.floor(Math.random() * 100)) > __robotErrorPercentage ? false : true;
+
+              
+              if (willRobotWillMessUpThisFrame) {
+                player.update(dt - 10);
+                continue;
+              }
               
               //console.log(lowerBound, upperBound);
 
@@ -1124,12 +1134,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               potentialPlayerCollision = __players[1];
               ballYToHit = (ballPosition.y + ballRadius);
               inPlayerYRange = y1 <= ballYToHit;
-              console.log('computer');
+              //console.log('computer');
             }
             else {
               ballYToHit =  (ballPosition.y - ballRadius);
               inPlayerYRange = y2 >= ballYToHit;
-              console.log('player', y2, ballPosition.y);
+              //console.log('player');
             }
 
             if (player !== potentialPlayerCollision) {
@@ -1148,8 +1158,9 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
              else {
                __playerWon(__thePlayer);
              }
-              console.log('loser!');
-               return;
+
+             console.log('loser!');
+             return;
             }
 
           }

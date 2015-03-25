@@ -785,7 +785,7 @@ angular.module('WebGLRLOApp')
 	          				//'<li>&quot;Up&quot;, &quot;Down&quot; keys to move the camera on the Z-Axis (In and Out)</li>' + 
 	          			'</ul>', 
 	          appFn: Pong,
-	          screenShotURL: 'styles/app/images/demo4.png'
+	          screenShotURL: 'styles/app/images/demo7.png'
 	        }
         ]
       ];
