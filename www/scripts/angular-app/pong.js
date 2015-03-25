@@ -69,44 +69,50 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           }
 
+          // draw itself
           function __draw() {
 
 
             mat4.multiply(__modelMatrix, __translationMatrix, __rotationMatrix);
             mat4.multiply(__modelMatrix, __modelMatrix, __scaleMatrix);
 
+            // calculate the inverse, transpose of the model Matrix to make sure our surface normals are perpendicular to the surface again!!
             mat3.normalFromMat4(__normalMatrix, __modelMatrix);
 
+            // View * Model
             mat4.multiply(__PVMMatrix, _glProgram.customAttribs.viewMatrix, __modelMatrix);
+
+            // Perspective * (View * Model)
             mat4.multiply(__PVMMatrix, _glProgram.customAttribs.perspectiveMatrix, __PVMMatrix);
 
 
 
-
+            // alright now assign the matrices back to the location of our vertex shader
             _gl.uniformMatrix3fv(_glProgram.customAttribs.u_NormalMatrixRef, false, __normalMatrix);
             _gl.uniformMatrix4fv(_glProgram.customAttribs.u_PVMMatrixRef, false, __PVMMatrix);
 
-
+            // set the position buffer
             _gl.bindBuffer(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer);
             _gl.vertexAttribPointer(_glProgram.customAttribs.a_PositionRef, __sphereVertexPositionBuffer.itemSize, _gl.FLOAT, false, 0, 0);
             _gl.enableVertexAttribArray(_glProgram.customAttribs.a_PositionRef);
 
-
+            // set the index buffer
             _gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer);
 
-
+            // bind the surface normal buffer
             _gl.bindBuffer(_gl.ARRAY_BUFFER, __sphereVertexNormalBuffer);
             _gl.vertexAttribPointer(_glProgram.customAttribs.a_VertexNormalRef, __sphereVertexNormalBuffer.itemSize, _gl.FLOAT, false, 0, 0);
             _gl.enableVertexAttribArray(_glProgram.customAttribs.a_VertexNormalRef);
 
-
+            // make sure the sphere is in the correct colour
             _gl.uniform4f(_glProgram.customAttribs.u_FragColourRef, __colour.r, __colour.g, __colour.b, __colour.a);
 
+            // draw the elements!
             _gl.drawElements(_gl.TRIANGLES, __sphereVertexIndexBuffer.numItems, _gl.UNSIGNED_SHORT, 0);
 
           }
 
-
+          // rotate the sphere by x, y, z degrees
           function __rotateOnAxisByDegrees(x, y, z) {
 
             if (typeof x === 'number') {
@@ -128,6 +134,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           }
 
 
+          // scale the sphere by s units
           function __scale(s) {
             if (typeof s === 'number') {
               mat4.scale(__scaleMatrix, __scaleMatrix, vec3.fromValues(s, s, s));
@@ -138,6 +145,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             return this;
           }
 
+          // translate the sphere by (x, y, z) units
           function __translate(x, y, z) {
 
             mat4.translate(__translationMatrix, __translationMatrix, vec3.fromValues(x, y, z));
@@ -149,8 +157,9 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           __init();
 
-
-
+          ////////////////////////////////////////////////////////
+          // _Sphere public API
+          ////////////////////////////////////////////////////////
           this.rotateOnAxisByDegrees = __rotateOnAxisByDegrees;
 
           this.draw = __draw;
@@ -159,6 +168,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           this.translate = __translate;
 
+          // sets the colour of the primitive
           this.setColour = function(r, g, b, a) {
             __colour.r = r;
             __colour.g = g;
@@ -231,6 +241,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           }
 
+          // this function works in EXACTLY the same way as our sphere __draw function! Please refer to that
           function __draw() {
 
 
@@ -269,7 +280,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           }
 
-
+          // Note that the sphere and quads function constructors or so similar we could have created a basic JS Prototype to provide the basic functionality
+          // I just wanted to keep it simple for code readability - and I am lazy - that too...
           function __rotateOnAxisByDegrees(x, y, z) {
 
             if (typeof x === 'number') {
@@ -308,7 +320,9 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           __init();
 
 
-
+          ////////////////////////////////////////////////////////
+          // _Quad public API
+          ////////////////////////////////////////////////////////
           this.rotateOnAxisByDegrees = __rotateOnAxisByDegrees;
 
           this.draw = __draw;
@@ -336,7 +350,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
 
 
-    ///////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  _init() sets some gl program defaults and grabs the location to our attributes/uniforms in our shaders...
+    // The function then starts the game loop
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function _init() {
 
       _gl = canvasModalWidget.getGLContext();
@@ -444,7 +461,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         function __showTitleScreen() {
           var HUDEl = canvasModalWidget.get2DCanvasEl();
 
-
+          // clear the 2D canvas before drawing our stats!
           canvasModalWidget.clearHUDCanvas();
 
           __HUDContext.font = '24px "Verdana"';
@@ -457,6 +474,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           __HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)';
           __HUDContext.font = '18px "Verdana"';
 
+          // display the right messaging
           if (__isGamePaused() === true && __hasGameStarted) {
             __HUDContext.fillText('Press Space Bar to unpause...', 190, 210);
             __HUDContext.fillStyle = 'rgba(219, 204, 255, 1.0)';
@@ -464,14 +482,19 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             __HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)';
             __HUDContext.fillText('Robot Score: ' + __players[1].getScore(), 10, 40);
           }
-          else {
+          else { // game intro messaging
             __HUDContext.fillText('Press Space Bar to start...', 200, 210);
           }
 
-
+          // show the 2D HUD Canvas
           canvasModalWidget.showHUDCanvas();
         }
 
+        ///////////////////////////////////////////////////////////////////////////////
+        // __Rect provides some basic structures to encapsulate
+        // bounding rectangles for our game objects that we can check against
+        // useful for determining if the ball went out of bounds...
+        ///////////////////////////////////////////////////////////////////////////////
         function __Rect(x, y, width, height) {
           this.x1 = x || 0;
           this.y1 = y || 0;
@@ -483,6 +506,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           return this;
         }
 
+        ///////////////////////////////////////////////////////////////////////////////
+        // __Position provides some basic structures to encapsulate
+        // the location of our game objects...
+        ///////////////////////////////////////////////////////////////////////////////
         function __Position(x, y, z) {
           this.x = x || 0;
           this.y = y || 0;
@@ -491,6 +518,11 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           return this;
         }
 
+        ///////////////////////////////////////////////////////////////////////////////
+        // __Player encapsulates our player (essentially a paddle...)
+        // It is capable of drawing itself at a position based on the delta time which
+        // is in milliseconds (using it's velocity)
+        ///////////////////////////////////////////////////////////////////////////////
         function __Player(position, boundingRect, playerType) {
           var ___paddle = null,
               ___score = 0,
@@ -512,6 +544,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             ___paddle.draw();
           }
 
+          // update the player's position is 3D Space based off the delta time in milliseconds
           function ___update(tickDeltaMS) {
 
             var shouldUpdatePosition = true,
@@ -544,6 +577,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
             //console.log(newXPosition, ___playerBoundingRect.x2);
 
+            // don't let the paddle fall out of our bounding rect's X axis
             if ((newXPosition < - ___playerBoundingRect.x2) || (newXPosition > ___playerBoundingRect.x2)) {
               return;
             }
@@ -563,6 +597,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           ___init();
 
+          // __Player Public API
           this.getScore = function() {
             return ___score;
           };
@@ -604,10 +639,15 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         }
 
+        // Because I felt guilty for not using a prototype anywhere...
         __Player.prototype.PLAYER_TYPE = {ROBOT: 0, HUMAN: 1};
 
 
-        ////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////
+        // __Ball encapsulates our player (essentially a sphere...)
+        // It is capable of drawing itself at a position based on the delta time which
+        // is in milliseconds (using it's velocity)
+        ///////////////////////////////////////////////////////////////////////////////
         function __Ball(position, boundingRect) {
           var   ___ball = null,
                 ___ballPosition = position || new __Position(),
@@ -627,7 +667,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           }
 
 
-
+          // update the ball's position is 3D Space based off the delta time in milliseconds
           function ___update(tickDeltaMS) {
 
 
@@ -643,6 +683,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
             var newXPosition = ___ballPosition.x + distanceX;
             var newYPosition = ___ballPosition.y + distanceY;
+
+            // used to update the ball's current direction
             var newDirection = __DIRECTIONS.NONE;
 
 
@@ -651,13 +693,13 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
 
 
-
+            // don't let the ball fall out of our bounding rect's X axis
             if (newXPosition < - ___ballBoundingRect.x2 || newXPosition > ___ballBoundingRect.x2) {
               ___velocity.x = -___velocity.x;
                distanceX = -distanceX;
             }
 
-
+            // don't let the ball fall out of our bounding rect's Y axis
             if (newYPosition < - ___ballBoundingRect.y2 || newYPosition > ___ballBoundingRect.y2) {
               ___velocity.y = -___velocity.y;
               distanceY = -distanceY;
@@ -673,6 +715,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             }
 
 
+            // merge the NORTH/SOUTH Directional bit in our resultant direction variable
             if ( ___velocity.y < 0 ) {
                 newDirection |= __DIRECTIONS.SOUTH;
                 //console.log('south')
@@ -699,6 +742,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           }
 
+          // do some initial velocity calculations based on the direction passed in
           function ___setDirection(direction) {
             if (
                 ((direction & __DIRECTIONS.SOUTH) && ___velocity.y > 0) ||
@@ -719,6 +763,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           ___init();
 
+
+          // __Ball Public API
           this.draw = ___draw;
           this.update = ___update;
           this.setDirection = ___setDirection;
@@ -747,7 +793,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           return this;
         }
 
-
+      //////////////////////////////////////////////////////////////////////////////////////////
+      // __Map encapsulates our map (essentially a bunch of rectangles that creates a fence...)
+      // It is capable of drawing itself and doesn't do much else - except looking pretty.
+      //////////////////////////////////////////////////////////////////////////////////////////
       function __Map() {
         var ___leftWall = null,
             ___rightWall = null;
@@ -782,6 +831,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         ___init();
 
+        // __Map public API
         this.draw = ___draw;
         this.update = ___update;
 
@@ -817,7 +867,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
       }
 
 
-
+      ///////////////////////////////////////////////////////////////////////////
+      // __initGame() does some initial work to set some variables and bind
+      // our keyboard listener
+      ///////////////////////////////////////////////////////////////////////////
       function __initGame() {
 
         __HUDContext = canvasModalWidget.getHUDContext();
@@ -825,6 +878,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         __showTitleScreen();
         __bindKeyEvents();
 
+        // reset the FPS meter
         canvasModalWidget.setFPSVal(0);
 
         __resetGame();
@@ -832,26 +886,39 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       }
 
+      ///////////////////////////////////////////////////////////////////////////
+      // __resetGame() creates our basic game data structures and starts
+      // our main game loop (__tick)
+      ///////////////////////////////////////////////////////////////////////////
       function __resetGame() {
 
+        // reset the timer counter variables
         __lastDrawTime = 0;
         __frameCounter = 0;
 
+        // the players positions in 3D space
         var playerPosition = {x: 0.0, y: -1.9, z: 0.0};
 
+        // create the Map object
         __map = new __Map();
 
+
+        // create the Ball object
         __ball = new __Ball(null, new __Rect(0, 0, 2.5, 2));
+
+        // remove any old players (we want to draw all our game objects from scratch!)
         __players.length = 0;
 
-
+        // add the players to the game
         __players.push(new __Player(new __Position(playerPosition.x, playerPosition.y, playerPosition.z),  new __Rect(playerPosition.x, playerPosition.y, 2.08, 1), __Player.prototype.PLAYER_TYPE.HUMAN).setColour(0,0,1));
         __players.push(new __Player(new __Position(playerPosition.x, -playerPosition.y, playerPosition.z),  new __Rect(playerPosition.x, -playerPosition.y, 2.08, 1), __Player.prototype.PLAYER_TYPE.ROBOT).setColour(0,1,0));
 
+        // make note of the human player
         __thePlayer = __players[0];
 
 
-
+        // using bitwise ORs to be able to easily evaluate the direction
+        // the ball is moving in
         var possibleBallDirections = [
           __DIRECTIONS.EAST | __DIRECTIONS.NORTH,
           __DIRECTIONS.WEST | __DIRECTIONS.NORTH,
@@ -859,11 +926,17 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           __DIRECTIONS.WEST | __DIRECTIONS.SOUTH
         ];
 
+        // randomize the direction of the ball!
         __ball.setDirection(possibleBallDirections[Math.floor((Math.random() * possibleBallDirections.length) + 1)]);
 
+        // start the game loop!
         __tick();
       }
 
+      ///////////////////////////////////////////////////////////////////////////
+      // __playerWon() increments the user's score then wipes the game objects
+      // and replaces them with new ones while retaining the prior scores.
+      ///////////////////////////////////////////////////////////////////////////
       function __playerWon(player) {
         var playerScores = [];
 
@@ -894,13 +967,16 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
       }
 
 
-
+      ///////////////////////////////////////////////////////////////////////////
+      // __rotateMap() moves and rotates our camera view based on keyboard
+      // input.
+      ///////////////////////////////////////////////////////////////////////////
       function __rotateMap(rotationX, rotationY, zoomZ) {
         __setGamePauseStatus(true);
 
         var viewMatrix = mat4.create();
 
-
+        // rotates our X,Y locations of our camera
         if (rotationX) {
           var rotationInRadsX = glMatrix.toRadian(rotationX);
           vec3.rotateX(_glProgram.customAttribs.eyePosition, _glProgram.customAttribs.eyePosition, vec3.fromValues(0,0,0), rotationInRadsX);
@@ -913,6 +989,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           vec3.rotateY(_glProgram.customAttribs.centerPoint, _glProgram.customAttribs.centerPoint, vec3.fromValues(0,0,0), rotationInRadsY);
         }
 
+        // moves our camera in closer to the screen (only along the z-axis)
         if (zoomZ) {
           //console.log(_glProgram.customAttribs.eyePosition);
           vec3.add(_glProgram.customAttribs.eyePosition, _glProgram.customAttribs.eyePosition, vec3.fromValues(0, 0, zoomZ));
@@ -925,6 +1002,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // __bindKeyEvents() adds our keyboard listeners which we use throughout
+    // our game.
+    ///////////////////////////////////////////////////////////////////////////
     function __bindKeyEvents() {
       var KEY_PRESS_EVENT = 'keydown.pong3D',
           KEY_RELEASE_EVENT = 'keyup.pong3D',
@@ -946,6 +1027,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           //console.log(event.which);
         });
 
+      // when the modal is closed remove our key press listeners
       canvasModalWidget.onHide(function() {
         __isAppRunning = false;
 
@@ -959,6 +1041,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
     }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////
+    // __processInput() does the work of updating a game objects based on our
+    // user's input.
+    ///////////////////////////////////////////////////////////////////////////
     function __processInput() {
       var degreeInc = 2.0,
           zInc = 0.05;
@@ -994,13 +1082,21 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           case 100:
             __rotateMap(null, -degreeInc);
           break;
+
           case 32: // space bar
             __hasGameStarted = true;
             __setGamePauseStatus(! __getGameStatus());
           break;
+
           case 37: // move player left
             if (! __isGamePaused()) {
               __thePlayer.setDirection(__DIRECTIONS.EAST);
+            }
+          break;
+
+          case 39: // move player right
+            if (! __isGamePaused()) {
+              __thePlayer.setDirection(__DIRECTIONS.WEST);
             }
           break;
 
@@ -1010,12 +1106,6 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           case 50: // zoom in
             __rotateMap(null, null, zInc);
-          break;
-
-          case 39: // move player right
-            if (! __isGamePaused()) {
-              __thePlayer.setDirection(__DIRECTIONS.WEST);
-            }
           break;
 
           default:
@@ -1043,9 +1133,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
       }
     }
 
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // __tick() (our game loop) does the heavy lifting work of updating a game objects based on our
+    // user's input. It also provides a means to determine how far our game has progressed from the
+    // last time the frame was drawn.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
     function __tick() {
-
 
 
         var player = null,
@@ -1084,15 +1177,16 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         __processInput();
 
+
+        // if the game hasn't been paused...
         if (! __isGamePaused()) {
 
+          // calculate the new ball's position
           __ball.update(dt);
 
-          var ballPosition = __ball.getPosition();
-
-
-
-          var ballDirection = __ball.getDirection();
+          // get the new ball's position and direction
+          var ballPosition = __ball.getPosition(),
+              ballDirection = __ball.getDirection();
 
 
            for (count = 0; count < __players.length; count++) {
@@ -1103,7 +1197,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
                 x1 |--------- playerPosition.x (center) ---------| x2
                    y1--------------------------------------------|
             */
-
+            // calculate our player boundries based off of it's position in space
+            // we use this to determine where a collision happens
+            // and also where to move our robot so he/she/it does not miss the
+            // ball.
             var playerPosition = player.getPosition(),
                 x1 = playerPosition.x - playerDimensions.x,
                 x2 = playerPosition.x + playerDimensions.x,
@@ -1112,7 +1209,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
             if (player  !== __thePlayer) {
 
-              // is the robot going to screw up
+              // is the robot going to screw up - we randomize it's chance
               var willRobotWillMessUpThisFrame = (1 + Math.floor(Math.random() * 100)) > __robotErrorPercentage ? false : true;
 
 
@@ -1138,43 +1235,47 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               }
             }
 
+            // update the player's position
             player.update(dt);
 
-            // check for collision
-            var potentialPlayerCollision = __thePlayer,
-                inPlayerYRange = false,
+            // used to calculate who's potentially going to hit the ball
+            var potentialPlayerCollision = null,
+                inPlayerYRange = null,
                 ballYToHit = 0;
 
+            // if the ball is moving north then it's going to the robot
             if (ballDirection & __DIRECTIONS.NORTH) {
               potentialPlayerCollision = __players[1];
               ballYToHit = (ballPosition.y + ballRadius);
               inPlayerYRange = y1 <= ballYToHit;
               //console.log('computer');
             }
-            else {
+            else { // it's coming to us
+              potentialPlayerCollision = __thePlayer;
               ballYToHit =  (ballPosition.y - ballRadius);
               inPlayerYRange = y2 >= ballYToHit;
               //console.log('player');
             }
 
+            // if the current player being updated isn't set for a collision ignore them
             if (player !== potentialPlayerCollision) {
               continue;
             }
 
-
+            // alright, if the paddle is in place where the ball is moving rebound the ball
             if (x1  < ballPosition.x &&  ballPosition.x < x2 && inPlayerYRange) {
               __ball.rebound();
               __ball.update(dt);
             }
-            else if (ballYToHit <= -ballBoundingRect.y2 || ballYToHit >=  ballBoundingRect.y2) {
+            else if (ballYToHit <= -ballBoundingRect.y2 || ballYToHit >=  ballBoundingRect.y2) {  // if the ball's position is out of it's y-bound (for it's bounding rectangle) somebody lost
              if (player === __thePlayer) {
-              __playerWon(__players[1]);
+              __playerWon(__players[1]); // the computer won - booooo....
              }
              else {
-               __playerWon(__thePlayer);
+               __playerWon(__thePlayer); // we won!!! (! boooooo....)
              }
 
-             console.log('loser!');
+             //console.log('loser!');
              return;
             }
 
