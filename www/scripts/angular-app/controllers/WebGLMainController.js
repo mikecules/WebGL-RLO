@@ -722,7 +722,7 @@ angular.module('WebGLRLOApp')
 		window.$demos.Pong(canvasModalWidget, webGLDrawUtilities);
 	}
 
-	
+
 
 
   	////////////////////////////////////////////////////
@@ -777,13 +777,13 @@ angular.module('WebGLRLOApp')
         [
         	{
 	          caption: 'PongGL!',
-	          details: '<strong>Instructions</strong>: <ul>' + 
-	          				'<li>Press &quot;Space Bar&quot; to pause the game.</li>' +
-	          				'<li>The left and right arrow keys to move your player.</li>' +
-	          				'<li>&quot;w&quot;, &quot;s&quot; keys to rotate the camera on the X-Axis (Up and Down)</li>' + 
-	          				'<li>&quot;a&quot;, &quot;d&quot; keys to rotate the camera on the Y-Axis (Left and Right)</li>' + 
-	          				'<li>&quot;1&quot;, &quot;2&quot; numeric keys to move the camera on the Z-Axis (In and Out)</li>' + 
-	          			'</ul>', 
+	          details: '<strong>Instructions</strong>: <ul>' +
+	          				'<li>Press &quot;<strong>Space Bar</strong>&quot; to pause the game.</li>' +
+	          				'<li>The &quot;<strong>left</strong>&quot; and &quot;<strong>right</strong>&quot; arrow keys to move your player.</li>' +
+	          				'<li>&quot;<strong>w</strong>&quot;, &quot;<strong>s</strong>&quot; keys to rotate the camera on the X-Axis (Up and Down)</li>' +
+	          				'<li>&quot;<strong>a</strong>&quot;, &quot;<strong>d</strong>&quot; keys to rotate the camera on the Y-Axis (Left and Right)</li>' +
+	          				'<li>&quot;<strong>1</strong>&quot;, &quot;<strong>2</strong>&quot; numeric keys to move the camera on the Z-Axis (In and Out)</li>' +
+	          			'</ul>',
 	          appFn: Pong,
 	          screenShotURL: 'styles/app/images/demo7.png'
 	        }

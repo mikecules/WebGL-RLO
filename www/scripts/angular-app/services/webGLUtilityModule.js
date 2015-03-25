@@ -186,7 +186,7 @@ angular.module('webGLUtilityModule', [])
           __context = null;
         }
 
-        console.log('Canvas Context: ', __context);
+        //console.log('Canvas Context: ', __context);
       }
 
       function __setHeight(h) {
@@ -356,6 +356,16 @@ angular.module('webGLUtilityModule', [])
 
          __initCanvases();
 
+         // hide modal on ESC key press
+         $(window).on('keyup.modal', function(event) {
+              var key = parseInt(event.which);
+
+             // hide on the escape key
+             if (key === 27 && ! __isHidden()) {
+               __hide();
+             }
+          });
+
        }
 
 
@@ -373,7 +383,7 @@ angular.module('webGLUtilityModule', [])
             .append(_canvas3D.getCanvasJQObj().addClass('canvas canvas-gl'));
         }
 
-        console.log(_canvas2D, _canvas3D);
+        //console.log(_canvas2D, _canvas3D);
 
       }
 
@@ -393,12 +403,18 @@ angular.module('webGLUtilityModule', [])
 
       function __show(callbackFn) {
 
+        if (! __isHidden()) {
+          return this;
+        }
+
         _modalJQObj.fadeIn('fast', function() {
 
         _modalBox.show('fast', function() {
           if (typeof callbackFn === 'function') {
             callbackFn.call(this);
           }
+
+          _isModalShowing = true;
         });
       });
 
@@ -407,6 +423,10 @@ angular.module('webGLUtilityModule', [])
       }
 
       function __hide(callbackFn) {
+
+        if (__isHidden()) {
+          return this;
+        }
 
         _modalBox.hide('fast', function() {
           _modalJQObj.fadeOut('fast', function() {
@@ -422,8 +442,11 @@ angular.module('webGLUtilityModule', [])
 
             _modalHideCallbackFn = null;
             __resetCanvasWidget();
+
+            _isModalShowing = false;
           });
         });
+
 
         return this;
 
@@ -432,6 +455,10 @@ angular.module('webGLUtilityModule', [])
 
       function __modalFPSHide() {
         _modalFPSContainer.html('&nbsp;');
+      }
+
+      function __isHidden() {
+        return _isModalShowing === false;
       }
 
 
@@ -448,9 +475,7 @@ angular.module('webGLUtilityModule', [])
         return this;
       };
 
-      this.isHidden = function() {
-        return _isModalShowing;
-      };
+      this.isHidden = __isHidden;
 
       this.getHUDContext = function() {
         return _canvas2D.getContext();
@@ -484,10 +509,10 @@ angular.module('webGLUtilityModule', [])
         return this;
       };
 
-      this.clearHUDCanvas = function() {      
+      this.clearHUDCanvas = function() {
         _canvas2D
           .getContext()
-          .clearRect(0, 0, _canvas2D.getWidth(), _canvas2D.getHeight()); 
+          .clearRect(0, 0, _canvas2D.getWidth(), _canvas2D.getHeight());
       };
 
       this.setGLVertexAndFragmentShaders = function(vertexShaderStrOrID, fragmentShaderStrOrID) {
