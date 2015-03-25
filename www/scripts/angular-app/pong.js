@@ -440,10 +440,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               __keyPressed = {},
               __keyReleased = {};
 
-        function __showTitleScreen(isGamePaused) {
+        function __showTitleScreen() {
           var HUDEl = canvasModalWidget.get2DCanvasEl();
 
-          
+
           canvasModalWidget.clearHUDCanvas();
 
           __HUDContext.font = '24px "Verdana"';
@@ -456,7 +456,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           __HUDContext.fillStyle = 'rgba(255, 204, 204, 1.0)'; 
           __HUDContext.font = '18px "Verdana"';
 
-          if (isGamePaused === true && __hasGameStarted) {
+          if (__isGamePaused() === true && __hasGameStarted) {
             __HUDContext.fillText('Press Space Bar to unpause...', 190, 210);
             __HUDContext.fillStyle = 'rgba(219, 204, 255, 1.0)';
             __HUDContext.fillText('Your Score: ' + __thePlayer.getScore(), 10, 20);
@@ -497,12 +497,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               ___playerPosition = position || new __Position(),
               ___playerBoundingRect = boundingRect,
               ___velocity = {x: 0.003, y: 0},
-              ___movingDirection = __DIRECTIONS.NONE;
+              ___movingDirection = __DIRECTIONS.NONE,
+              ___paddleDimensions = {x: 0.5, y: 0.05, z: 0.1};
 
 
           function ___init() {
-            var paddleDimensions = {x: 0.5, y: 0.05, z: 0.1}
-            ___paddle = new _Quad(paddleDimensions.x, paddleDimensions.y, paddleDimensions.z);
+            ___paddle = new _Quad(___paddleDimensions.x, ___paddleDimensions.y, ___paddleDimensions.z);
             ___paddle.translate(___playerPosition.x, ___playerPosition.y, ___playerPosition.z);
           }
 
@@ -538,11 +538,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               return;
             }
 
-            var distance = tickDeltaMS * playerVelocityX;
+            var distance = tickDeltaMS * playerVelocityX,
+                newXPosition = ___playerPosition.x + distance;
 
-            var newXPosition = ___playerPosition.x + distance;
-
-            console.log(newXPosition, ___playerBoundingRect.x2);
+            //console.log(newXPosition, ___playerBoundingRect.x2);
 
             if ((newXPosition < - ___playerBoundingRect.x2) || (newXPosition > ___playerBoundingRect.x2)) {
               return;
@@ -565,7 +564,11 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           this.getScore = function() {
             return ___score;
-          }
+          };
+
+          this.setScore = function(score) {
+            ___score = score;
+          };
 
           this.draw = ___draw;
           this.update = ___update;
@@ -574,6 +577,24 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           this.setColour = function(r, g, b) {
             ___paddle.setColour(r, g, b, 1);
+            return this;
+          };
+
+          this.getPosition = function() {
+            return ___playerPosition;
+          };
+
+          this.getDirection = function() {
+            return ___movingDirection;
+          };
+
+
+          this.getDimensions = function() {
+            return ___paddleDimensions;
+          };
+
+          this.setVelocityX = function(x) {
+            ___velocity.x = x;
             return this;
           };
 
@@ -590,12 +611,13 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           var   ___ball = null,
                 ___ballPosition = position || new __Position(),
                 ___ballBoundingRect = boundingRect,
-                ___velocity = {x: 0.003, y: 0.003},
-                ___movingDirection = __DIRECTIONS.NONE;
+                ___velocity = {x: 0.002, y: 0.002},
+                ___movingDirection = __DIRECTIONS.NONE,
+                ___radius = 0.1;
 
 
           function ___init() {
-            ___ball = new _Sphere(0.1);
+            ___ball = new _Sphere(___radius);
             ___ball.translate(___ballPosition.x, ___ballPosition.y, ___ballPosition.z);
           }
 
@@ -607,65 +629,90 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
           function ___update(tickDeltaMS) {
 
-            var ballVelocityX = ___velocity.x,
-                ballVelocityY = ___velocity.y;
-
+    
             if (___movingDirection === __DIRECTIONS.NONE) {
               return;
             }
 
+          
             
-            
-            if (___movingDirection & __DIRECTIONS.WEST) {
-              ballVelocityX = -ballVelocityX;
-            }
-
-
-            if (___movingDirection & __DIRECTIONS.SOUTH) {
-              ballVelocityY = -ballVelocityY;
-            }
-            
-                
-
-            var distanceX = tickDeltaMS * ballVelocityX;
-            var distanceY = tickDeltaMS * ballVelocityY;
+        
+            var distanceX = tickDeltaMS * ___velocity.x;
+            var distanceY = tickDeltaMS * ___velocity.y;
 
             var newXPosition = ___ballPosition.x + distanceX;
             var newYPosition = ___ballPosition.y + distanceY;
+            var newDirection = __DIRECTIONS.NONE;
 
 
-            console.log('x ', newXPosition, ___ballBoundingRect.x2);
-            console.log('y' , newYPosition, ___ballBoundingRect.y2);
+           //console.log('x ', newXPosition, ___ballBoundingRect.x2);
+            //console.log('y' , newYPosition, ___ballBoundingRect.y2);
 
 
-            if (newXPosition < - ___ballBoundingRect.x2) { 
-              ___movingDirection = __DIRECTIONS.EAST;
-            }
-            else if (newXPosition > ___ballBoundingRect.x2) {
+        
+
+            if (newXPosition < - ___ballBoundingRect.x2 || newXPosition > ___ballBoundingRect.x2) {             
+              ___velocity.x = -___velocity.x;
                distanceX = -distanceX;
-               ___movingDirection = __DIRECTIONS.WEST;
             }
-/*
-            if (newYPosition < - ___ballBoundingRect.y2) {
+          
+
+            if (newYPosition < - ___ballBoundingRect.y2 || newYPosition > ___ballBoundingRect.y2) {          
+              ___velocity.y = -___velocity.y;
               distanceY = -distanceY;
-              ___movingDirection = __DIRECTIONS.NORTH;
             }
-            else if (newYPosition > ___ballBoundingRect.y2) {
-               ___movingDirection = __DIRECTIONS.SOUTH; 
-            }*/
+
+            if (___velocity.x < 0) {
+                newDirection = __DIRECTIONS.WEST;
+                //console.log('west')
+            }
+            else {
+              newDirection = __DIRECTIONS.EAST;
+               //console.log('east')
+            }
+           
+
+            if ( ___velocity.y < 0 ) {
+                newDirection |= __DIRECTIONS.SOUTH;
+                //console.log('south')
+            }
+            else {
+              newDirection |= __DIRECTIONS.NORTH;
+              //console.log('north')
+            }
+           
+
+            
+           
+            ___movingDirection = newDirection;
+            
+
+
             
              ___ballPosition.x += distanceX;
              ___ballPosition.y += distanceY;
              
-             ___ball.translate(distanceX, 0, 0);
+             ___ball.translate(distanceX, distanceY, 0);
 
 
-
-          
 
           }
 
           function ___setDirection(direction) {
+            if (
+                ((direction & __DIRECTIONS.SOUTH) && ___velocity.y > 0) || 
+                ((direction & __DIRECTIONS.NORTH) && ___velocity.y < 0)
+              ) {
+              ___velocity.y = -___velocity.y;
+            }
+
+            if (
+                ((direction & __DIRECTIONS.WEST) && ___velocity.x > 0) || 
+                ((direction & __DIRECTIONS.EAST) && ___velocity.x < 0)
+              ) {
+              ___velocity.x = -___velocity.x;
+            }
+           
             ___movingDirection = direction;
           }
 
@@ -674,6 +721,26 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           this.draw = ___draw;
           this.update = ___update;
           this.setDirection = ___setDirection;
+
+          this.getPosition = function() {
+            return ___ballPosition;
+          };
+
+          this.getDirection = function() {
+            return ___movingDirection;
+          };
+
+          this.getRadius = function() {
+            return ___radius;
+          };
+
+          this.getBoundingRect = function() {
+            return ___ballBoundingRect;
+          };
+
+          this.rebound = function() {
+             ___velocity.y = -___velocity.y;
+          };
 
 
           return this;
@@ -732,7 +799,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         __gameStatus = newGameStatus;
 
         if (__gameStatus === __GAME_STATES.PAUSED) {
-          __showTitleScreen(true);
+          __showTitleScreen();
         }
         else {
           canvasModalWidget.hideHUDCanvas();
@@ -755,25 +822,74 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         __HUDContext = canvasModalWidget.getHUDContext();
 
         __showTitleScreen();
+        __bindKeyEvents();
 
         canvasModalWidget.setFPSVal(0);
+
+        __resetGame();
+
+        
+      }
+
+      function __resetGame() {
+
+        __lastDrawTime = 0;
+        __frameCounter = 0;
 
         var playerPosition = {x: 0.0, y: -1.9, z: 0.0};
 
         __map = new __Map();
 
         __ball = new __Ball(null, new __Rect(0, 0, 2.5, 2));
+        __players.length = 0;
+
 
         __players.push(new __Player(new __Position(playerPosition.x, playerPosition.y, playerPosition.z),  new __Rect(playerPosition.x, playerPosition.y, 2.08, 1), __Player.prototype.PLAYER_TYPE.HUMAN).setColour(0,0,1));
         __players.push(new __Player(new __Position(playerPosition.x, -playerPosition.y, playerPosition.z),  new __Rect(playerPosition.x, -playerPosition.y, 2.08, 1), __Player.prototype.PLAYER_TYPE.ROBOT).setColour(0,1,0));
 
         __thePlayer = __players[0];
 
-        __bindKeyEvents();
+        
 
-        __ball.setDirection(__DIRECTIONS.EAST );
+        var possibleBallDirections = [
+          __DIRECTIONS.EAST | __DIRECTIONS.NORTH, 
+          __DIRECTIONS.WEST | __DIRECTIONS.NORTH, 
+          __DIRECTIONS.EAST | __DIRECTIONS.SOUTH,
+          __DIRECTIONS.WEST | __DIRECTIONS.SOUTH
+        ]; 
+
+        __ball.setDirection(possibleBallDirections[Math.floor((Math.random() * possibleBallDirections.length) + 1)]);
 
         __tick();
+      }
+
+      function __playerWon(player) {
+        var playerScores = [];
+
+        for (var i = 0; i < __players.length; i++) {
+          var p = __players[i],
+                  playerScore = p.getScore();
+
+          if (p === player) {
+            playerScore++;
+          }
+
+          playerScores.push(playerScore);
+
+        }
+
+        console.log()
+          
+        __setGamePauseStatus(true);
+        __resetGame(playerScores);
+
+        for (var i = 0; i < __players.length; i++) {
+          var p = __players[i];
+          p.setScore(playerScores[i]);
+        }
+        
+        __showTitleScreen();
+        
       }
 
 
@@ -919,7 +1035,10 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         var player = null,
             count = 0,
             tickTime = (new Date()).getTime(),
-            dt = 0;
+            dt = 0,
+            playerDimensions = __thePlayer.getDimensions(),
+            ballRadius = __ball.getRadius(),
+            ballBoundingRect = __ball.getBoundingRect();
 
 
         if (__lastDrawTime === 0) {
@@ -933,6 +1052,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         if (__lastFrameDisplayDeltaTime >= 1000)  {
            canvasModalWidget.setFPSVal(__frameCounter);
+
           __frameCounter = 0;
           __lastFrameDisplayDeltaTime = 0;
         }
@@ -949,13 +1069,96 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         __processInput();
 
         if (! __isGamePaused()) {
+          
           __ball.update(dt);
+          
+          var ballPosition = __ball.getPosition();
+
+
+
+          var ballDirection = __ball.getDirection();
+
 
            for (count = 0; count < __players.length; count++) {
             player = __players[count];
+
+            /*
+                   y2--------------------------------------------|
+                x1 |--------- playerPosition.x (center) ---------| x2
+                   y1--------------------------------------------|
+            */
+
+            var playerPosition = player.getPosition(),        
+                x1 = playerPosition.x - playerDimensions.x,
+                x2 = playerPosition.x + playerDimensions.x,
+                y1 = playerPosition.y - playerDimensions.y,
+                y2 = playerPosition.y + playerDimensions.y;
+            
+            if (player  !== __thePlayer) {
+              
+              //console.log(lowerBound, upperBound);
+
+              // if the lower bound X is less then the ball center X and the upper bound is greater than the ball center stay still
+              if (x1 < ballPosition.x &&  ballPosition.x < x2) { 
+                player.setDirection(__DIRECTIONS.NONE);
+              }
+              // if the the ball center X is greater than the right extremity of the player go east quickily
+              else if (ballPosition.x < x2) {
+                player.setDirection(__DIRECTIONS.EAST);
+              }
+
+              // otherwise go south
+              else {
+                player.setDirection(__DIRECTIONS.WEST);
+              }
+            }
+
             player.update(dt);
+
+            // check for collision
+            var potentialPlayerCollision = __thePlayer,
+                inPlayerYRange = false,
+                ballYToHit = 0; 
+
+            if (ballDirection & __DIRECTIONS.NORTH) {
+              potentialPlayerCollision = __players[1];
+              ballYToHit = (ballPosition.y + ballRadius);
+              inPlayerYRange = y1 <= ballYToHit;
+              console.log('computer');
+            }
+            else {
+              ballYToHit =  (ballPosition.y - ballRadius);
+              inPlayerYRange = y2 >= ballYToHit;
+              console.log('player', y2, ballPosition.y);
+            }
+
+            if (player !== potentialPlayerCollision) {
+              continue;
+            }
+
+
+            if (x1  < ballPosition.x &&  ballPosition.x < x2 && inPlayerYRange) {
+              __ball.rebound();
+              __ball.update(dt);
+            }
+            else if (ballYToHit <= -ballBoundingRect.y2 || ballYToHit >=  ballBoundingRect.y2) {
+             if (player === __thePlayer) {
+              __playerWon(__players[1]);
+             }
+             else {
+               __playerWon(__thePlayer);
+             }
+              console.log('loser!');
+               return;
+            }
+
           }
+
+           
         }
+
+        
+        
 
 
         // draw the game objects...

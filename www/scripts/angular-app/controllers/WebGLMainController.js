@@ -782,7 +782,7 @@ angular.module('WebGLRLOApp')
 	          				'<li>The left and right arrow keys to move your player.</li>' +
 	          				'<li>&quot;w&quot;, &quot;s&quot; keys to rotate the camera on the X-Axis (Up and Down)</li>' + 
 	          				'<li>&quot;a&quot;, &quot;d&quot; keys to rotate the camera on the Y-Axis (Left and Right)</li>' + 
-	          				'<li>&quot;Up&quot;, &quot;Down&quot; keys to move the camera on the Z-Axis (In and Out)</li>' + 
+	          				//'<li>&quot;Up&quot;, &quot;Down&quot; keys to move the camera on the Z-Axis (In and Out)</li>' + 
 	          			'</ul>', 
 	          appFn: Pong,
 	          screenShotURL: 'styles/app/images/demo4.png'
