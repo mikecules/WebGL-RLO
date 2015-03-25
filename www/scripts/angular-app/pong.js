@@ -879,7 +879,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
         }
 
-        console.log()
+        //console.log()
           
         __setGamePauseStatus(true);
         __resetGame(playerScores);
@@ -895,7 +895,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
 
 
-      function __rotateMap(rotationX, rotationY) {
+      function __rotateMap(rotationX, rotationY, zoomZ) {
         __setGamePauseStatus(true);
 
         var viewMatrix = mat4.create();
@@ -911,6 +911,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           var rotationInRadsY = glMatrix.toRadian(rotationY);
           vec3.rotateY(_glProgram.customAttribs.eyePosition, _glProgram.customAttribs.eyePosition, vec3.fromValues(0,0,0), rotationInRadsY);
           vec3.rotateY(_glProgram.customAttribs.centerPoint, _glProgram.customAttribs.centerPoint, vec3.fromValues(0,0,0), rotationInRadsY);
+        }
+
+        if (zoomZ) {
+          //console.log(_glProgram.customAttribs.eyePosition);
+          vec3.add(_glProgram.customAttribs.eyePosition, _glProgram.customAttribs.eyePosition, vec3.fromValues(0, 0, zoomZ));
+          //console.log(_glProgram.customAttribs.eyePosition);
         }
 
 
@@ -995,6 +1001,14 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             if (! __isGamePaused()) {
               __thePlayer.setDirection(__DIRECTIONS.EAST);
             }
+          break;
+
+          case 49: // zoom out
+            __rotateMap(null, null, -0.1);
+          break;
+
+          case 50: // zoom in
+            __rotateMap(null, null, 0.1);
           break;
 
           case 39: // move player right
