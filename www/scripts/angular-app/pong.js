@@ -960,7 +960,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
     }
 
     function __processInput() {
-      var degreeInc = 2.0;
+      var degreeInc = 2.0,
+          zInc = 0.05;
       //console.log(_keyPressed);
 
     
@@ -1004,11 +1005,11 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
           break;
 
           case 49: // zoom out
-            __rotateMap(null, null, -0.1);
+            __rotateMap(null, null, -zInc);
           break;
 
           case 50: // zoom in
-            __rotateMap(null, null, 0.1);
+            __rotateMap(null, null, zInc);
           break;
 
           case 39: // move player right
