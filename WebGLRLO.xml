@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This is a Reload version 2.5.6 Metadata document-->
+<!--Spawned from the Reload Metadata Generator - http://www.reload.ac.uk-->
+<lom xmlns="http://www.imsglobal.org/xsd/imsmd_v1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p4.xsd">
+  <general>
+    <identifier>learn.npcomplete.me.index.html</identifier>
+    <catalogentry>
+      <catalog>URI</catalog>
+      <entry>http://learn.npcomplete.me</entry>
+    </catalogentry>
+    <title>
+      <langstring xml:lang="en">An Introduction to WebGL</langstring>
+    </title>
+    <language>en</language>
+    <description>
+      <langstring xml:lang="en">An introduction to WebGL illustrated through real examples.</langstring>
+    </description>
+    <keyword>
+      <langstring xml:lang="en">WegGL Pong</langstring>
+    </keyword>
+    <keyword>
+      <langstring xml:lang="en">HTML5</langstring>
+    </keyword>
+    <keyword>
+      <langstring xml:lang="en">Graphics</langstring>
+    </keyword>
+    <keyword>
+      <langstring xml:lang="en">Canvas</langstring>
+    </keyword>
+    <keyword>
+      <langstring xml:lang="en">Pong</langstring>
+    </keyword>
+    <coverage>
+      <langstring xml:lang="en">Beginner</langstring>
+    </coverage>
+    <structure>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Collection</langstring>
+      </value>
+    </structure>
+    <aggregationlevel>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">2</langstring>
+      </value>
+    </aggregationlevel>
+  </general>
+  <lifecycle>
+    <version>
+      <langstring xml:lang="en">1.0</langstring>
+    </version>
+    <status>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Final</langstring>
+      </value>
+    </status>
+    <contribute>
+      <role>
+        <source>
+          <langstring xml:lang="en">LOMv1.0</langstring>
+        </source>
+        <value>
+          <langstring xml:lang="en">Author</langstring>
+        </value>
+      </role>
+      <centity>
+        <vcard><![CDATA[BEGIN:VCARD
+N:Moncada;Michael;;Mr.;
+EMAIL;INTERNET:michael.moncada@gmail.com
+TITLE:Mobile Application Developer
+URL:http://npcomplete.me
+END:VCARD]]></vcard>
+      </centity>
+      <date>
+        <datetime>2015-03-26</datetime>
+      </date>
+    </contribute>
+  </lifecycle>
+  <metametadata>
+    <identifier>me.npcomplete.learn.metadata</identifier>
+    <contribute>
+      <role>
+        <source>
+          <langstring xml:lang="en">LOMv1.0</langstring>
+        </source>
+        <value>
+          <langstring xml:lang="en">Author</langstring>
+        </value>
+      </role>
+      <centity>
+        <vcard><![CDATA[BEGIN:VCARD
+N:Moncada;Michael;;Mr.;
+EMAIL;INTERNET:michael.moncada@gmail.com
+TITLE:Mobile Application Developer
+URL:http://npcomplete.me
+END:VCARD]]></vcard>
+      </centity>
+      <date>
+        <datetime>2015-03-26</datetime>
+      </date>
+    </contribute>
+    <contribute>
+      <role>
+        <source>
+          <langstring xml:lang="en">LOMv1.0</langstring>
+        </source>
+        <value>
+          <langstring xml:lang="en">Validator</langstring>
+        </value>
+      </role>
+      <centity>
+        <vcard><![CDATA[BEGIN:VCARD
+N:Moncada;Michael;;Mr.;
+EMAIL;INTERNET:michael.moncada@gmail.com
+TITLE:Mobile Application Developer
+URL:http://npcomplete.me
+END:VCARD]]></vcard>
+      </centity>
+      <date>
+        <datetime>2015-03-26</datetime>
+      </date>
+    </contribute>
+    <metadataSchema>LOMv1.0</metadataSchema>
+    <metadatascheme>CanCorev2.0</metadatascheme>
+    <language>en</language>
+  </metametadata>
+  <technical>
+    <format>text/html</format>
+    <format>image/png</format>
+    <format>text/javascript</format>
+    <location>http://learn.npcomplete.me</location>
+    <requirement>
+      <type>
+        <source>
+          <langstring xml:lang="en">LOMv1.0</langstring>
+        </source>
+        <value>
+          <langstring xml:lang="en">Browser</langstring>
+        </value>
+      </type>
+      <name>
+        <source>
+          <langstring xml:lang="en">LOMv1.0</langstring>
+        </source>
+        <value>
+          <langstring xml:lang="en">Multi-OS</langstring>
+        </value>
+      </name>
+    </requirement>
+    <otherplatformrequirements>
+      <langstring xml:lang="en">WebGL compliant browsers including Chrome, Firefox and Safari</langstring>
+    </otherplatformrequirements>
+    <duration />
+  </technical>
+  <educational>
+    <interactivitytype>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Expositive</langstring>
+      </value>
+    </interactivitytype>
+    <learningresourcetype>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Lecture</langstring>
+      </value>
+    </learningresourcetype>
+    <interactivitylevel>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">medium</langstring>
+      </value>
+    </interactivitylevel>
+    <intendedenduserrole>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Learner</langstring>
+      </value>
+    </intendedenduserrole>
+    <context>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Training</langstring>
+      </value>
+    </context>
+    <typicalagerange>
+      <langstring xml:lang="en">16-120</langstring>
+    </typicalagerange>
+    <difficulty>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">medium</langstring>
+      </value>
+    </difficulty>
+    <typicallearningtime>
+      <duration>PT1H00M00S</duration>
+    </typicallearningtime>
+    <description>
+      <langstring xml:lang="en">An introduction to WebGL illustrated through real examples.</langstring>
+    </description>
+    <language>en</language>
+  </educational>
+  <rights>
+    <cost>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">no</langstring>
+      </value>
+    </cost>
+    <copyrightandotherrestrictions>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">yes</langstring>
+      </value>
+    </copyrightandotherrestrictions>
+    <description>
+      <langstring xml:lang="en">CC 4.0 License</langstring>
+    </description>
+  </rights>
+  <classification>
+    <purpose>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">Competency</langstring>
+      </value>
+    </purpose>
+    <taxonpath>
+      <source>
+        <langstring xml:lang="en">CanCorev2.0</langstring>
+      </source>
+      <taxon>
+        <entry>
+          <langstring xml:lang="en">Course</langstring>
+        </entry>
+      </taxon>
+    </taxonpath>
+  </classification>
+</lom>
+
