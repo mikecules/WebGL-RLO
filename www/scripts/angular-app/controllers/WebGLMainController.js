@@ -18,6 +18,7 @@ angular.module('WebGLRLOApp')
         // get the gl context from our modal widget
         var gl = canvasModalWidget.getGLContext();
 
+        // if we couldn't get the WebGL context abort!
         if (! gl) {
           throw new Error('Could not run drawPointExample() WebGL Demo!');
         }
@@ -30,7 +31,7 @@ angular.module('WebGLRLOApp')
 
         // create vertex data and the buffer then bind them!
         var vertices = new Float32Array([
-            0.0, 0.0, 0.0, // x , y, z coordinatates
+            0.0, 0.0, 0.0, // x , y, z coordinates for each of our points in 3D space
             1.0, 0.0, 0.0,
             0.0, 1.0, 0.0,
             1.0, 1.0, 0.0,
@@ -41,20 +42,29 @@ angular.module('WebGLRLOApp')
             0.0,-1.0, 0.0
           ]);
 
-        var NUM_OF_COORDS = 3,
-            vertexBuffer = gl.createBuffer();
+        var NUM_OF_COORDS = 3,                  // x, y, z per point
+            vertexBuffer = gl.createBuffer();   // create the buffer from the WebGL Context
 
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer); // let WebGL know we are selecting this buffer
+        gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW); // now write our data to the selected buffer
 
 
         // get the location of the a_Position attribute in the vertex shader
         var a_Position = gl.getAttribLocation(program, 'a_Position');
 
-        // Assign the pointer
+        // Give WebGL some info about the data we are assigning to the position variable 
+        /* 
+            void glVertexAttribPointer( GLuint index,
+                    GLint size,
+                    GLenum type,
+                    GLboolean normalized,
+                    GLsizei stride,
+                    const GLvoid * pointer);
+            see https://www.khronos.org/opengles/sdk/docs/man/xhtml/glVertexAttribPointer.xml
+        */
         gl.vertexAttribPointer(a_Position, NUM_OF_COORDS, gl.FLOAT, false, 0, 0);
-        gl.enableVertexAttribArray(a_Position);
+        gl.enableVertexAttribArray(a_Position); // tell WebGL we want to enable this vertex shader variable for this buffer
 
 
         // Set clear color to black, fully opaque
@@ -64,6 +74,13 @@ angular.module('WebGLRLOApp')
         gl.clear(gl.COLOR_BUFFER_BIT);
 
         // Draw the points
+        /*
+            void glDrawArrays(  GLenum mode,
+                    GLint first,
+                    GLsizei count);
+
+            see https://www.khronos.org/opengles/sdk/docs/man/xhtml/glDrawArrays.xml
+        */
         gl.drawArrays(gl.POINTS, 0, vertices.length / NUM_OF_COORDS);
 
       }
@@ -73,46 +90,59 @@ angular.module('WebGLRLOApp')
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Demo 2: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+	// Demo 2: Draws freeform points recorded as we hold down the "click" mouse button
+    // the points will be drawn in blue
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function drawSimpleShapeWithMouseExample() {
 
 	    // get the gl context from our modal widget
 	    var gl = canvasModalWidget.getGLContext(),
-	    	RESIZE_EVENT_NAME = 'resize.demo2',
-	    	_window = $(window);
+	    	RESIZE_EVENT_NAME = 'resize.demo2', // make this a constant we want to know when the window is resizes
+	    	_window = $(window); // lets cache a jQuery reference to the window
 
+        // if we couldn't get the WebGL context abort!
 	    if (! gl) {
 	      throw new Error('Could not run drawPointExample() WebGL Demo!');
 	    }
 
 
-
+        // this anonymous function is called when our modal is dismissed
 	    canvasModalWidget.onHide(function() {
-	    	console.log('Closed');
+	    	//console.log('Closed');
+            // unbind our resize listener on modal close (clean-up)
 	    	_window.unbind(RESIZE_EVENT_NAME);
 	    });
 
 	    // get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
 	    var program = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo1', '#f-shader-demo1');
-	    var freeFormPoints = [];
+	    
+        // this array stores all of our points that we will be drawing
+        var freeFormPoints = [];
 
 
+        // we only care to record the x and y points since we don't care about the z-axis at this point
+	    var NUM_OF_COORDS = 2,
+            vertexBuffer = gl.createBuffer(), // create the buffer
+            _canvasRect = null; // we will cache the canvas rectangle object for perfomance reasons
+	    
 
-	    var NUM_OF_COORDS = 2;
-	    var vertexBuffer = gl.createBuffer();
-	    var _canvasRect = null;
-	    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+        // tell WebGL that we want to use the vertex buffer
+        gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+
+        // give WebGL some information about the data we are storing in the buffer
 	    gl.vertexAttribPointer(a_Position, NUM_OF_COORDS, gl.FLOAT, false, 0, 0);
 
 	    // get the location of the a_Position attribute in the vertex shader
 	    var a_Position = gl.getAttribLocation(program, 'a_Position');
 
+        // we want to enable the position variable for use
 	    gl.enableVertexAttribArray(a_Position);
 
-	    _window.on(RESIZE_EVENT_NAME, function() { console.log('window resized!'); _canvasRect = null; })
+        // on window resize we want to get a new reference to the canvas rectangle object
+	    _window.on(RESIZE_EVENT_NAME, function() { /* console.log('window resized!'); */ _canvasRect = null; })
 
 
+        // this method clears our colour buffer and then draws our points
 	    function _draw() {
 	      gl.clear(gl.COLOR_BUFFER_BIT);
 	      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(freeFormPoints), gl.STATIC_DRAW);
@@ -121,7 +151,9 @@ angular.module('WebGLRLOApp')
 
 
 
-
+        // _bindMouseEvents() contains the logic to map browser x, y coordinates to WebGL
+        // coordinetes - remember that WebGL uses -1 <= x <= 1, -1 <= y <= 1, -1 <= z <= 1
+        // coordinate space.
 	    function _bindMouseEvents() {
 	      	var __startTracking = false,
 	          	__glCanvas = canvasModalWidget.getGLCanvasEl(),
@@ -133,14 +165,17 @@ angular.module('WebGLRLOApp')
 				var x = e.clientX, // x coordinate of a mouse pointer
 				y = e.clientY; // y coordinate of a mouse pointer
 
-	          	_canvasRect = _canvasRect || e.target.getBoundingClientRect();
+	          	// grab the cached canvas rectangle or query the event object
+                // for a new one
+                _canvasRect = _canvasRect || e.target.getBoundingClientRect();
 
 
-
+                // make
 	          	x = ((x - _canvasRect.left) - __midCanvasWidth) / __midCanvasWidth;
 	          	y = (__midCanvasHeight - (y - _canvasRect.top))  / __midCanvasHeight;
 
 
+                // store our transformed points in the array
 	          	freeFormPoints.push(x), freeFormPoints.push(y);
 	          	//console.log(freeFormPoints.length/2)
 
@@ -148,6 +183,7 @@ angular.module('WebGLRLOApp')
 	          	//console.log(e);
 	    	}
 
+            // bind our mouse listener that will capture our x,y coordinates
 			__glCanvas
 				.on('mousedown', function(event) {
 				  __startTracking = true;
@@ -174,27 +210,30 @@ angular.module('WebGLRLOApp')
 
 
 
+        // _init() is our start function
+	    function _init() {
+	      // Set clear color to black, fully opaque
+	      gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-		    function _init() {
-		      // Set clear color to black, fully opaque
-		      gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
 
+	      // Clear the color buffer.
+	      gl.clear(gl.COLOR_BUFFER_BIT);
 
-		      // Clear the color buffer.
-		      gl.clear(gl.COLOR_BUFFER_BIT);
+	      _bindMouseEvents();
+	    }
 
-		      _bindMouseEvents();
-		    }
-
-		    _init();
+		
+        // start this demo
+        _init();
 
 
 	}
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Demo 3: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+	// Demo 3: Draws a triangle and then uses tranformations to copy the same triangle at 2 other locations
+    // with 3 other drawing modes.
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function shapesExample() {
 
@@ -242,7 +281,8 @@ angular.module('WebGLRLOApp')
         // Clear the color buffer.
         gl.clear(gl.COLOR_BUFFER_BIT);
 
-
+        // here we have our translation coordinates, our draw mode and colours all in one data structure
+        // a JavaScript object.
         var translations = [
         	{x: 0, y: 0, z: 0, drawMode: gl.TRIANGLES, colour: [1.0, 0.0, 0.0, 1.0]},
         	{x: -0.5, y: -1.0, z: 0, drawMode: gl.LINE_LOOP, colour: [0.0, 1.0, 0.0, 1.0]},
@@ -253,7 +293,12 @@ angular.module('WebGLRLOApp')
         	var t = translations[i],
         		RGBComponent = t.colour;
 
+            // we are using the uniform shader variable type to apply the transformations to
+            // each of the vertices.
         	gl.uniform4f(u_Translation, t.x, t.y, t.z, 0.0);
+
+            // we want a custom colour so lets apply the (r,g,b,a) colour components to the
+            // fragment colour variable we are using to colour our triangles
         	gl.uniform4f(u_FragColour, RGBComponent[0], RGBComponent[1], RGBComponent[2], 1.0);
 
 
@@ -265,7 +310,8 @@ angular.module('WebGLRLOApp')
     }
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Demo 4: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+	// Demo 4: Shows how we can use the fragment shaders Varying variable to colour our shapes using colour
+    // interpolation.
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function shapesFragmentVaryingExample() {
 		// get the gl context from our modal widget
@@ -328,7 +374,7 @@ angular.module('WebGLRLOApp')
 
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Demo 5: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+	// Demo 5: Shows a sphere and rectangle being animated in 3D space!
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function animating3DPrimativesExample() {
 
@@ -352,7 +398,7 @@ angular.module('WebGLRLOApp')
 
         		__colour = {r: 0.8, g: 0.8, b: 0.8, a: 1.0},
         		__radius = radius || 1.0,
-        		__modelMatrix = mat4.create(),
+        		__modelMatrix = mat4.create(), // we are using the glMatrix Library to help us with our matrix math
         		__rotationMatrix = mat4.create(),
         		__translationMatrix = mat4.create(),
         		__scaleMatrix = mat4.create();
