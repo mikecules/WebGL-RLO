@@ -1,4 +1,13 @@
-// Declare app level module which depends on views, and components
+// turn on JavaScript strictness so we can catch error's easier
+'use strict';
+
+/*
+    This file contains the first 5 demos used to show WebGL fundamental functionality.
+    It also contains some logic for running each of our demos which we use angularJS to do for us.
+    Gotta love front end Model/View/Controller frameworks!
+*/
+
+// Declare app level module used by angularJS
 angular.module('WebGLRLOApp')
   .controller('WebGLMainController', ['$scope', 'webGLUtilities', 'webGLDrawUtilities', function($scope, webGLUtilities, webGLDrawUtilities) {
 

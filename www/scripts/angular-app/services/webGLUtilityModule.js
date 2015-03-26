@@ -1,5 +1,10 @@
 'use strict';
 
+/*
+  This file provides the platform logic for the creation of our modal window as well as some utility draw
+  functions that will calculate the vertices needed to draw our 3D rectangles and spheres.
+*/
+
 angular.module('webGLUtilityModule', [])
   .service('webGLUtilities', [function() {
 
