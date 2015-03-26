@@ -6,7 +6,9 @@
     <identifier>learn.npcomplete.me.index.html</identifier>
     <catalogentry>
       <catalog>URI</catalog>
-      <entry>http://learn.npcomplete.me</entry>
+      <entry>
+        <langstring xml:lang="en">http://learn.npcomplete.me</langstring>
+      </entry>
     </catalogentry>
     <title>
       <langstring xml:lang="en">An Introduction to WebGL</langstring>
@@ -86,6 +88,12 @@ END:VCARD]]></vcard>
   </lifecycle>
   <metametadata>
     <identifier>me.npcomplete.learn.metadata</identifier>
+    <catalogentry>
+      <catalog>URI</catalog>
+      <entry>
+        <langstring xml:lang="en">http://learn.npcomplete.me</langstring>
+      </entry>
+    </catalogentry>
     <contribute>
       <role>
         <source>
@@ -129,13 +137,14 @@ END:VCARD]]></vcard>
       </date>
     </contribute>
     <metadataSchema>LOMv1.0</metadataSchema>
-    <metadatascheme>CanCorev2.0</metadatascheme>
+    <metadatascheme>CanCore</metadatascheme>
     <language>en</language>
   </metametadata>
   <technical>
     <format>text/html</format>
     <format>image/png</format>
     <format>text/javascript</format>
+    <size>1760055</size>
     <location>http://learn.npcomplete.me</location>
     <requirement>
       <type>
@@ -185,6 +194,14 @@ END:VCARD]]></vcard>
         <langstring xml:lang="en">medium</langstring>
       </value>
     </interactivitylevel>
+    <semanticdensity>
+      <source>
+        <langstring xml:lang="en">LOMv1.0</langstring>
+      </source>
+      <value>
+        <langstring xml:lang="en">medium</langstring>
+      </value>
+    </semanticdensity>
     <intendedenduserrole>
       <source>
         <langstring xml:lang="en">LOMv1.0</langstring>
@@ -238,7 +255,7 @@ END:VCARD]]></vcard>
       </value>
     </copyrightandotherrestrictions>
     <description>
-      <langstring xml:lang="en">CC 4.0 License</langstring>
+      <langstring xml:lang="en">Creative Commons 4.0 License</langstring>
     </description>
   </rights>
   <classification>
@@ -252,7 +269,7 @@ END:VCARD]]></vcard>
     </purpose>
     <taxonpath>
       <source>
-        <langstring xml:lang="en">CanCorev2.0</langstring>
+        <langstring xml:lang="en">CanCore</langstring>
       </source>
       <taxon>
         <entry>
