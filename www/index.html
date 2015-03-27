@@ -184,7 +184,8 @@
 							<div class="exercise-container">
 								<h4><span class="icon fa-edit"></span> Exercises</h4>
 								<ul>
-									<li>q1</li>
+									<li>Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
+							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff</li>
 									<li>q2</li>
 								</ul>
 							</div>
@@ -193,6 +194,91 @@
 								<h4><span class="icon fa-code"></span> Code</h4>
 								<div>// this is a comment
 some code here...
+								</div>
+							</div>
+
+							<ul class="info-grouping">
+								<li>
+									<div class="caption"><span class="icon fa-comment"></span> Process to Bootstrap your WebGL Application</div>
+									<ul class="numbered">
+										<li>Get a WebGL Context (i.e. <strong>var gl = canvas.getContext("webgl")</strong>).</li>
+										<li>Compile your Vertex and Fragment Shader using your context (i.e. <strong>var compiledShader = gl.compileShader(shaderString)</strong>)</li>
+										<li>Get a reference to a program object from your context (i.e. <strong>var program = gl.createProgram()</strong>).</li>
+										<li>Use your context to attach both compiled shaders to your program object (i.e. <strong>gl.attachShader(compiledShader)</strong>).</li>
+										<li>Link your program with the context (i.e. <strong>gl.linkProgram(program)</strong>). Note that you can use multiple programs in your app.</li>
+										<li>Associate the program to use in your current context (i.e. <strong>gl.useProgram(program)</strong>).</li>
+									</ul>
+								</li>
+							</ul>
+
+							<ul class="info-grouping">
+								<li>
+									<div class="caption"><span class="icon fa-comment"></span> Demo Files Structure</div>
+									<ul class="numbered">
+										<li></li>
+									</ul>
+								</li>
+							</ul>
+
+							<div class="code-container">
+								<h4><span class="icon fa-code"></span> Initalizing the WebGL Context</h4>
+								<div><strong>HTML Code</strong>
+&lt;canvas id="the-canvas" width="640" height="480"&gt;&lt;/canvas&gt;
+
+-----
+
+<strong>JavaScript Code</strong>
+
+var canvas = document.getElementById('the-canvas');
+var gl = null;
+
+try {
+    // Try to get the context. If it fails, fallback to the old style of invoking it.
+    gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  }
+  catch(e) {
+  	throw new Error(e);
+  }
+  
+  // If we don't have a GL context, give up now
+  if (!gl) {
+    throw new Error('Unable to initialize canvas context. Your browser may not support it.');
+    gl = null;
+  }
+some code here...
+								</div>
+							</div>
+
+							
+
+							<div class="code-container">
+								<h4><span class="icon fa-code"></span> Vertex and Fragment Shader Sample</h4>
+								<div><strong>&lt;script id="v-shader-demo4" type="x-shader/x-vertex"&gt;</strong>
+		  // attributes are accessible from JavaScript (but are write only - since we do most of our work in Javascript it doesn't matter)
+		  attribute vec4 a_Position; 
+		  attribute vec4 a_Colour;
+		  varying vec4 v_Colour; // this represents the colour value we want to interpolate by (between each vertex)
+
+		  void main() {
+		    gl_Position = a_Position; // specify a custom vertex from JavaScript
+		    gl_PointSize = 1.0; // each pixel will be 1:1
+
+		    // giving this variable same name as the variable in the fragment shader effectively passes on the argument
+		   	v_Colour = a_Colour;
+		  }
+<strong>&lt;/script&gt;</strong>
+<strong>&lt;script id="f-shader-demo4" type="x-shader/x-fragment"&gt;</strong>
+		  /*
+		  	New comment multi-line style shown here -
+		  	because we specified the same variable name in the
+		  */
+		  varying mediump vec4 v_Colour;
+
+		  void main() {
+		      gl_FragColor = v_Colour;   // assign the interpolated colour
+		  }
+<strong>&lt;/script&gt;</strong>
+
 								</div>
 							</div>
 						</p>

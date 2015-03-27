@@ -61,15 +61,47 @@
   margin: 1em 0em;
 }
 
+.container ul.info-grouping {
+  background: #fff;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+}
+
+.container ul.info-grouping li {
+  margin: 0 0;
+}
+
+.container ul.info-grouping .caption {
+  color: #000;
+  background: #ddd;
+  padding: 5px 10px;
+}
+
+.container ul.numbered {
+  list-style-type: decimal;
+  color: #000;
+  background: #fff;
+  padding: 10px 10px 0px 10px;
+}
+
+.container strong {
+  font-weight: bold;
+}
+
+.container ul.numbered li  {
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+    line-height: 1.5em;
+    font-size: medium
+}
+
 .container .exercise-container ul {
   list-style-type: decimal;
-
-  
 }
 
 .container .exercise-container ul li  {
     margin-left: 1.5em;
-    margin-bottom: 0px;
+    margin-bottom: 1em;
     line-height: 1.5em;
     font-size: medium
 }
@@ -95,6 +127,7 @@
   padding: 1em 1em;
   border-radius: 5px;
   margin: 1em 0em;
+  
 }
 
 .container .code-container div {
@@ -103,9 +136,14 @@
   text-align: left;
   margin: 0.2em 0em;
   white-space: pre;
+  width: 100%;
+  overflow: auto;
 }
 
-
+.container .code-container div strong {
+  color: #000055;
+  font-weight: bold;
+}
 
 /**************************************************
  * Modal Styles
