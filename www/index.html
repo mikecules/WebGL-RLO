@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="global wide normal narrow">
+<html>
 <head>
 	<title>Learning Object - An Introduction to WebGL</title>
 
@@ -140,8 +140,8 @@
 
 						<p>Blah</p>
 
-						<div class="row">
-							<div class="4u" ng-repeat="demo in demoRunner.getDemos()">
+						<div class="demo row">
+							<div class="4u" ng-repeat="demo in demoRunner.getDemos(0, 3)">
 								<article class="item" ng-init="demo1 = demo[0]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
 										<img ng-src="{{demo1.screenShotURL}}" alt="">
@@ -151,6 +151,26 @@
 									</a>
 								</article>
 								<article class="item" ng-if="demo[1]" ng-init="demo2 = demo[1]">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo2)" class="image fit">
+										<img ng-src="{{demo2.screenShotURL}}" alt="">
+										<header>
+											<h3 ng-bind="demo2.caption"></h3>
+										</header>
+									</a>
+								</article>
+							</div>
+						</div> 
+						<div class="demo row">
+							<div class="item showcase-demos" ng-repeat="demo in demoRunner.getDemoByGroup(3)">
+								<article class="item" ng-init="demo1 = demo[0]">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
+										<img ng-src="{{demo1.screenShotURL}}" alt="">
+										<header>
+											<h3 ng-bind="demo1.caption"></h3>
+										</header>
+									</a>
+								</article>
+								<article class="item showcase-demos" ng-if="demo[1]" ng-init="demo2 = demo[1]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo2)" class="image fit">
 										<img ng-src="{{demo2.screenShotURL}}" alt="">
 										<header>

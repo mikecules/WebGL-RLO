@@ -5,6 +5,7 @@
     This file contains the first 5 demos used to show WebGL fundamental functionality.
     It also contains some logic for running each of our demos which we use angularJS to do for us.
     Gotta love front end Model/View/Controller frameworks!
+    @author: Michael Moncada <michael.moncada@gmail.com>
 */
 
 // Declare app level module used by angularJS
@@ -384,8 +385,9 @@ angular.module('WebGLRLOApp')
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Demo 5: Shows a sphere and rectangle being animated in 3D space!
+    // we reuse this function to show what orthographic looks like vs perspective projection
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	function animating3DPrimativesExample() {
+	function animating3DPrimativesExample(doOrthoProjectionInstead) {
 
 		// get the gl context from our modal widget
         var _gl = null,
@@ -393,7 +395,8 @@ angular.module('WebGLRLOApp')
         	_sphere = null,
         	_quad = null,
         	_lastDrawTime = 0,
-        	_isAppRunning = true;
+        	_isAppRunning = true,
+            _shouldProjectOrtho = doOrthoProjectionInstead || false;
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -704,16 +707,29 @@ angular.module('WebGLRLOApp')
 
 			var perspectiveMatrix = mat4.create(), // get the identity matrix
 				viewMatrix = mat4.create(),
-				modelMatrix = mat4.create();
+				modelMatrix = mat4.create(),
+                viewportAspectRatio =  canvasModalWidget.getGLViewportAspectRatio();
 
-			/*
-				mat4.perspective(out, fovy, aspect, near, far)
-				Generates a perspective projection matrix with the given bounds
-				from: http://glmatrix.net/docs/2.2.0/symbols/mat4.html
-			*/
+			
 
-			mat4.perspective(perspectiveMatrix, glMatrix.toRadian(45.0), canvasModalWidget.getGLViewportAspectRatio(), 1, 1000);
-			_glProgram.customAttribs.perspectiveMatrix = perspectiveMatrix;
+            if (_shouldProjectOrtho === true) {
+                /*
+                    mat4.ortho(out, left, right, bottom, top, near, far)
+                    Generates a orthogonal projection matrix with the given bounds
+                    from: from: http://glmatrix.net/docs/2.2.0/symbols/mat4.html
+                */
+                mat4.ortho(perspectiveMatrix,  -viewportAspectRatio,  viewportAspectRatio, -viewportAspectRatio, viewportAspectRatio, 1, 1000);
+            }
+            else { 
+                /*
+                    mat4.perspective(out, fovy, aspect, near, far)
+                    Generates a perspective projection matrix with the given bounds
+                    from: http://glmatrix.net/docs/2.2.0/symbols/mat4.html
+                */
+    			 mat4.perspective(perspectiveMatrix, glMatrix.toRadian(45.0), viewportAspectRatio, 1, 1000);
+			}
+
+            _glProgram.customAttribs.perspectiveMatrix = perspectiveMatrix;
 
 
 
@@ -786,6 +802,7 @@ angular.module('WebGLRLOApp')
        		_frameCount = 0;
        	}
 
+
        	// stop calling the browser's animate when ready callback function when the modal has closed
        	if (_isAppRunning) {
 
@@ -801,6 +818,11 @@ angular.module('WebGLRLOApp')
 
 
 	}
+
+
+    function animating3DPrimativesOrthoExample() {
+        animating3DPrimativesExample(true);  
+    }
 
 	//////////////////////////////////////////////////
 
@@ -825,7 +847,7 @@ angular.module('WebGLRLOApp')
   	////////////////////////////////////////////////////
 
     // demo metadata and functions to execute used by angularJS to execute the demos
-  	var demos = [
+  	var _demos = [
         [
 	        {
 	          caption: 'Draw Fixed Points',
@@ -858,19 +880,26 @@ angular.module('WebGLRLOApp')
 	     [
 	         {
 	          caption: 'Animation of 3D Primitives',
-	          details: 'Here we finally show you some 3D primitive models moving around in 3D-space.',
+	          details: 'Here we finally show you some 3D primitive models moving around in 3D-space using Perspective Projection.',
 	          appFn: animating3DPrimativesExample,
 	          screenShotURL: 'styles/app/images/demo5.png'
 	        },
-	        {
-	          caption: 'Lighting Example',
-	          details: 	'An ambient and directional lighting example. The directional lighting is rotating around the ' +
-	          			' Y and Z axis as the 3D primitives move around in virtual 3D space.',
-	          appFn: lightingExample,
-	          screenShotURL: 'styles/app/images/demo6.png'
-	        }
+            {
+              caption: 'Animation of 3D Primitives (V2)',
+              details: 'Here we finally show you some 3D primitive models moving around in 3D-space using Orthographic Projection.',
+              appFn: animating3DPrimativesOrthoExample,
+              screenShotURL: 'styles/app/images/demo5v2.png'
+            }
+	        
         ],
         [
+            {
+              caption: 'Lighting Example',
+              details:  'An ambient and directional lighting example. The directional lighting is rotating around the ' +
+                        ' Y and Z axis as the 3D primitives move around in virtual 3D space.',
+              appFn: lightingExample,
+              screenShotURL: 'styles/app/images/demo6.png'
+            },
         	{
 	          caption: 'PongGL!',
 	          details: '<strong>Instructions</strong>: <ul>' +
@@ -905,19 +934,28 @@ angular.module('WebGLRLOApp')
         };
 
 
-        this.getDemos = function(index) {
+        this.getDemos = function(index, length) {
 
           if (typeof index === 'number') {
-            if (index < demos.length) {
-              return demos[index];
+            if (index >= _demos.length) {
+              return null;
             }
-            else if (index >= demos.length) {
-              return false;
+            else {
+                index = 0;
+            }
+
+            if (! length) {
+                length = _demos.length;
             }
           }
 
-          return demos;
 
+          return _demos.slice(index, length);
+
+        };
+
+        this.getDemoByGroup = function(index) {
+            return  [_demos[index]];
         };
 
         return this;

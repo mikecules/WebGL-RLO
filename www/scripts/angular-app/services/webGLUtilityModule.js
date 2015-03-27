@@ -3,6 +3,7 @@
 /*
   This file provides the platform logic for the creation of our modal window as well as some utility draw
   functions that will calculate the vertices needed to draw our 3D rectangles and spheres.
+  @author: Michael Moncada <michael.moncada@gmail.com>
 */
 
 angular.module('webGLUtilityModule', [])

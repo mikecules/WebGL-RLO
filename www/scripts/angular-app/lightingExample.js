@@ -5,6 +5,7 @@ var $demos = $demos || {};
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Demo 6: Uses Lambert Shading to make our 3D objects from demo 5 look more realistic. Note that
 // the resultant shading is not as accurate had we done this in the fragment shader.
+// @author: Michael Moncada <michael.moncada@gmail.com>
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $demos.lightingExample = function lightingExample(canvasModalWidget, webGLDrawUtilities) {

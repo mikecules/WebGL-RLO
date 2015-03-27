@@ -1,6 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
+// @author: Michael Moncada <michael.moncada@gmail.com>
 angular.module('WebGLRLOApp', ['webGLUtilityModule'])
   .config(function ($compileProvider) {
     //We don't need routing, because the ng-controller will load automagically
