@@ -17,6 +17,22 @@
   box-shadow: 0 0.05em 0.15em 0 rgba(0,0,0,0.05);
 }
 
+#objectives .container ul {
+  margin: auto;
+  width: 95%;
+  color: #000;
+  font-size: 1em;
+  line-height: 2em;
+}
+
+.container li {
+  margin-bottom: 1em;
+}
+
+#objectives .container li .icon.fa-check-square-o {
+  color: rgb(26, 121, 26);
+}
+
 .container .demo-container, .container .image-container {
   width: 80%;
   margin: 1em auto;
@@ -29,6 +45,23 @@
 
 .container .image-container header em {
   font-size: 12px
+}
+
+.container ul {
+  width: 100%;
+  text-align: left;
+}
+
+.container code {
+  margin: 0.2em 0em;
+  text-align: left;
+  width: 100%;
+  display: inline-block;
+  font-size: medium;
+  background: #eee;
+  border: solid 1px #ccc;
+  padding: 0.2em 0.4em;
+  color: #000;
 }
 
 
