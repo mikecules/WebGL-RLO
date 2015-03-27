@@ -462,9 +462,25 @@
 		    // since a negative color ref makes no sense (in this case we would want to make the colour at that surface black)!
 		    vec3 transformedNormal = u_NormalMatrix * a_VertexNormal;
 
-		    // when the normal vector of the surface is pointing in the opposite direction of the light source
+		    // when the normal vector of the surface is pointing in the same direction of the light source
 		    // this surface is facing the light source so illuminate the surface
 		    // by the directional colour.
+		    
+		    /*  surface    directional
+		    	normal     light
+		        ^          ^
+		        |         /
+                |        /
+		        |       /
+		        |      /
+		        |     /
+		        |    /
+		        |   /
+		        |  /
+		        | /
+		        |/
+		        cos(angle between the two vectors) = dot(transformedNormal, u_LightingDirection)
+		    */
 		    float transformedSurfaceNormal = max(0.0, dot(transformedNormal, u_LightingDirection));
 
       		v_LightWeightFactor = u_AmbientColour + u_DirectionalColour * transformedSurfaceNormal;
