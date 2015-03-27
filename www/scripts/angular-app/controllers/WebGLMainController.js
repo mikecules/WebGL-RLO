@@ -421,8 +421,9 @@ angular.module('WebGLRLOApp')
         		__sphereVertexPositionBuffer.numItems = __sphereData.vertexPositionData.length / __sphereVertexPositionBuffer.itemSize;
         		__sphereVertexPositionBuffer.items = new Float32Array(__sphereData.vertexPositionData);
 
-            _gl.bindBuffer(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer);
-            _gl.bufferData(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer.items, _gl.STATIC_DRAW);
+                // for efficiency bind the buffer and preload the data
+                _gl.bindBuffer(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer);
+                _gl.bufferData(_gl.ARRAY_BUFFER, __sphereVertexPositionBuffer.items, _gl.STATIC_DRAW);
 
         		// create the buffer for vertex positions indexes and assign it to that buffer to use for later
         		__sphereVertexIndexBuffer = _gl.createBuffer();
@@ -430,15 +431,26 @@ angular.module('WebGLRLOApp')
         		__sphereVertexIndexBuffer.numItems = __sphereData.vertexIndexData.length;
         		__sphereVertexIndexBuffer.items = new Uint16Array(__sphereData.vertexIndexData);
 
-            _gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer);
-            _gl.bufferData(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer.items, _gl.STATIC_DRAW);
-
-
+                // for efficiency bind the buffer and preload the data
+                _gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer);
+                _gl.bufferData(_gl.ELEMENT_ARRAY_BUFFER, __sphereVertexIndexBuffer.items, _gl.STATIC_DRAW);
         	}
 
+            // __draw() does the drawing of the sphere - we use some new webGL functions in this method
         	function __draw() {
+
+                // multiple the appropriate matrices using glMatrix functions
+                // calculate the Model Matrix
         		mat4.multiply(__modelMatrix, __translationMatrix, __rotationMatrix);
         		mat4.multiply(__modelMatrix, __modelMatrix, __scaleMatrix);
+
+                /*
+                    void glUniform4fv(  GLint location,
+                        GLsizei count,
+                        const GLfloat *value);
+
+                    see https://www.khronos.org/opengles/sdk/docs/man/xhtml/glUniform.xml
+                */
 
         		_gl.uniformMatrix4fv(_glProgram.customAttribs.u_ModelMatrixRef, false, __modelMatrix);
 
@@ -448,14 +460,24 @@ angular.module('WebGLRLOApp')
         		_gl.vertexAttribPointer(_glProgram.customAttribs.a_PositionRef, __sphereVertexPositionBuffer.itemSize, _gl.FLOAT, false, 0, 0);
         		_gl.enableVertexAttribArray(_glProgram.customAttribs.a_PositionRef);
 
+                /*
+                    
+                    void glUniform4f(   GLint location,
+                        GLfloat v0,
+                        GLfloat v1,
+                        GLfloat v2,
+                        GLfloat v3);
 
+                    see https://www.khronos.org/opengles/sdk/docs/man/xhtml/glUniform.xml
+
+                */
         		_gl.uniform4f(_glProgram.customAttribs.u_FragColourRef, __colour.r, __colour.g, __colour.b, __colour.a);
 
         		_gl.drawElements(_gl.LINE_LOOP, __sphereVertexIndexBuffer.numItems, _gl.UNSIGNED_SHORT, 0);
 
         	}
 
-
+            // rotate the sphere by (x, y, z) radians
         	function __rotateOnAxisByDegrees(x, y, z) {
 
         		if (typeof x === 'number') {
@@ -474,7 +496,7 @@ angular.module('WebGLRLOApp')
 
         	}
 
-
+            // scale the sphere
         	function __scale(s) {
         		if (typeof s === 'number') {
         			mat4.scale(__scaleMatrix, __scaleMatrix, vec3.fromValues(s, s, s));
@@ -483,6 +505,7 @@ angular.module('WebGLRLOApp')
         		return this;
         	}
 
+            // translate the sphere
         	function __translate(x, y, z) {
 
         		mat4.translate(__translationMatrix, __translationMatrix, vec3.fromValues(x, y, z));
@@ -519,8 +542,10 @@ angular.module('WebGLRLOApp')
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //	_Quad(x, y, z) Constructor method is used to represent and Quadrilateral (rectangle) with
-        //  width, height and depth (x, y ,z) dimensions respectively.ß
+        //  width, height and depth (x, y ,z) dimensions respectively.
         //  This quadrilateral can draw itself and adjust its orientation on the canvas via the accessor methods.
+        //  This is pretty much the same code as the sphere Constructor so we could optimize this class further
+        //  by utilizing Prototypes...
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         function _Quad(x, y, z) {
 
@@ -543,8 +568,8 @@ angular.module('WebGLRLOApp')
         		__quadVertexPositionBuffer.numItems = __quadData.vertexPositionData.length / __quadVertexPositionBuffer.itemSize;
         		__quadVertexPositionBuffer.items = new Float32Array(__quadData.vertexPositionData);
 
-            _gl.bindBuffer(_gl.ARRAY_BUFFER, __quadVertexPositionBuffer);
-            _gl.bufferData(_gl.ARRAY_BUFFER, __quadVertexPositionBuffer.items, _gl.STATIC_DRAW);
+                _gl.bindBuffer(_gl.ARRAY_BUFFER, __quadVertexPositionBuffer);
+                _gl.bufferData(_gl.ARRAY_BUFFER, __quadVertexPositionBuffer.items, _gl.STATIC_DRAW);
 
         		// create the buffer for vertex positions indexes and assign it to that buffer to use for later
         		__quadVertexIndexBuffer = _gl.createBuffer();
@@ -552,8 +577,8 @@ angular.module('WebGLRLOApp')
         		__quadVertexIndexBuffer.numItems = __quadData.vertexIndexData.length;
         		__quadVertexIndexBuffer.items = new Uint16Array(__quadData.vertexIndexData);
 
-            _gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __quadVertexIndexBuffer);
-            _gl.bufferData(_gl.ELEMENT_ARRAY_BUFFER, __quadVertexIndexBuffer.items, _gl.STATIC_DRAW);
+                _gl.bindBuffer(_gl.ELEMENT_ARRAY_BUFFER, __quadVertexIndexBuffer);
+                _gl.bufferData(_gl.ELEMENT_ARRAY_BUFFER, __quadVertexIndexBuffer.items, _gl.STATIC_DRAW);
 
 
         	}
@@ -651,6 +676,7 @@ angular.module('WebGLRLOApp')
           		throw new Error('Could not run animating3DPrimativesExample() WebGL Demo!');
         	}
 
+            // in this case when we dismiss the modal stop calling the _tick function
 			canvasModalWidget.onHide(function() {
 				_isAppRunning = false;
 				//console.log('cancel request animation');
@@ -664,7 +690,10 @@ angular.module('WebGLRLOApp')
 
 			// get the shaders and compile them - the resultant will be a program that is automatically joined to the gl context in the background
         	_glProgram = canvasModalWidget.setGLVertexAndFragmentShaders('#v-shader-demo5', '#f-shader-demo5');
-        	_glProgram.customAttribs = {};
+        	
+            // we inject this property so we can reference the appropriate data 
+            // throughout our application.
+            _glProgram.customAttribs = {};
 
 			// Get the storage locations of all the customizable shader variables
 			_glProgram.customAttribs.a_PositionRef = _gl.getAttribLocation(_glProgram, 'a_Position'),
@@ -700,24 +729,30 @@ angular.module('WebGLRLOApp')
 
 			_glProgram.customAttribs.modelMatrix = modelMatrix;
 
-			//_gl.uniformMatrix4fv(_glProgram.customAttribs.u_ModelMatrixRef, false, _glProgram.customAttribs.modelMatrix);
+			// we set our uniform View and Perspective Matrices the multiplication of matrices happens in the vertex shader
+            // new vertex position = P * V * M * (original vertex position coordinates)
 			_gl.uniformMatrix4fv(_glProgram.customAttribs.u_ViewMatrixRef, false, _glProgram.customAttribs.viewMatrix);
 			_gl.uniformMatrix4fv(_glProgram.customAttribs.u_PerspectiveRef, false, _glProgram.customAttribs.perspectiveMatrix);
 
 
 			// create some primitives that can keep track of their own orientation and draw themselves
 			_sphere = new _Sphere();
-			_sphere.translate(-1.6,0,0);
+			_sphere
+                .translate(-1.6,0,0);
 
 			_quad = new _Quad(2, 0.5, 0.5);
-			_quad.translate(0, 0, 2).scale(0.5);
+			_quad
+                .translate(0, 0, 2)
+                .scale(0.5);
 
+
+            // start animating the primitives
 			_tick();
 
 
       }
 
-
+    // we use these variables to do some arbitrary movements
     var _frameCount = 0,
    		_xInc = 0.01,
   	  	_yInc = 0.001,
@@ -743,7 +778,7 @@ angular.module('WebGLRLOApp')
        	// counter used to create a pattern for the primitives to move and rotate along the screen
        	_frameCount++;
 
-
+        // reverse the directions when our frames drawn is least 220
        	if (_frameCount >= 220) {
        		_xInc = - _xInc;
        		_yInc = - _yInc;
@@ -753,6 +788,9 @@ angular.module('WebGLRLOApp')
 
        	// stop calling the browser's animate when ready callback function when the modal has closed
        	if (_isAppRunning) {
+
+            // special browser function that recalls this draw function when the browser is ready
+            // to perform the draw - this usually happens no less than approx 16.66ms = 60 frames per second (FPS)
        		requestAnimationFrame(_tick);
        	}
     }
@@ -769,11 +807,13 @@ angular.module('WebGLRLOApp')
 
 
 	function lightingExample() {
+        // given that the application logic is long we moved the code to lightingExample.js
 		window.$demos.lightingExample(canvasModalWidget, webGLDrawUtilities);
 	}
 
 
 	function Pong(){
+        // given that the application logic is long we moved the code to pong.js
 		window.$demos.Pong(canvasModalWidget, webGLDrawUtilities);
 	}
 
@@ -784,6 +824,7 @@ angular.module('WebGLRLOApp')
   	// End of examples
   	////////////////////////////////////////////////////
 
+    // demo metadata and functions to execute used by angularJS to execute the demos
   	var demos = [
         [
 	        {
@@ -845,8 +886,8 @@ angular.module('WebGLRLOApp')
         ]
       ];
 
-      // Only continue if WebGL is available and working
-
+      
+      // constructor method we use to loop through and execute the demos in index.html
       function _DemoRunner() {
 
         this.run = function(demo) {

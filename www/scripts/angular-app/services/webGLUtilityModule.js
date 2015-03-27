@@ -8,7 +8,10 @@
 angular.module('webGLUtilityModule', [])
   .service('webGLUtilities', [function() {
 
-
+    // _Canvas() constructor method represents the DOM canvas and provides methods
+    // for creating 2d and WebGL canvases. Also in the case of WebGL canvases the 
+    // below constructor offers methods for creating the webGL program and compiling and linking
+    // or vertex and fragment shaders.
     function _Canvas(id, type) {
       var __context = null,
           __canvasEl = null,
@@ -23,6 +26,7 @@ angular.module('webGLUtilityModule', [])
           __shaders = {};
 
 
+      // __initProgram() create our program and link our shaders
       function __initProgram() {
           if (__context === null || __canvasType !== _Canvas.prototype.CANVAS_TYPES.CANVAS_3D) {
             return;
@@ -55,12 +59,16 @@ angular.module('webGLUtilityModule', [])
                throw new Error('Program filed to link: ' + __context.getProgramInfoLog(__glProgram));
            }
 
+           // tell the webGl context to use this program
+           // note that you can switch between multiple programs within the lifecycle
+           // of your own apps
            __context.useProgram(__glProgram);
 
            return __glProgram;
       }
 
-
+      // __getShaderContentsHelper() grabs the text of shader in the DOM if we pass in the JQuery ID str 
+      // i.e. the id is prefixed with '#'
       function __getShaderContentsHelper(shaderStr) {
         var shaderContents = null;
 
@@ -77,6 +85,7 @@ angular.module('webGLUtilityModule', [])
       }
 
 
+      // __setShaders() compiles our shaders and initalizes the program
       function __setShaders(vertexShaderStr, fragmentShaderStr) {
 
         if (! __context || typeof vertexShaderStr !== 'string' || typeof fragmentShaderStr !== 'string' || __canvasType !== _Canvas.prototype.CANVAS_TYPES.CANVAS_3D) {
@@ -102,7 +111,8 @@ angular.module('webGLUtilityModule', [])
         return __initProgram();
       }
 
-
+      // __compileShader() does exactly what it says it does accept that it will complain if something goes 
+      // wrong with the compilation
       function __compileShader(shaderSource, shaderType) {
 
         if (__context === null || __canvasType !== _Canvas.prototype.CANVAS_TYPES.CANVAS_3D || typeof shaderSource !== 'string') {
@@ -130,7 +140,7 @@ angular.module('webGLUtilityModule', [])
         return shader;
       }
 
-
+      // __initCanvas() initializes the canvas object
       function __initCanvas() {
         __canvasJQObj = $('<canvas id="' + __canvasID +  '"></canvas>');
 
@@ -156,7 +166,7 @@ angular.module('webGLUtilityModule', [])
         return __shaders;
       }
 
-
+      //__initContext() creates our canvas context based on the type of canvas it is i.e. 2d/webgl
       function __initContext() {
 
         __context = null;
@@ -252,7 +262,7 @@ angular.module('webGLUtilityModule', [])
 
       this.updateViewportSize = __updateViewportSize;
 
-
+      // destroys the canvas's inner objects so it can be garbage collected in the future
       this.destroy = function() {
         if (__canvasJQObj !== null && __canvasJQObj.length) {
           __canvasJQObj.remove();
@@ -284,7 +294,10 @@ angular.module('webGLUtilityModule', [])
 
 
 
-
+    //_CanvasModalWidget() - constructor method encapsulates the application logic surrounding our modal
+    // you can use this in your examples to manipulate the modal. The widget contains 2 canvases 
+    // 1) A 2D canvas used for our HUD display (we use this for PONG)
+    // 2) The WebGL canvas we run our demos on
     function _CanvasModalWidget(id, anchorPoint) {
 
       var _modalJQObj =  null,
@@ -315,6 +328,10 @@ angular.module('webGLUtilityModule', [])
       function __initCanvasWidget() {
         var modalCanvasContainer =  _modalID + '-canvas-box';
 
+        // if this is the first time we intialized the widget
+        // add the inner body of the modal at the anchor point 
+        // which must be a jQuery valid selector or it will default 
+        // to appending it's contents to the DOMs body
         if (_modalJQObj === null) {
 
           _modalJQObj = $(
@@ -392,6 +409,8 @@ angular.module('webGLUtilityModule', [])
 
       }
 
+      // __resetCanvasWidget() everytime we dismiss the modal we clean up 
+      // everything by destroying and recreating our 2D/3D canvases
       function __resetCanvasWidget() {
         if (_canvas2D) {
           _canvas2D.destroy();
@@ -406,6 +425,7 @@ angular.module('webGLUtilityModule', [])
         return this;
       }
 
+      // __show() shows the modal and calls an optional callback function when done
       function __show(callbackFn) {
 
         if (! __isHidden()) {
@@ -427,6 +447,7 @@ angular.module('webGLUtilityModule', [])
         return this;
       }
 
+      // __hide() hides the modal and calls an optional callback function when done
       function __hide(callbackFn) {
 
         if (__isHidden()) {
@@ -461,6 +482,7 @@ angular.module('webGLUtilityModule', [])
       function __modalFPSHide() {
         _modalFPSContainer.html('&nbsp;');
       }
+
 
       function __isHidden() {
         return _isModalShowing === false;
@@ -520,10 +542,13 @@ angular.module('webGLUtilityModule', [])
           .clearRect(0, 0, _canvas2D.getWidth(), _canvas2D.getHeight());
       };
 
+      // we use this method to set the vertex and fragment shaders in one call and return the
+      // resultant webGL Program
       this.setGLVertexAndFragmentShaders = function(vertexShaderStrOrID, fragmentShaderStrOrID) {
         return _canvas3D.setVertexAndFragmentShaders(vertexShaderStrOrID, fragmentShaderStrOrID);
       };
 
+      // give the user the option of getting the program - we could also provide a setter in the future
       this.getGLProgram = function() {
         return _canvas3D.getGLProgram();
       }
@@ -541,10 +566,12 @@ angular.module('webGLUtilityModule', [])
 
       this.FPSHide = __modalFPSHide;
 
+      // we use this method to show the FPS text (used in PONG)
       this.setFPSVal = function(fps) {
         _modalFPSContainer.text('FPS: ' + fps);
       };
 
+      // on dismissal of the modal call this callback function if one exists
       this.onHide = function(callbackFn) {
         if (typeof callbackFn === 'function') {
           _modalHideCallbackFn = callbackFn;
@@ -582,12 +609,9 @@ angular.module('webGLUtilityModule', [])
 
     return this;
   }])
-.service('webGLDrawUtilities', [function() {
+.service('webGLDrawUtilities', [function() { // angularJS 3D Primitives Service we inject into our demo examples to draw our shapes
 
-  // generate square vertices
-  // generate 3D-Cube vertices
-  // generate Sphere vertices
-
+  // generate 3D-Cube vertices and normals.
   this.createCubeVertexData = function(scaleX, scaleY, scaleZ) {
     scaleX = scaleX || 1.0,
     scaleY = scaleY || 1.0,
@@ -704,6 +728,7 @@ angular.module('webGLUtilityModule', [])
 
   }
 
+  // generate Sphere vertices, normals and textures
   this.createSphereVertexData = function(r, latBands, longBands) {
 
     /* Algorithm accredited to "WebGL Lesson 11 – spheres, rotation matrices, and mouse events | Learning WebGL"

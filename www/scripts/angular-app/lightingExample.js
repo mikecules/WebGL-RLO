@@ -1,7 +1,10 @@
+'use strict';
+
 var $demos = $demos || {};
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Demo 6: Draws points at various extremes of the x, y, z axis which ranges from -1 to 1
+// Demo 6: Uses Lambert Shading to make our 3D objects from demo 5 look more realistic. Note that
+// the resultant shading is not as accurate had we done this in the fragment shader.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $demos.lightingExample = function lightingExample(canvasModalWidget, webGLDrawUtilities) {
@@ -382,21 +385,26 @@ $demos.lightingExample = function lightingExample(canvasModalWidget, webGLDrawUt
 				modelMatrix = mat4.create(),
 				PVMMatrix = mat4.create();
 
-
+            // calculate the perspective matrix
 			mat4.perspective(perspectiveMatrix, glMatrix.toRadian(45.0), canvasModalWidget.getGLViewportAspectRatio(), 1, 1000);
-			mat4.lookAt(viewMatrix, vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, -50), vec3.fromValues(0, 1, 0));
+			
+            // calculate the view matrix (camera view)
+            mat4.lookAt(viewMatrix, vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, -50), vec3.fromValues(0, 1, 0));
 
 			_glProgram.customAttribs.viewMatrix = viewMatrix;
 			_glProgram.customAttribs.modelMatrix = modelMatrix;
-      _glProgram.customAttribs.perspectiveMatrix = perspectiveMatrix;
+            _glProgram.customAttribs.perspectiveMatrix = perspectiveMatrix;
 
-      mat4.multiply(PVMMatrix, perspectiveMatrix, viewMatrix);
+            mat4.multiply(PVMMatrix, perspectiveMatrix, viewMatrix);
 
-      _glProgram.customAttribs.PVMMatrix = PVMMatrix;
+            _glProgram.customAttribs.PVMMatrix = PVMMatrix;
 
+            // optimization: we are now only passing one multiplied matrix into our vertex shader rather than
+            // doing the multiplications 3 times for each vertex triplet
 			_gl.uniformMatrix4fv(_glProgram.customAttribs.u_PVMMatrixRef, false, _glProgram.customAttribs.PVMMatrix);
 
-      _glProgram.customAttribs.lightingDirection  = _setLightingDirection(-20.0, 0.0, 1.0);
+            // set our directional light
+            _glProgram.customAttribs.lightingDirection  = _setLightingDirection(-20.0, 0.0, 1.0);
 
 			_gl.uniform3fv(_glProgram.customAttribs.u_LightingDirectionRef, _glProgram.customAttribs.lightingDirection);
 			_gl.uniform3f(_glProgram.customAttribs.u_AmbientColourRef, 0.1, 0.1, 0.1);
