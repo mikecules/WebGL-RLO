@@ -144,7 +144,7 @@
 							<div class="4u" ng-repeat="demo in demoRunner.getDemos(0, 3)">
 								<article class="item" ng-init="demo1 = demo[0]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
-										<img ng-src="{{demo1.screenShotURL}}" alt="">
+										<img ng-src="{{demo1.screenShotURL}}" alt="{{demo1.caption}}">
 										<header>
 											<h3 ng-bind="demo1.caption"></h3>
 										</header>
@@ -152,7 +152,7 @@
 								</article>
 								<article class="item" ng-if="demo[1]" ng-init="demo2 = demo[1]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo2)" class="image fit">
-										<img ng-src="{{demo2.screenShotURL}}" alt="">
+										<img ng-src="{{demo2.screenShotURL}}" alt="{{demo2.caption}}">
 										<header>
 											<h3 ng-bind="demo2.caption"></h3>
 										</header>
@@ -164,7 +164,7 @@
 							<div class="item showcase-demos" ng-repeat="demo in demoRunner.getDemoByGroup(3)">
 								<article class="item" ng-init="demo1 = demo[0]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
-										<img ng-src="{{demo1.screenShotURL}}" alt="">
+										<img ng-src="{{demo1.screenShotURL}}" alt="{{demo1.caption}}">
 										<header>
 											<h3 ng-bind="demo1.caption"></h3>
 										</header>
@@ -172,7 +172,7 @@
 								</article>
 								<article class="item showcase-demos" ng-if="demo[1]" ng-init="demo2 = demo[1]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo2)" class="image fit">
-										<img ng-src="{{demo2.screenShotURL}}" alt="">
+										<img ng-src="{{demo2.screenShotURL}}" alt="{{demo2.caption}}">
 										<header>
 											<h3 ng-bind="demo2.caption"></h3>
 										</header>
@@ -183,12 +183,43 @@
 					</div>
 				</section>
 
+				
+					
+
 
 
 
 				<!-- More Resources -->
 				<section id="resources" class="three">
 					<div class="container">
+
+					<!-- Demo container used as one off illustration -->
+					<div class="demo-container">
+						<article class="item" ng-init="demo =  demoRunner.getDemoByOrderInList(0)">
+							<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo)" class="image fit">
+								<img ng-src="{{demo.screenShotURL}}" alt="{{demo.caption}}">
+								<header>
+									<h3 ng-bind="demo.caption"></h3>
+								</header>
+							</a>
+						</article>	
+					</div>
+					<!-- Image Container used as a one off illustration -->
+					<div class="image-container">
+						<article class="item">
+							<div class="image fit">
+								<img ng-src="styles/app/images/pipeline.jpg" alt="">
+								<header>
+									<h3>
+										Some image caption
+									</h3>
+									<em>http://aaaa.aaa.aa</em>
+								</header>
+							</div>
+						</article>	
+					</div>
+
+				
 
 						<header>
 							<h2>More Resources</h2>

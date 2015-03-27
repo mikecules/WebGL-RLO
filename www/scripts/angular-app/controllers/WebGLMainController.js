@@ -919,6 +919,21 @@ angular.module('WebGLRLOApp')
       // constructor method we use to loop through and execute the demos in index.html
       function _DemoRunner() {
 
+        // used as a convenience array to look up demos by index
+        var __demoByOrderLookup = [];
+
+
+        function __init() {
+            for (var i = 0; i < _demos.length; i++) {
+                for (var j = 0; j < _demos[i].length; j++) {
+                    __demoByOrderLookup.push(_demos[i][j]);
+                }
+            }
+        }
+
+        __init();
+
+        // public demo runner api
         this.run = function(demo) {
 
           var demoObject = demo;
@@ -956,6 +971,10 @@ angular.module('WebGLRLOApp')
 
         this.getDemoByGroup = function(index) {
             return  [_demos[index]];
+        };
+
+         this.getDemoByOrderInList = function(order) {
+            return  __demoByOrderLookup[order];
         };
 
         return this;
