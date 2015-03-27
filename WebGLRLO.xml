@@ -3,11 +3,11 @@
 <!--Spawned from the Reload Metadata Generator - http://www.reload.ac.uk-->
 <lom xmlns="http://www.imsglobal.org/xsd/imsmd_v1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p4.xsd">
   <general>
-    <identifier>learn.npcomplete.me.index.html</identifier>
+    <identifier>learn.npcomplete.me.webgl</identifier>
     <catalogentry>
       <catalog>URI</catalog>
       <entry>
-        <langstring xml:lang="en">http://learn.npcomplete.me</langstring>
+        <langstring xml:lang="en">http://learn.npcomplete.me/webgl</langstring>
       </entry>
     </catalogentry>
     <title>
@@ -87,11 +87,11 @@ END:VCARD]]></vcard>
     </contribute>
   </lifecycle>
   <metametadata>
-    <identifier>me.npcomplete.learn.metadata</identifier>
+    <identifier>learn.npcomplete.me.webgl.metadata</identifier>
     <catalogentry>
       <catalog>URI</catalog>
       <entry>
-        <langstring xml:lang="en">http://learn.npcomplete.me</langstring>
+        <langstring xml:lang="en">http://learn.npcomplete.me/webgl</langstring>
       </entry>
     </catalogentry>
     <contribute>
@@ -145,7 +145,7 @@ END:VCARD]]></vcard>
     <format>image/png</format>
     <format>text/javascript</format>
     <size>1760055</size>
-    <location>http://learn.npcomplete.me</location>
+    <location>http://learn.npcomplete.me/webgl</location>
     <requirement>
       <type>
         <source>
@@ -255,7 +255,7 @@ END:VCARD]]></vcard>
       </value>
     </copyrightandotherrestrictions>
     <description>
-      <langstring xml:lang="en">Creative Commons 4.0 License</langstring>
+      <langstring xml:lang="en">The instructional material is under the Creative Commons 4.0 License. If this work is used in a commerical context the provider of the content must obtain the appropriate permission from any 3rd party images used in this instructional material.</langstring>
     </description>
   </rights>
   <classification>
