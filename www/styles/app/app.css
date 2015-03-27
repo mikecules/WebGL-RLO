@@ -43,6 +43,15 @@
   line-height: 1.2em;
 }
 
+.container .image-container header.dark {
+  background-color: #555;
+  color: #fff;
+}
+
+.container .image-container header.dark h3 {
+  color: #fff;
+}
+
 .container .image-container header em {
   font-size: 12px
 }
