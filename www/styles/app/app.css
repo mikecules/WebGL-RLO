@@ -1,7 +1,11 @@
 /*
-* app.css provides the basic styles for the modal used in the WebGL Demonstrations
+* app.css provides the basic custom styles for website and the modal used in the WebGL Demonstrations
 * @author: Michael Moncada <michael.moncada@gmail.com>
 */
+
+/**************************************************
+ * Custom Web Page Styles
+ **************************************************/
 .demo.row .showcase-demos {
   margin: auto; 
   width: 100%;
@@ -13,7 +17,9 @@
   box-shadow: 0 0.05em 0.15em 0 rgba(0,0,0,0.05);
 }
 
-
+/**************************************************
+ * Modal Styles
+ **************************************************/
 .modal-container {
   position: fixed;
   height: 100%;

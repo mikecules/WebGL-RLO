@@ -415,7 +415,8 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
 
       _gl.uniformMatrix4fv(_glProgram.customAttribs.u_PVMMatrixRef, false, _glProgram.customAttribs.PVMMatrix);
 
-      _glProgram.customAttribs.lightingDirection  = _setLightingDirection(-20.0, 10.0, 1.0);
+      // set our directional light which is pointing 10 units to the left 10 units upwards away 5 units from the user 
+      _glProgram.customAttribs.lightingDirection  = _setLightingDirection(-10.0, 10.0, -5.0);
 
       _gl.uniform3fv(_glProgram.customAttribs.u_LightingDirectionRef, _glProgram.customAttribs.lightingDirection);
       _gl.uniform3f(_glProgram.customAttribs.u_AmbientColourRef, 0.5, 0.5, 0.5);
@@ -431,8 +432,12 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
         var n = vec3.create(),
             v = vec3.fromValues(x, y, z);
 
+        // make sure this is a unit vector!
         vec3.normalize(n, v);
-        //vec3.scale(n, n, -1.0);
+
+        // we want the vector to point in the opposite direction for our calculation
+        // in the vertex shader
+        vec3.scale(n, n, -1.0);
 
         return n;
       }
