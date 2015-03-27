@@ -248,9 +248,12 @@ some code here...
 								</article>
 							</div>
 						</div> 
+						<br />
+						<h3>And now for our feature show...</h3>
+						<br />
 						<div class="demo row">
-							<div class="item showcase-demos" ng-repeat="demo in demoRunner.getDemoByGroup(3)">
-								<article class="item" ng-init="demo1 = demo[0]">
+							<div ng-repeat="demo in demoRunner.getDemoByGroup(3)">
+								<article class="item showcase-demos" ng-init="demo1 = demo[0]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
 										<img ng-src="{{demo1.screenShotURL}}" alt="{{demo1.caption}}">
 										<header>

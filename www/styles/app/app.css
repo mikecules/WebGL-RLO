@@ -7,9 +7,8 @@
  * Custom Web Page Styles
  **************************************************/
 .demo.row .showcase-demos {
-  margin: auto; 
-  width: 100%;
-  box-shadow: none;
+  margin: 0 auto; 
+  width: 80%;
   margin-bottom: 40px;
 }
 
