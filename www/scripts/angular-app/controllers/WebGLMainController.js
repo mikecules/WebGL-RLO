@@ -846,6 +846,20 @@ angular.module('WebGLRLOApp')
   	// End of examples
   	////////////////////////////////////////////////////
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Now you can play around with the code in your own area - feel free to fill in these functions and remember to 
+    // uncomment the _demos array entries below when you are ready to test your demos.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function yourDemoExample1() {
+        alert('hello 3D world one!');
+    }
+
+    function yourDemoExample2() {
+        alert('hello 3D world two!');
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // demo metadata and functions to execute used by angularJS to execute the demos
   	var _demos = [
         [
@@ -912,8 +926,26 @@ angular.module('WebGLRLOApp')
 	          appFn: Pong,
 	          screenShotURL: 'styles/app/images/demo7.png'
 	        }
+        ] /*,
+        
+         [
+            {
+              caption: 'Your Demo Example 1', // UNCOMMENT these entries to start exploring your own WegGL experiments using this app
+              details:  'Some details about your demo 1',
+              appFn: yourDemoExample1,
+              screenShotURL: '#'
+            },
+            {
+              caption: 'Your Demo Example 2',
+              details: 'Some details about your demo 2',
+              appFn: yourDemoExample2,
+              screenShotURL: '#'
+            }
         ]
+        */
+        
       ];
+
 
       
       // constructor method we use to loop through and execute the demos in index.html
@@ -974,6 +1006,11 @@ angular.module('WebGLRLOApp')
         };
 
          this.getDemoByOrderInList = function(order) {
+            
+            if (order >= __demoByOrderLookup.length) {
+                return null;
+            }
+
             return  __demoByOrderLookup[order];
         };
 

@@ -337,26 +337,54 @@ some code here...
 						<br />
 						<h3>And now for our feature show...</h3>
 						<br />
-						<div class="demo row">
-							<div ng-repeat="demo in demoRunner.getDemoByGroup(3)">
-								<article class="item showcase-demos" ng-init="demo1 = demo[0]">
-									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
-										<img ng-src="{{demo1.screenShotURL}}" alt="{{demo1.caption}}">
+						<div class="demo-container">
+								<article class="item showcase-demos" ng-init="lightExampleDemo = demoRunner.getDemoByOrderInList(6)">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(lightExampleDemo)" class="image fit">
+										<img ng-src="{{lightExampleDemo.screenShotURL}}" alt="{{lightExampleDemo.caption}}">
 										<header>
-											<h3 ng-bind="demo1.caption"></h3>
+											<h3 ng-bind="lightExampleDemo.caption"></h3>
 										</header>
 									</a>
 								</article>
-								<article class="item showcase-demos" ng-if="demo[1]" ng-init="demo2 = demo[1]">
-									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo2)" class="image fit">
-										<img ng-src="{{demo2.screenShotURL}}" alt="{{demo2.caption}}">
-										<header>
-											<h3 ng-bind="demo2.caption"></h3>
-										</header>
-									</a>
-								</article>
-							</div>
 						</div>
+						<div class="demo-container">
+								<article class="item showcase-demos" ng-init="pong = demoRunner.getDemoByOrderInList(7)">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(pong)" class="image fit">
+										<img ng-src="{{pong.screenShotURL}}" alt="{{pong.caption}}">
+										<header>
+											<h3 ng-bind="pong.caption"></h3>
+										</header>
+									</a>
+								</article>
+						</div>
+
+						<!-- --------------------------------------------------------------------- -->
+						<!-- YOUR DEMOS! -->
+						<!-- --------------------------------------------------------------------- -->
+						<div class="demo-container" ng-if="demoRunner.getDemoByOrderInList(8)">
+								<article class="item showcase-demos" ng-init="yourDemo1 = demoRunner.getDemoByOrderInList(8)">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(yourDemo1)" class="image fit">
+										<img ng-src="{{yourDemo1.screenShotURL}}" alt="{{yourDemo1.caption}}">
+										<header>
+											<h3 ng-bind="yourDemo1.caption"></h3>
+										</header>
+									</a>
+								</article>
+						</div> 
+						<div class="demo-container" ng-if="demoRunner.getDemoByOrderInList(9)">
+								<article class="item showcase-demos" ng-init="yourDemo2 = demoRunner.getDemoByOrderInList(9)">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(yourDemo2)" class="image fit">
+										<img ng-src="{{yourDemo2.screenShotURL}}" alt="{{yourDemo2.caption}}">
+										<header>
+											<h3 ng-bind="yourDemo2.caption"></h3>
+										</header>
+									</a>
+								</article>
+						</div>
+
+						<!-- END YOUR DEMOS! -->
+						<!-- --------------------------------------------------------------------- -->
+					
 					</div>
 				</section>
 
