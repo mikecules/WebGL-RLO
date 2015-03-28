@@ -164,15 +164,16 @@
 							</div>
 
 							<br />
-							If you are still good to go - the next step to mastering WebGL (and all the wonders that go along with it!) it is to understand the technology and composition of the demos that you will be working with moving forward. The following sections will provide you with an overview of the demo files composition (i.e. where you can find the demo code, areas where you can add your own demo code, etc.) and 3<sup>rd</sup> party libraries used in the demos.
+							If you are still good to go - the next step to mastering WebGL (and all the wonders that go along with it!) is to understand the technology and composition of the demos that you will be working with moving forward. The following sections will provide you with an overview of the demo files composition (i.e. where you can find the demo code, areas where you can add your own demo code, etc.) and 3<sup>rd</sup> party libraries used in the demos. Let's start with the 3<sup>rd</sup> party libraries and finish up with the demo code.
 							</div>
 							<div class="content">
 								<ul class="info-grouping">
 									<li>
-										<div class="caption"><span class="icon fa-comment"></span> 3<sup>rd</sup> Party Libraries Used in the Demos</div>
+										<div class="caption"><span class="icon fa-group"></span> 3<sup>rd</sup> Party Libraries Used in the Demos</div>
 										<ul class="numbered">
 											<li><a href="https://jquery.com" target="_blank">jQuery</a>: Used as a cross-browser solution to gain access to the DOM, used to build the canvas widget that displays the demos. It is also used to make the magic of this site work.</li>
-											<li><a href="https://angularjs.org" target="_blank">AngularJS</a>: This a Model/View/Controller JavaScript framework used to organize your code. All demos are placed within the AngularJS controller scope. See <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">WebGLMainController.js</a> to view the main controller that runs the WebGL demos in this site.</li>
+											<li><a href="https://angularjs.org" target="_blank">AngularJS</a>: This a Model/View/Controller JavaScript framework used to organize your code. All demos are placed within the AngularJS controller scope. See <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">WebGLMainController.js</a> to view the main controller that runs the WebGL demos in this site. <span class="emphasis">Note that you do not need to understand how AngularJS works to be able to play around
+												with the demo code (or write your own). See the following &quot;JavaScript Demo Files Composition&quot; section for more details.</span></li>
 											<li><a href="http://glmatrix.net/" target="_blank">glMatrix</a>: We use this library to create the necessary mathematical data structures (matrices and vectors) and data operations (matrix multiply, transpose, invert, etc.). This lightweight library can also generate the appropriate Model, View/Camera and Projection matrices that the WebGL subsystem requires (so we don't have too) to do it's magic!</li>
 										</ul>
 									</li>
@@ -180,9 +181,25 @@
 
 								<ul class="info-grouping">
 									<li>
-										<div class="caption"><span class="icon fa-comment"></span> Demo Files Composition</div>
+										<div class="caption"><span class="icon fa-folder"></span> JavaScript Demo Files Composition</div>
 										<ul class="numbered">
-											<li></li>
+											<li><a href="./scripts/angular-app/app.js" target="_blank">scripts/angular-app/app.js</a>: This is the entry point to the angularJS app used. This file defines the primary module (and dependencies required) that will be used for the site. 
+												There will be no need to modify the code in this file.</li>
+											<li><a href="./scripts/angular-app/lightingExample.js" target="_blank">scripts/angular-app/lightingExample.js</a>: This file
+											 contains a WebGL lighting example that uses <a href="http://en.wikipedia.org/wiki/List_of_common_shading_algorithms" target="_blank">the Lambert Shading technique</a> to make our 3D objects look good. <span class="emphasis">This is an advanced example and should only be looked at after you grasp the fundamentals.</span></li>
+											<li><a href="./scripts/angular-app/pong.js" target="_blank">scripts/angular-app/pong.js</a>: This file contains the Pong game. The code is not 100% efficient and there is room for improvement (an exercise for you perhaps??) but it is fairly structured and commented and will serve as a good learning point for you. <span class="emphasis">This is an advanced example and should only be looked at after you grasp the fundamentals.</span></li>
+											<li><a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">scripts/angular-app/controllers/WebGLMainController.js</a>: As was mentioned earlier, this file contains the primary AngularJS controller used for this site. It features the first 6 demos and is the area that you will be most interested in. This is the file you will need to modify to add in your own examples. Look for the phrase &quot;<strong>STUDENT EXERCISES!!</strong>&quot; in this file to see how this can be achieved.</li>
+											<li><a href="./scripts/angular-app/services/WebGLUtilityModule.js" target="_blank">scripts/angular-app/services/WebGLUtilityModule.js</a>: This file provides the backbone for displaying the demos. The code is contained in an <a href="https://docs.angularjs.org/guide/services" target="_blank">AngularJS Service</a> (you can think of it as being a <a href="http://www.oodesign.com/singleton-pattern.html" target="_blank">singleton object</a> available only to AngularJS apps). Basically the code in this service creates a modal window with two <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 canvases</a>. A WebGL canvas that runs our demo code, and a 2D canvas which is used as a Heads Up Display (HUD) used to provide an overlay for our score and title menu in the Pong game. You can use the public API of <strong>_CanvasModalWidget()</strong> to run your demos on it. <span class="emphasis">The JavaScript (JS) variable that represents the modal is called &quot;canvasModalWidget&quot; in WebGLMainController.js</a></li>
+										</ul>
+									</li>
+								</ul>
+
+								<ul class="info-grouping">
+									<li>
+										<div class="caption"><span class="icon fa-folder"></span> CSS/Image Demo Files Composition</div>
+										<ul class="numbered">
+											<li><a href="./styles/app/app.css" target="_blank">styles/app/app.css</a>: Contains the basic styling used for the authored content (overriding some of HTML5 Up's styling and introducing some new ones) and the modal styling used to present the WebGL demos.</li>
+											<li><a href="./styles/app/images" target="_blank">styles/app/images</a>: Contains the directory where all demo screenshots and 3<sup>rd</sup> party images are stored.</li>
 										</ul>
 									</li>
 								</ul>

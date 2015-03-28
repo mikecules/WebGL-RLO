@@ -493,15 +493,12 @@ angular.module('webGLUtilityModule', [])
       // initialize the Canvas Widget
       __initCanvasWidget();
 
-
-      // Publically accessible Canvas Modal API
+      ///////////////////////////////////////////////////////////////
+      // Publically accessible Canvas Modal Widget API
+      ///////////////////////////////////////////////////////////////
       this.show = __show;
 
       this.hide = __hide;
-
-      this.setWidth = function(width) {
-        return this;
-      };
 
       this.isHidden = __isHidden;
 
@@ -513,6 +510,7 @@ angular.module('webGLUtilityModule', [])
         return _canvas3D.getContext();
       };
 
+      // get the jQuery object representing the webGL canvas
       this.getGLCanvasEl = function() {
         return _canvas3D.getCanvasJQObj();
       };
@@ -521,6 +519,7 @@ angular.module('webGLUtilityModule', [])
         return _canvas3D.getViewportAspectRatio();
       };
 
+      // get the jQuery object representing the HUD
       this.get2DCanvasEl = function() {
         return _canvas2D.getCanvasJQObj();
       };
@@ -537,6 +536,7 @@ angular.module('webGLUtilityModule', [])
         return this;
       };
 
+      // clears the HUD from drawing
       this.clearHUDCanvas = function() {
         _canvas2D
           .getContext()
@@ -554,11 +554,13 @@ angular.module('webGLUtilityModule', [])
         return _canvas3D.getGLProgram();
       }
 
+      // the title of the modal
       this.setCaption = function(caption) {
         _modalCaptionElement.html(caption);
         return this;
       };
 
+      // the text on the bottom on the modal
       this.setDetailText = function(details) {
         _modalDetailBody.html(details);
         return this;
@@ -567,7 +569,7 @@ angular.module('webGLUtilityModule', [])
 
       this.FPSHide = __modalFPSHide;
 
-      // we use this method to show the FPS text (used in PONG)
+      // we use this method to show the Frames Per Second (FPS) (used in PONG)
       this.setFPSVal = function(fps) {
         _modalFPSContainer.text('FPS: ' + fps);
       };
@@ -582,7 +584,7 @@ angular.module('webGLUtilityModule', [])
       };
 
 
-      // Canvas Widget Public API
+      // we can force our own cleanup of the canvases using this method
       this.resetCanvasWidget = __resetCanvasWidget;
 
 

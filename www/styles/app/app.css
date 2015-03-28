@@ -16,6 +16,14 @@
   box-shadow: 0 0.05em 0.15em 0 rgba(0,0,0,0.05);
 }
 
+.container .content span.emphasis {
+  color: #550000;
+}
+
+.container .content a {
+  font-weight: bold;
+}
+
 .container .content {
   color: #000;
 }
