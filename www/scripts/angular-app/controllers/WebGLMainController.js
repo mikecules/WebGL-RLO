@@ -848,7 +848,7 @@ angular.module('WebGLRLOApp')
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Now you can play around with the code in your own area - feel free to fill in these functions and remember to 
-    // uncomment the _demos array entries below when you are ready to test your demos.
+    // uncomment the _studentDemos array entries below when you are ready to test your demos.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     function yourDemoExample1() {
         alert('hello 3D world one!');
@@ -859,8 +859,8 @@ angular.module('WebGLRLOApp')
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // demo metadata and functions to execute used by angularJS to execute the demos
+    // Demo metadata and functions to execute used by angularJS to execute the demos.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   	var _demos = [
         [
 	        {
@@ -926,25 +926,56 @@ angular.module('WebGLRLOApp')
 	          appFn: Pong,
 	          screenShotURL: 'styles/app/images/demo7.png'
 	        }
-        ] /*,
-        
-         [
-            {
-              caption: 'Your Demo Example 1', // UNCOMMENT these entries to start exploring your own WegGL experiments using this app
-              details:  'Some details about your demo 1',
-              appFn: yourDemoExample1,
-              screenShotURL: '#'
-            },
-            {
-              caption: 'Your Demo Example 2',
-              details: 'Some details about your demo 2',
-              appFn: yourDemoExample2,
-              screenShotURL: '#'
-            }
-        ]
-        */
+        ] 
         
       ];
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // STUDENT EXERCISES!!
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // The data structure used here is exactly the same as the one above so you can keep adding to
+    // this array as you perform your experiments.
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    var _studentDemos = [
+    /*
+
+     [
+        {
+          caption: 'Your Demo Example 1', // UNCOMMENT these entries to start exploring your own WegGL experiments using this app
+          details:  'Some details about your demo 1',
+          appFn: yourDemoExample1,
+          screenShotURL: '#'
+        },
+        {
+          caption: 'Your Demo Example 2',
+          details: 'Some details about your demo 2',
+          appFn: yourDemoExample2,
+          screenShotURL: '#'
+        }
+    ],
+     [
+        {
+          caption: 'Your Demo Example 3', // UNCOMMENT these entries to start exploring your own WegGL experiments using this app
+          details:  'Some details about your demo 3',
+          appFn: function(){},
+          screenShotURL: '#'
+        },
+        {
+          caption: 'Your Demo Example 4',
+          details: 'Some details about your demo 4',
+          appFn: function(){},
+          screenShotURL: '#'
+        }
+    ]
+    */    
+    ];
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+      var _demosForType =   {
+                                'rlo': _demos,
+                                'student': _studentDemos
+                            };
 
 
       
@@ -952,13 +983,13 @@ angular.module('WebGLRLOApp')
       function _DemoRunner() {
 
         // used as a convenience array to look up demos by index
-        var __demoByOrderLookup = [];
+        var __demoRLOByOrderLookup = [];
 
 
         function __init() {
             for (var i = 0; i < _demos.length; i++) {
                 for (var j = 0; j < _demos[i].length; j++) {
-                    __demoByOrderLookup.push(_demos[i][j]);
+                    __demoRLOByOrderLookup.push(_demos[i][j]);
                 }
             }
         }
@@ -981,10 +1012,16 @@ angular.module('WebGLRLOApp')
         };
 
 
-        this.getDemos = function(index, length) {
+        this.getDemos = function(type, index, length) {
+
+          var demos = _demosForType[type]; 
+
+          if (typeof demos === 'undefined') {
+            throw new Error('Could not find demos of type: ' + type);
+          }
 
           if (typeof index === 'number') {
-            if (index >= _demos.length) {
+            if (index >= demos.length) {
               return null;
             }
             else {
@@ -992,26 +1029,32 @@ angular.module('WebGLRLOApp')
             }
 
             if (! length) {
-                length = _demos.length;
+                length = demos.length;
             }
           }
 
 
-          return _demos.slice(index, length);
+          return demos.slice(index, length);
 
         };
 
-        this.getDemoByGroup = function(index) {
-            return  [_demos[index]];
+        this.getDemoByGroup = function(type, index) {
+            var demos = _demosForType[type];
+
+            if (typeof demos === 'undefined') {
+                throw new Error('Could not find demos of type: ' + type);
+            }
+
+            return  [demos[index]];
         };
 
-         this.getDemoByOrderInList = function(order) {
+         this.getRLODemoByOrderInList = function(order) {
             
-            if (order >= __demoByOrderLookup.length) {
+            if (order >= __demoRLOByOrderLookup.length) {
                 return null;
             }
 
-            return  __demoByOrderLookup[order];
+            return  __demoRLOByOrderLookup[order];
         };
 
         return this;

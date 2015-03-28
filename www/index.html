@@ -315,7 +315,7 @@ some code here...
 						<p>Click on the below demos to run them in your browser.</p>
 
 						<div class="demo row">
-							<div class="4u" ng-repeat="demo in demoRunner.getDemos(0, 3)">
+							<div class="4u" ng-repeat="demo in demoRunner.getDemos('rlo', 0, 3)">
 								<article class="item" ng-init="demo1 = demo[0]">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo1)" class="image fit">
 										<img ng-src="{{demo1.screenShotURL}}" alt="{{demo1.caption}}">
@@ -338,7 +338,7 @@ some code here...
 						<h3>And now for our feature show...</h3>
 						<br />
 						<div class="demo-container">
-								<article class="item showcase-demos" ng-init="lightExampleDemo = demoRunner.getDemoByOrderInList(6)">
+								<article class="item showcase-demos" ng-init="lightExampleDemo = demoRunner.getRLODemoByOrderInList(6)">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(lightExampleDemo)" class="image fit">
 										<img ng-src="{{lightExampleDemo.screenShotURL}}" alt="{{lightExampleDemo.caption}}">
 										<header>
@@ -348,7 +348,7 @@ some code here...
 								</article>
 						</div>
 						<div class="demo-container">
-								<article class="item showcase-demos" ng-init="pong = demoRunner.getDemoByOrderInList(7)">
+								<article class="item showcase-demos" ng-init="pong = demoRunner.getRLODemoByOrderInList(7)">
 									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(pong)" class="image fit">
 										<img ng-src="{{pong.screenShotURL}}" alt="{{pong.caption}}">
 										<header>
@@ -359,30 +359,30 @@ some code here...
 						</div>
 
 						<!-- --------------------------------------------------------------------- -->
-						<!-- YOUR DEMOS! -->
+						<!-- STUDENT EXERCISES!! -->
 						<!-- --------------------------------------------------------------------- -->
-						<div class="demo-container" ng-if="demoRunner.getDemoByOrderInList(8)">
-								<article class="item showcase-demos" ng-init="yourDemo1 = demoRunner.getDemoByOrderInList(8)">
-									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(yourDemo1)" class="image fit">
-										<img ng-src="{{yourDemo1.screenShotURL}}" alt="{{yourDemo1.caption}}">
+						<div class="demo row" ng-hide="demoRunner.getDemos('student').length == 0">
+							<div class="4u" ng-repeat="studentDemos in demoRunner.getDemos('student')">
+								<article class="item" ng-init="studentDemo1 = studentDemos[0]">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(studentDemo1)" class="image fit">
+										<img ng-src="{{studentDemo1.screenShotURL}}" alt="{{studentDemo1.caption}}">
 										<header>
-											<h3 ng-bind="yourDemo1.caption"></h3>
+											<h3 ng-bind="studentDemo1.caption"></h3>
 										</header>
 									</a>
 								</article>
-						</div> 
-						<div class="demo-container" ng-if="demoRunner.getDemoByOrderInList(9)">
-								<article class="item showcase-demos" ng-init="yourDemo2 = demoRunner.getDemoByOrderInList(9)">
-									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(yourDemo2)" class="image fit">
-										<img ng-src="{{yourDemo2.screenShotURL}}" alt="{{yourDemo2.caption}}">
+								<article class="item" ng-if="studentDemos[1]" ng-init="studentDemo2 = studentDemos[1]">
+									<a ng-href="javascript:void(0)" ng-click="demoRunner.run(studentDemo2)" class="image fit">
+										<img ng-src="{{studentDemo2.screenShotURL}}" alt="{{studentDemo2.caption}}">
 										<header>
-											<h3 ng-bind="yourDemo2.caption"></h3>
+											<h3 ng-bind="studentDemo2.caption"></h3>
 										</header>
 									</a>
 								</article>
+							</div>
 						</div>
-
-						<!-- END YOUR DEMOS! -->
+						<!-- --------------------------------------------------------------------- -->
+						<!-- END OF YOUR DEMOS! -->
 						<!-- --------------------------------------------------------------------- -->
 					
 					</div>
@@ -405,7 +405,7 @@ some code here...
 
 					<!-- Demo container used as one off illustration -->
 					<div class="demo-container">
-						<article class="item" ng-init="demo =  demoRunner.getDemoByOrderInList(0)">
+						<article class="item" ng-init="demo =  demoRunner.getRLODemoByOrderInList(0)">
 							<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo)" class="image fit">
 								<img ng-src="{{demo.screenShotURL}}" alt="{{demo.caption}}">
 								<header>
