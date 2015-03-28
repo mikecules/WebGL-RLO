@@ -71,15 +71,6 @@
 }
 
 
-.container .content .exercise-container {
-  background: rgb(228, 219, 185);
-  border-radius: 5px;
-  padding: 1em 1em;
-  border: solid 1px rgb(186, 181, 164);
-  color: #000;
-  margin: 1em 0em;
-}
-
 .container .content ul.info-grouping {
   background: #fff;
   border: solid 1px #ccc;
@@ -89,12 +80,39 @@
 .container .content ul.info-grouping li {
   margin: 0 0;
   text-align: left;
+  line-height: 1.5em;
+}
+
+.container .content ul.info-grouping .caption.pro {
+  background: rgb(221, 249, 221);
+}
+
+.container .content ul.info-grouping .caption.con {
+  background: rgb(249, 228, 221);
 }
 
 .container .content ul.info-grouping .caption {
+  list-style-type: none;
   color: #000;
   background: #ddd;
-  padding: 5px 10px;
+  padding: 5px 0.9em;
+  border-radius: 5px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.container .content ul.info-grouping ul.disc {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+  line-height: 1.5em;
+  font-size: medium;
+}
+
+.container .content  ul.disc {
+  list-style-type: disc;
+  color: #000;
+  background: #fff;
+  padding: 10px 10px 0px 10px;
 }
 
 .container .content ul.numbered {
@@ -115,8 +133,24 @@
     font-size: medium
 }
 
+
+.container .content .exercise-container {
+  background: rgb(228, 219, 185);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  border: solid 1px rgb(186, 181, 164);
+  color: #000;
+  margin: 1em 0em;
+  text-align: left;
+}
+
+.container .content .exercise-container h4 {
+  color: #000;
+}
+
 .container .content .exercise-container ul {
   list-style-type: decimal;
+  margin-top: 0.5em;
 }
 
 .container .content .exercise-container ul li  {

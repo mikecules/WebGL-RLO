@@ -181,7 +181,7 @@
 
 								<ul class="info-grouping">
 									<li>
-										<div class="caption"><span class="icon fa-folder"></span> JavaScript Demo Files Composition</div>
+										<div class="caption"><span class="icon fa-file"></span> JavaScript Demo Files Composition</div>
 										<ul class="numbered">
 											<li><a href="./scripts/angular-app/app.js" target="_blank">scripts/angular-app/app.js</a>: This is the entry point to the angularJS app used. This file defines the primary module (and dependencies required) that will be used for the site. 
 												There will be no need to modify the code in this file.</li>
@@ -189,20 +189,28 @@
 											 contains a WebGL lighting example that uses <a href="http://en.wikipedia.org/wiki/List_of_common_shading_algorithms" target="_blank">the Lambert Shading technique</a> to make our 3D objects look good. <span class="emphasis">This is an advanced example and should only be looked at after you grasp the fundamentals.</span></li>
 											<li><a href="./scripts/angular-app/pong.js" target="_blank">scripts/angular-app/pong.js</a>: This file contains the Pong game. The code is not 100% efficient and there is room for improvement (an exercise for you perhaps??) but it is fairly structured and commented and will serve as a good learning point for you. <span class="emphasis">This is an advanced example and should only be looked at after you grasp the fundamentals.</span></li>
 											<li><a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">scripts/angular-app/controllers/WebGLMainController.js</a>: As was mentioned earlier, this file contains the primary AngularJS controller used for this site. It features the first 6 demos and is the area that you will be most interested in. This is the file you will need to modify to add in your own examples. Look for the phrase &quot;<strong>STUDENT EXERCISES!!</strong>&quot; in this file to see how this can be achieved.</li>
-											<li><a href="./scripts/angular-app/services/WebGLUtilityModule.js" target="_blank">scripts/angular-app/services/WebGLUtilityModule.js</a>: This file provides the backbone for displaying the demos. The code is contained in an <a href="https://docs.angularjs.org/guide/services" target="_blank">AngularJS Service</a> (you can think of it as being a <a href="http://www.oodesign.com/singleton-pattern.html" target="_blank">singleton object</a> available only to AngularJS apps). Basically the code in this service creates a modal window with two <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 canvases</a>. A WebGL canvas that runs our demo code, and a 2D canvas which is used as a Heads Up Display (HUD) used to provide an overlay for our score and title menu in the Pong game. You can use the public API of <strong>_CanvasModalWidget()</strong> to run your demos on it. <span class="emphasis">The JavaScript (JS) variable that represents the modal is called &quot;canvasModalWidget&quot; in WebGLMainController.js</a></li>
+											<li><a href="./scripts/angular-app/services/WebGLUtilityModule.js" target="_blank">scripts/angular-app/services/WebGLUtilityModule.js</a>: This file provides the backbone for displaying the demos. The code is contained in an <a href="https://docs.angularjs.org/guide/services" target="_blank">AngularJS Service</a> (you can think of it as being a <a href="http://www.oodesign.com/singleton-pattern.html" target="_blank">singleton object</a> available only to AngularJS apps). Basically the code in this service creates a modal window with two <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 canvases</a>. A WebGL canvas that runs our demo code, and a 2D canvas which is used as a Heads Up Display (HUD) to provide an overlay for our score and title menu in the Pong game. You can use the public API of <strong>_CanvasModalWidget()</strong> to run your demos on it. <span class="emphasis">The JavaScript (JS) variable that represents the modal is called &quot;canvasModalWidget&quot; in WebGLMainController.js</span>. There is also a second service called &quot;<strong>webGLDrawUtilities</strong>&quot; in the same file. This service is used to generate the data (vertices, surface normals, vertex indexes) used by WebGL to render some 3D primitives used by the demos.</li>
 										</ul>
 									</li>
 								</ul>
 
 								<ul class="info-grouping">
 									<li>
-										<div class="caption"><span class="icon fa-folder"></span> CSS/Image Demo Files Composition</div>
+										<div class="caption"><span class="icon fa-file"></span> CSS/Image Demo Files Composition</div>
 										<ul class="numbered">
 											<li><a href="./styles/app/app.css" target="_blank">styles/app/app.css</a>: Contains the basic styling used for the authored content (overriding some of HTML5 Up's styling and introducing some new ones) and the modal styling used to present the WebGL demos.</li>
 											<li><a href="./styles/app/images" target="_blank">styles/app/images</a>: Contains the directory where all demo screenshots and 3<sup>rd</sup> party images are stored.</li>
 										</ul>
 									</li>
 								</ul>
+
+								<div class="exercise-container">
+								<h4><span class="icon fa-edit"></span> Unit 0 Exercises</h4>
+								<ul>
+									<li>Take some time to explore the 3<sup>rd</sup> party technologies mentioned in this unit. It will be help your understanding of what's happening in the demo code moving forward.</li>
+									<li>Familiarize yourself with the demo JS files in terms of the organization of the code. If you were the learning object author how would you organize the files in order to make learning for the student easier?</li>
+								</ul>
+							</div>
 							</div>
 						
 						</p>
@@ -217,12 +225,34 @@
 
 						<header>
 							<h2 class="icon fa-gavel"></h2>
-							<h2>Why WebGL?</h2>
+							<h2>Unit 1: Why WebGL?</h2>
 						</header>
-
-						<!-- a href="#" class="image featured"><img src="#" alt=""></a -->
-
-						<p></p>
+						<p>
+							<div class="content text">
+								Choosing to adopt a relatively new technology can be a difficult choice that often requires the careful evaluation of cost-to-benefit ratios before employing it in your own projects.
+								The following unit will outline some of the advantages and disadvantages of utilizing WebGL in your projects.
+							</div>
+							<div class="content">
+								<ul class="info-grouping">
+									<li>
+										<div class="caption pro"><span class="icon fa-thumbs-up"></span> Advantages of WebGL</div>
+										<ul class="disc">
+											<li>a</li>
+											<li>a</li>
+											<li>a</li>
+										</ul>
+									</li>
+								</ul>
+								<ul class="info-grouping">
+									<li>
+										<div class="caption con"><span class="icon fa-thumbs-down"></span> Disadvantages of WebGL</div>
+										<ul>
+											<li></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</p>
 
 					</div>
 				</section>
