@@ -17,8 +17,27 @@
 }
 
 .container .content {
+  color: #000;
+}
+.container .content.text { 
+
   margin: 1em 0em;
   text-align: left;
+  line-height: 1.7em;
+
+}
+
+.container .content ul.list {
+  list-style-type: disc;
+  margin: 1em 0em;
+  text-align: left;
+  font-size: 0.8em;
+  padding-left: 2em;
+}
+
+.container .content ul.list li {
+  line-height: 1.5em;
+  width: 100%;
 }
 
 #objectives .container ul {
@@ -27,32 +46,24 @@
   color: #000;
   font-size: 1em;
   line-height: 2em;
-}
-
-.container li {
-  margin-bottom: 1em;
+  text-align: left;
 }
 
 #objectives .container li .icon.fa-check-square-o {
   color: rgb(26, 121, 26);
 }
 
-.container .demo-container, .container .image-container {
+.container li {
+  margin-bottom: 1em;
+}
+
+.container .content .demo-container, .container .content .image-container {
   width: 80%;
   margin: 1em auto;
 }
 
-.container .image-container header {
-  padding: 0.2em 0 0.2em 0em;
-  line-height: 1.2em;
-}
 
-.container .image-container header.dark {
-  background-color: #555;
-  color: #fff;
-}
-
-.container .exercise-container {
+.container .content .exercise-container {
   background: rgb(228, 219, 185);
   border-radius: 5px;
   padding: 1em 1em;
@@ -61,65 +72,74 @@
   margin: 1em 0em;
 }
 
-.container ul.info-grouping {
+.container .content ul.info-grouping {
   background: #fff;
   border: solid 1px #ccc;
   border-radius: 5px;
 }
 
-.container ul.info-grouping li {
+.container .content ul.info-grouping li {
   margin: 0 0;
+  text-align: left;
 }
 
-.container ul.info-grouping .caption {
+.container .content ul.info-grouping .caption {
   color: #000;
   background: #ddd;
   padding: 5px 10px;
 }
 
-.container ul.numbered {
+.container .content ul.numbered {
   list-style-type: decimal;
   color: #000;
   background: #fff;
   padding: 10px 10px 0px 10px;
 }
 
-.container strong {
+.container .content strong {
   font-weight: bold;
 }
 
-.container ul.numbered li  {
+.container .content ul.numbered li  {
     margin-left: 1.5em;
     margin-bottom: 1em;
     line-height: 1.5em;
     font-size: medium
 }
 
-.container .exercise-container ul {
+.container .content .exercise-container ul {
   list-style-type: decimal;
 }
 
-.container .exercise-container ul li  {
+.container .content .exercise-container ul li  {
     margin-left: 1.5em;
     margin-bottom: 1em;
     line-height: 1.5em;
     font-size: medium
 }
 
-.container .image-container header.dark h3 {
+.container .content .image-container header {
+  padding: 0.2em 0 0.2em 0em;
+  line-height: 1.2em;
+  text-align: center;
+}
+
+.container .content .image-container header.dark {
+  background-color: #555;
+  color: #fff;
+  padding: 0.2em 0 0.2em 0em;
+}
+
+.container .content .image-container header.dark h3 {
   color: #fff;
 }
 
-.container .image-container header em {
+.container .content .image-container header em {
   font-size: 12px
 }
 
-.container ul {
-  width: 100%;
-  text-align: left;
-}
 
-.container .code-container {
+.container .content .code-container {
   width: 100%;
   display: inline-block;
   background: #eee;
@@ -130,7 +150,7 @@
   
 }
 
-.container .code-container div {
+.container .content .code-container div {
   font-size: medium;
   color: #000;
   text-align: left;
@@ -140,7 +160,7 @@
   overflow: auto;
 }
 
-.container .code-container div strong {
+.container .content .code-container div strong {
   color: #000055;
   font-weight: bold;
 }

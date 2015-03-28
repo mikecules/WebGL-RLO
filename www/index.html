@@ -52,12 +52,18 @@
 						<p>
 							<ul>
 								<li><i class="icon fa-check-square-o"></i> 
-									Understand the benefits/disadvantages of WebGL.
+									Learn what you will need to know to complete this lesson.
 								</li>
-
+								<li><i class="icon fa-check-square-o"></i> 
+									Ensure your browser is WebGL capable.
+								</li>
 								<li><i class="icon fa-check-square-o"></i> 
 									Learn about the files used by the WebGL demos. You will need this knowledge for the 
 									proceeding sections.
+								</li>
+
+								<li><i class="icon fa-check-square-o"></i> 
+									Understand the benefits/disadvantages of WebGL.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
@@ -73,7 +79,7 @@
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Be able to describe and apply the basic steps to initialize a WegGL application.
+									Be able to describe and apply the basic steps to initialize a WebGL application.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
@@ -81,24 +87,23 @@
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Describe the cartesian coordinate space conventionally used by 2D Canvas.
+									Describe the Cartesian coordinate space conventionally used by 2D Canvas.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Describe the cartesian coordinate space conventionally used by the WebGL Canvas.
+									Describe the Cartesian coordinate space conventionally used by the WebGL Canvas.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Understand the difference between Model, View/Camera and Perspective Spaces.
+									Understand the difference between Model, View/Camera and Projection Spaces.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Describe the two popular types of 3D projection used in WegGL.
+									Understand how to convert between Model, View/Camera and Projection Spaces.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Apply your understanding of Model, View/Camera and Perspective Spaces to position
-									3D objects in the WebGL coordinate space.
+									Describe the two popular types of 3D projection used in WebGL.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
@@ -106,8 +111,9 @@
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
-									Learn (using the supplied demos) how to write your own WebGL applications.
+									Apply your understanding of this lesson to write your own WebGL applications!
 								</li>
+
 							</ul>
 						</p>
 
@@ -120,12 +126,69 @@
 
 						<header>
 							<h2 class="icon fa-graduation-cap"></h2>
-							<h2>Prerequisite Knowledge</h2>
+							<h2>Unit 0: Prerequisite Knowledge</h2>
 						</header>
 
 						
 
-						<p></p>
+						<p>
+							<div class="content text">
+
+							Every lesson has it's beginning, and ours begins here. Before we continue, let's discuss the necessary prerequisite knowledge that you must possess (beforehand) to be able to successfully complete the journey you are about to embark on. Given the nature of the topic it is important to be comfortable with the following areas:
+							<ul class="list">
+								<li>
+									Have done some HTML/JavaScript development in the past. The demos and following exercises will require you to have at least some knowledge in these areas in order to proceed with the lesson. <a href="http://www.amazon.ca/s/?field-keywords=html5+programming" target="_blank">If not, there are plenty of resources out there!</a>
+								</li>
+								<li>
+									Have (at minimum) a basic understanding of high-school level mathematics. In particular, you should have knowledge in the areas of Matrices, vectors, geometry and trigonometry. While you certainly don’t need to be a math whiz you should be comfortable (enough to not get bogged down) with these topics before you proceed. <a href="http://www.amazon.ca/s/?field-keywords=3d+math" target="_blank">If not, you can try one of these books!</a>
+								</li>
+							</ul>
+							The next step will be to test your browser's 2D/3D capabilities so that you can ensure that the demos will run - you can do this by going to <a href="http://html5test.com/" target="_blank">html5test.com</a>. This site will test the capabilities of your browser - once complete scroll down to the &quot;<strong>3D, graphics &amp; effects</strong>&quot; section and ensure that &quot;<strong>WebGL 3D graphics</strong>&quot; is set to &quot;<strong>Yes</strong>&quot;. Refer to the screenshot below (click it to see the whole screenshot):
+							<br />
+
+							<!-- Image Container used as a one off illustration -->
+							<div class="image-container">
+								<article class="item">
+									<div class="image fit">
+										<a target="_blank" ng-href="styles/app/images/htm5_screenshot.png">
+											<img ng-src="styles/app/images/htm5_screenshot_clipped.png" alt="" style="padding: 100px; background-color: #ccc;">
+										</a>
+										<header class="dark">
+											<h3>
+												<a target="_blank" ng-href="styles/app/images/htm5_screenshot.png">Figure 0.1: HTML 5 Test 3D Graphics Capabilities</a>
+											</h3>
+											<em><a target="_blank" ng-href="https://html5test.com/">https://html5test.com</a></em>
+										</header>
+									</div>
+								</article>	
+							</div>
+
+							<br />
+							If you are still good to go - the next step to mastering WebGL (and all the wonders that go along with it!) it is to understand the technology and composition of the demos that you will be working with moving forward. The following sections will provide you with an overview of the demo files composition (i.e. where you can find the demo code, areas where you can add your own demo code, etc.) and 3<sup>rd</sup> party libraries used in the demos.
+							</div>
+							<div class="content">
+								<ul class="info-grouping">
+									<li>
+										<div class="caption"><span class="icon fa-comment"></span> 3<sup>rd</sup> Party Libraries Used in the Demos</div>
+										<ul class="numbered">
+											<li><a href="https://jquery.com" target="_blank">jQuery</a>: Used as a cross-browser solution to gain access to the DOM, used to build the canvas widget that displays the demos. It is also used to make the magic of this site work.</li>
+											<li><a href="https://angularjs.org" target="_blank">AngularJS</a>: This a Model/View/Controller JavaScript framework used to organize your code. All demos are placed within the AngularJS controller scope. See <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">WebGLMainController.js</a> to view the main controller that runs the WebGL demos in this site.</li>
+											<li><a href="http://glmatrix.net/" target="_blank">glMatrix</a>: We use this library to create the necessary mathematical data structures (matrices and vectors) and data operations (matrix multiply, transpose, invert, etc.). This lightweight library can also generate the appropriate Model, View/Camera and Projection matrices that the WebGL subsystem requires (so we don't have too) to do it's magic!</li>
+										</ul>
+									</li>
+								</ul>
+
+								<ul class="info-grouping">
+									<li>
+										<div class="caption"><span class="icon fa-comment"></span> Demo Files Composition</div>
+										<ul class="numbered">
+											<li></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						
+						</p>
 
 					</div>
 				</section>
@@ -176,10 +239,9 @@
 
 							<div class="content">
 							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							</div>
+							
+							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
+							
 
 							<div class="exercise-container">
 								<h4><span class="icon fa-edit"></span> Exercises</h4>
@@ -211,23 +273,7 @@ some code here...
 								</li>
 							</ul>
 
-							<ul class="info-grouping">
-								<li>
-									<div class="caption"><span class="icon fa-comment"></span> 3<sup>rd</sup> Party Libraries Used in the Demos</div>
-									<ul class="numbered">
-										<li></li>
-									</ul>
-								</li>
-							</ul>
-
-							<ul class="info-grouping">
-								<li>
-									<div class="caption"><span class="icon fa-comment"></span> Demo Files Composition</div>
-									<ul class="numbered">
-										<li></li>
-									</ul>
-								</li>
-							</ul>
+							
 
 							<div class="code-container">
 								<h4><span class="icon fa-code"></span> Initalizing the WebGL Context</h4>
@@ -290,6 +336,7 @@ some code here...
 
 								</div>
 							</div>
+			</div>
 						</p>
 
 						
@@ -315,6 +362,7 @@ some code here...
 			<!-- Demos -->
 				<section id="demos" class="two">
 					<div class="container">
+						
 
 						<header>
 							<h2 class="icon fa-th"></h2>
@@ -322,7 +370,7 @@ some code here...
 						</header>
 
 						<p>Click on the below demos to run them in your browser.</p>
-
+						<div class="content">
 						<div class="demo row">
 							<div class="4u" ng-repeat="demo in demoRunner.getDemos('rlo', 0, 3)">
 								<article class="item" ng-init="demo1 = demo[0]">
@@ -395,6 +443,7 @@ some code here...
 						<!-- --------------------------------------------------------------------- -->
 					
 					</div>
+				</div>
 				</section>
 
 				
@@ -411,7 +460,7 @@ some code here...
 						</header>
 
 							<div class="container">
-
+								<div class="content">
 					<!-- Demo container used as one off illustration -->
 					<div class="demo-container">
 						<article class="item" ng-init="demo =  demoRunner.getRLODemoByOrderInList(0)">
@@ -498,22 +547,7 @@ some code here...
 						</article>	
 					</div>
 
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<a target="_blank" ng-href="styles/app/images/htm5_screenshot.png">
-									<img ng-src="styles/app/images/htm5_screenshot_clipped.png" alt="" style="padding: 100px; background-color: #ccc;">
-								</a>
-								<header class="dark">
-									<h3>
-										<a target="_blank" ng-href="styles/app/images/htm5_screenshot.png">Figure 1.1: HTML 5 Test 3D Graphics Capabilities</a>
-									</h3>
-									<em><a target="_blank" ng-href="https://html5test.com/">https://html5test.com</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
+					
 
 					<!-- Image Container used as a one off illustration -->
 					<div class="image-container">
@@ -652,6 +686,7 @@ some code here...
 						<p></p>
 
 					</div>
+				</div>
 				</section>
 
 		</div>
