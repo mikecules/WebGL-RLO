@@ -818,6 +818,11 @@ some code here...
 						</header><br />
 						<h3>Lambert Shading - A Basic Lighting Technique</h3>
 						<div class="content text">
+							One of the most important aspects to making an object appear 3D is to provide the appropriate lighting to your 3D model (GLSL ES is named after the word after all). In our example we are using ambient and directional light (we represent this as a vector) to do our black magic and make everything look pretty. Ambient light is essentially light that is global to all regions of the model - producing no shadows. It is the basic level of light that is seen in all directions and has a colour associated with it (for our purposes we use white light). A directional light has a colour and a direction and via the calculations done in our vertex shader produces an interpolated decrease in light intensities when combined with that of a <stong>surface normal</strong>.
+							<br /><br />
+							A surface normal is a unit vector (of magnitude 1) that is perpendicular to the surface created by the vertex mesh comprising of the 3D model we are drawing. Usually 3D modelling program will generate these vectors for you so you don't have to. In our Lambert shading demo we use our surface normal and lighting directional vector to figure out if the surface is pointing in the same direction but unlike figure 5.1 we invert our directional (see <a ng-href="./scripts/angular-app/lightingExample.js" target="_blank">the demo code for 6.7</a> and the vertex/fragment shaders contained within this file) vector so that we can more intuitively determine if a surface is illuminated by that directional vector or not. This is to say that if the dot product of our two vectors (surface normal and directional light) is 1.0 the vertex region gets lit up. If it's less than or equal to 0 it does not. Remember from trig that the dot product of two vectors is <strong>dot(a, b) = ||a|| * ||b||cos(theta)</strong>, where theta is the angle between the two vectors, <strong>||a||</strong> is the length of <strong>a</strong>, <strong>||b||</strong> is the length of <strong>b</strong> and cos(0 degrees) = 1, cos(90 degrees) = 0 and cos(180 degrees) = -1, cos(360 degrees) = 0. 
+							<br /><br />
+							We use the ambient colour components as the base lighting colour and add a percentage of our directional colour whose weight is varies between 0 or 0% and 1.0 or 100% (i.e. depending on the angle of our directional vector and surface normal at the vertex). In the fragment shader this colour is interpolated and multiplied against the default fragment colour for our object producing the desired effect. See the figure below for an illustration of the technique.
 						</div>
 						<div class="content">
 							<!-- Image Container used as a one off illustration -->
@@ -1323,9 +1328,9 @@ some code here...
 
 		  void main() {
 		  	  // This uses vector swizzling http://en.wikipedia.org/wiki/Swizzling_%28computer_graphics%29 to
-		  	  // provide a code shortcode to multiplying each component of the vector components (x,y,z) with
+		  	  // provide a code shortcode to multiplying each component of the vector components (r,g,b) with
 		  	  // one another.
-		      gl_FragColor = vec4(u_FragColour.xyz * v_LightWeightFactor.xyz, u_FragColour.w) ;
+		      gl_FragColor = vec4(u_FragColour.rgb * v_LightWeightFactor.rgb, u_FragColour.a) ;
 		  }
 		</script>
 		<!--  -->
