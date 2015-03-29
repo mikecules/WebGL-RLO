@@ -462,7 +462,9 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               __isAppRunning = true,
               __keyPressed = {},
               __keyReleased = {},
-              __robotErrorPercentage = 25; // make the robot mess up 25% of the time
+              __robotErrorPercentage = 33, // make the robot mess up 33% of the time
+              __robotVelocityPenalty = 0,
+              __ROBOT_VELOCITY_PENALITY_PERCENTAGE = 1.0 - 9.0/10.0; // drop the robot's efficiency by this percentage. (10% of the delta time)
 
         function __showTitleScreen() {
           var HUDEl = canvasModalWidget.get2DCanvasEl();
@@ -1218,10 +1220,17 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               // is the robot going to screw up - we randomize it's chance
               var willRobotWillMessUpThisFrame = (1 + Math.floor(Math.random() * 100)) > __robotErrorPercentage ? false : true;
 
-
+              // the robot's mistakes will be cumulative until it stops failing...
               if (willRobotWillMessUpThisFrame) {
-                player.update(Math.max(1, dt - 10));
-                continue;
+                __robotVelocityPenalty += dt * __ROBOT_VELOCITY_PENALITY_PERCENTAGE; // git it to go slower
+              }
+              else {
+                __robotVelocityPenalty -= dt * __ROBOT_VELOCITY_PENALITY_PERCENTAGE; // get it to go faster
+
+                if (__robotVelocityPenalty < 0) {
+                  __robotVelocityPenalty = 0;
+                }
+
               }
 
               //console.log(lowerBound, upperBound);
@@ -1239,10 +1248,20 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               else {
                 player.setDirection(__DIRECTIONS.WEST);
               }
+
+              
+             
             }
 
-            // update the player's position
-            player.update(dt);
+            if (player === __thePlayer) {
+              // update the player's position
+              player.update(dt);
+            }
+            else {
+              // penalize the robot by slowing it down if its made a mistake but
+              // not so much the it the player looks too janky
+              player.update(Math.max(12, dt - __robotVelocityPenalty));
+            }
 
             // used to calculate who's potentially going to hit the ball
             var potentialPlayerCollision = null,

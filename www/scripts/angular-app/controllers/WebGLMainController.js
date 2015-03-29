@@ -869,8 +869,8 @@ angular.module('WebGLRLOApp')
         [
 	        {
 	          caption: '6.3: Draw Modes and Translations',
-	          details: 	'Draw some trinagles using different draw modes and do some uniform translations to position the ' +
-	          			' vertices of a single triangle in 3 different locations in space.',
+	          details: 	'Draw some triangles using different WebGL draw modes and do some uniform translations to position the ' +
+	          			' vertices of a single triangle\'s vertices into 3 separate locations in space.',
 	          appFn: shapesExample,
 	          screenShotURL: 'styles/app/images/demo3.png'
 	        },
@@ -890,7 +890,9 @@ angular.module('WebGLRLOApp')
 	        },
             {
               caption: '6.6: Animation of 3D Primitives (V2)',
-              details: 'Here we finally show you some 3D primitive models moving around in 3D-space using Orthographic Projection.',
+              details:  '<strong>Version 2</strong>: 3D primitive models moving around in 3D-space using Orthographic Projection. ' +
+                        'Notice how the objects appear to have lost their appearance of depth when compared against our previous version ' +
+                        'which uses perpesective projection.',
               appFn: animating3DPrimativesOrthoExample,
               screenShotURL: 'styles/app/images/demo5v2.png'
             }
