@@ -454,7 +454,7 @@ some code here...
 						<h3>Shader Variables</h3>
 
 						<div class="content text">
-							As you can see from the above examples, the shaders appear to be using variable data types that kind of look like types that would be used in the context of 4D-vectors (<a href="#math" class="scrolly">see Math 101</a>) and indeed this is the case. GLSL ES has many types of mathematical data structures baked into it that describe all kinds of mathematical constructs. These types include various n-dimensional vectors and matrices. The provided mathematical constructs are necessary to map your 3D models (which comprise of 3-dimensional/4-dimensional points in space) from a 3D coordinate space to it's final destination - your 2D screen (which comprises of the contents of the <strong>Frame Buffer</strong>). In addition to these data types, GLSL ES allows the developer to specify the type of role that each variable will serve in your shader program (i.e. <strong>attribute</strong>, <strong>uniform</strong> and <strong>varying</strong>). These specifiers have special meaning and can only be used in certain contexts. For example, <strong>attributes</strong> and <strong>uniforms</strong> are writeable from JS and can be used to apply values to your vertices in your vertex shader. Fragment shaders on the other hand,  only allow uniform variables to be passed on from your JS code. <strong>Varying</strong> types can be created from your vertex shader and passed on to your fragment shader - but you cannot access them directly from your JS code. <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">See demo 4</a>, <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">js code</a> and GLSL ES code (<strong>remember the shaders are in the source of this file</strong>) to see how the <strong>varying</strong> variable type can be used in both your vertex and fragment shader.  
+							As you can see from the above examples, the shaders appear to be using variable data types that kind of look like types that would be used in the context of 4D-vectors (<a href="#math" class="scrolly">see Math 101</a>) and indeed this is the case. GLSL ES has many types of mathematical data structures baked into it that describe all kinds of mathematical constructs. These types include various n-dimensional vectors and matrices. The provided mathematical constructs are necessary to map your 3D models (which comprise of 3-dimensional/4-dimensional points in space) from a 3D coordinate space to it's final destination - your 2D screen (which comprises of the contents of the <strong>Frame Buffer</strong>). In addition to these data types, GLSL ES allows the developer to specify the type of role that each variable will serve in your shader program (i.e. <strong>attribute</strong>, <strong>uniform</strong> and <strong>varying</strong>). These specifiers have special meaning and can only be used in certain contexts. For example, <strong>attributes</strong> and <strong>uniforms</strong> are writeable from JS and can be used to apply values to your vertices in your vertex shader. Fragment shaders on the other hand,  only allow uniform variables to be passed on from your JS code. <strong>Varying</strong> types can be created from your vertex shader and passed on to your fragment shader - but you cannot access them directly from your JS code. <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">See demo 6.4</a>, <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">js code</a> and GLSL ES code (<strong>remember the shaders are in the source of this file</strong>) to see how the <strong>varying</strong> variable type can be used in both your vertex and fragment shader.  
 						</div>
 						<div class="content">
 							<!-- Image Container used as a one off illustration -->
@@ -500,7 +500,7 @@ some code here...
 							<div class="exercise-container">
 								<h4><span class="icon fa-edit"></span>Unit 3 Exercises</h4>
 								<ul>
-									<li>If you have not done so already, please review the first four demos in <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">WebGLMainController.js</a> and this file. You do not need to understand the math involved quite yet but try to pinpoint the areas where you send data to the vertex/fragment shaders and what those shaders do with that data. Run demos <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(0))">1</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(1))">2</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(2))">3</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">4</a> and see the results that are produced by the code.</li>
+									<li>If you have not done so already, please review the first four demos in <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">WebGLMainController.js</a> and this file. You do not need to understand the math involved quite yet but try to pinpoint the areas where you send data to the vertex/fragment shaders and what those shaders do with that data. Run demos <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(0))">6.1</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(1))">6.2</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(2))">6.3</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">6.4</a> and see the results that are produced by the code.</li>
 									<li>Given the example code from demos 1-4 see if you can figure out the purpose of attributes, uniforms and varying GLSL ES variable types. Confirm your hypothesis by looking at <a href="http://www.html5rocks.com/en/tutorials/webgl/shaders/#toc-4" target="_blank">this site</a>, refer to the GLSL ES 2.0 reference or alternatively you can Google it.</li>
 									<li>Notice the order that WebGL uses to draw vertices in Figure 3.4. In what order and what draw mode would you have to use to create an outline of a square?
 								</ul>
@@ -574,7 +574,7 @@ some code here...
 											<img ng-src="styles/app/images/ogl_coord_object_space_cube.png" alt="" style="padding: 10px 10px; background-color: #fff;">
 											<header class="dark">
 												<h3>
-													Figure 4.1: WebGL's Cuboid Coordinate System [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(0))">see Demo 6.1</a>]
+													Figure 4.2: WebGL's Cuboid Coordinate System [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(0))">see Demo 6.1</a>]
 												</h3>
 												<em><a target="_blank" ng-href="http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl">http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl</a></em>
 											</header>
@@ -593,7 +593,7 @@ some code here...
 											<img ng-src="styles/app/images/canvas_2d_coordinate.jpg" alt="">
 											<header class="dark">
 												<h3>
-													Figure 4.2: 2D HTML5 Canvas Coordinate System with an inverted Y-Axis<br />
+													Figure 4.3: 2D HTML5 Canvas Coordinate System with an inverted Y-Axis<br />
 													The values also are positive and integer-based, spanning past 1 in both directions.<br />
 													This is modelled after traditional window coordinate space.
 												</h3>
@@ -622,7 +622,7 @@ some code here...
 											<img ng-src="styles/app/images/3d_transformations.png" alt="" style="padding: 10px 10px; background-color: #fff;">
 											<header class="dark">
 												<h3>
-													Figure 4.3: 3D Transformation Matrices
+													Figure 4.4: 3D Transformation Matrices [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(2))">see Demo 6.3</a>]
 												</h3>
 												<em>
 													<a target="_blank" ng-href="http://www.c-jump.com/bcc/common/Talk3/Math/Matrices/const_images/3Dtransformations.png">
@@ -639,6 +639,14 @@ some code here...
 							<br />
 							<h3>Understanding Model, View and Projection Spaces</h3>
 							<div class="content text">
+								At a high level, a 3D developer's most important role when writing a WebGL application is to ensure that objects get created, positioned (sometimes at different orientations) and well lit (unless you are playing a 3D horror game) in the application's 3D World. In addition to these requirements we will (mostly) want to ensure everything &quot;looks&quot; semi-realistic with regards to a user's perspective. That is to say we will want to ensure that objects that are closer to a user are larger than those objects that are further away (even if they are actually much bigger - take the moon for example). The user should also be able to arbitrarily move and orient their heads (viewpoint) in different ways and have the objects in the virtual world move around accordingly. 
+								<br />
+								<br />
+								Now let's put our computer graphics hats on and conduct some experiments to illustrate these properties. To begin, raise your right or left hand in front of your face - with your palm open and facing you (again, you probably don't want to do this in public) bring your hand closer to your face. Observe what's happening. As your hand gets closer to you the scene around you falls out of view and hand size uniformly magnifies (scales, so to speak). Now move your hand away from your face and you will notice the reverse effect happens. Your hands scale to become smaller and you are able to see more things around you - this ladies and gentlemen is called <strong>perspective</strong>. When 3D perspective views need to be mapped to a 2D surface (as we need to do to draw to your 2D screen) it's referred to as Perspective Projection. Another way to look at this is that we need to remove the Z-axis component out of the picture (no-pun intended!) before we can draw it on our display since our displays are not 3D (yet). Okay enough projection talk, let's try another experiment! Leaving your hands further away from your face and keeping your hand fixed (i.e. don't move it!) rotate your head slowly from extreme left to extreme right. What you will probably notice is that as your head rotates in one direction the world around you (including your hand!) is rotating (along the same axis of rotation - which is pointing out of the top of your head) in the opposite direction. This effect is an artifact of adjusting your viewpoint. The phenomenon occurs because are altering your <strong>view</strong> (also called the <strong>camera</strong>) space. This implies that you could create the illusion of a dynamic viewpoint by observing the direction, orientation and position of your viewpoint in 3D space and applying the opposite (inverse) transformations (rotations, scales, and translations) to all objects in the world. So in 3D games the world really does revolved around you! 
+								<br />
+								<br />
+								Now we've talked about View and Projection spaces, what about Model spaces? We left this for last because it's really the most boring of the three spaces. A model space really is just a space that is relative to a single object. Let's take you for example. Your body parts follow a certain hierarchy in terms of where everything is oriented in space. When sitting up, your toes are always below your head and your torso is always in between your toes and your head. That's what makes you, you! All 3D models are built within a coordinate space that is relative to itself. As a first step we always need to start with an object's model space and will need to perform the necessary transformations to get them looking right in the world space. You do this (you guessed it!), by using transformation matrices and matrix math. In fact, all conversions from model space ===&gt; world space ===&gt; view space ===&gt; projection space are all done using matrices (multiplication mostly) so you better get comfortable with them - they are here to stay.
+
 								
 							</div>
 							<div class="content">
@@ -646,10 +654,32 @@ some code here...
 								<div class="image-container">
 									<article class="item">
 										<div class="image fit">
+											<img ng-src="styles/app/images/matrix_math.png" alt="" style="padding: 10px 10px; background-color: #fff;">
+											<header class="dark">
+												<h3>
+													Figure 4.5: 3D Model and View Matrices Concatenated together via matrix multiplication. <br />Note that many 3<sup>rd</sup> party matrix libraries such as glMatrix do some this work for you.
+												</h3>
+												<em>
+													<a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">
+														http://www.songho.ca/opengl/gl_transform.html
+													</a>
+												</em>
+											</header>
+										</div>
+									</article>	
+								</div>
+
+								And now the matrix multiplication pipeline which moves from model to window coordinates.
+								In WebGL we need only worry about our <strong>model</strong>, <strong>view</strong> and <strong>projection</strong> matrices. The rest
+								of the details are taken care of for us (whew?!).
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
 											<img ng-src="styles/app/images/gl_transform.png" alt="">
 											<header class="dark">
 												<h3>
-													Figure 4.4: The Model, View, Projection Coordinate Pipeline [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(2))">see Demo 6.3</a>]
+													Figure 4.6: The Model, View, Projection Coordinate Pipeline [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(4))">see Demo 6.5</a>]
 												</h3>
 												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
 											</header>
@@ -662,22 +692,29 @@ some code here...
 							<br />
 							<h3>Understanding Perspective and Orthogonal Projection</h3>
 							<div class="content text">
+								In a 3D world utilizing the right projection technique is key to making your objects look appropriate for a given context (i.e. gaming vs architecture blueprints) and both of the below projection styles have their place. The most popular of the two (as we mentioned earlier) is perspective projection. Basically
+								perspective projection creates prism-like boundary (called the <strong>view frustum</strong>) separated by near clipping plan (a plane close to you where objects appear bigger) and a far clipping plane (a plane furthest from you where objects appear smaller). Anything outside of the near and far planes are automatically removed &quot;clipped&quot; out of the scene. The field of view (FOV) provides context into how much of the world you can see and is usually set to 45 degrees.
 							</div>
 							<div class="content">
 								<!-- Image Container used as a one off illustration -->
 								<div class="image-container">
 									<article class="item">
 										<div class="image fit">
-											<img ng-src="styles/app/images/camera_space.png" alt="" style="padding: 100px 100px; background-color: #fff;">
+											<img ng-src="styles/app/images/view_frustum.png" alt="" style="padding: 100px 100px; background-color: #fff;">
 											<header class="dark">
 												<h3>
-													Figure 4.5: Perspective Projection Space
+													Figure 4.7: View Frustum for Perspective Projection
 												</h3>
-												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
+												<em><a target="_blank" ng-href="http://demochronicles.mccolm.org/Media/Images/Common/3D/ViewFrustum.png">http://demochronicles.mccolm.org/Media/Images/Common/3D/ViewFrustum.png</a></em>
 											</header>
 										</div>
 									</article>	
 								</div>
+							</div>
+
+							And the formula used to create a Perspective projection matrix:
+
+							<div class="content">
 
 								<!-- Image Container used as a one off illustration -->
 								<div class="image-container">
@@ -686,16 +723,46 @@ some code here...
 											<img ng-src="styles/app/images/perspective_matrix.jpg" alt="">
 											<header class="dark">
 												<h3>
-													Figure 4.6: Perspective Projection Matrix [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(4))">see Demo 6.5</a>]
+													Figure 4.8: Perspective Projection Matrix [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(4))">see Demo 6.5</a>]<br />
+													Again a library like glMatrix can take care of most of the details
+													for creating a perspective matrix.
 												</h3>
 												<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
 											</header>
 										</div>
 									</article>	
 								</div>
+							</div>
+							<br />
+							<hr />
+							<br />
+							<h3>Orthogonal Projection Spaces</h3>
+							<div class="content text">
+								Look at the below (Figure 4.9 and 4.10) illustrations. Now that we have done a bit of mathematical review regarding transformations you may notice something interesting regarding the formation
+								of an orthogonal matrix. It looks strikingly similar to a matrix which scales each
+								x, y, z component and translates it by some factor. Look at Figure 4.9 - the view frustum is a cuboid rather than a prism-like shape. What that translates to is that objects do not get scaled based on their distance up or down the z-axis. This means that 3D objects that are projected using Orthographic projection tend to look non-3D as their perspectives appear 1:1 regardless of their z-values.
+								<br /><br />
+								Refer to <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(4))">demo 6.5</a> to see an example of Perspective projection and compare that with <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(5))">demo 6.6</a> which uses Orthographic Projection.
+							</div>
 
-								
 
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/ortho_frustum.png" style="background: #fff; padding: 100px 100px;" alt="">
+											<header class="dark">
+												<h3>
+													Figure 4.9: Orthographic Frustum
+												</h3>
+												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+
+								And the formula used to create a Orthographic projection matrix:
 								<!-- Image Container used as a one off illustration -->
 								<div class="image-container">
 									<article class="item">
@@ -703,13 +770,14 @@ some code here...
 											<img ng-src="styles/app/images/ortho_matrix.jpg" alt="">
 											<header class="dark">
 												<h3>
-													Figure 4.7: Orthographic Projection Matrix [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(5))">see Demo 6.6</a>]
+													Figure 4.10: Orthographic Projection Matrix [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(5))">see Demo 6.6</a>]
 												</h3>
 												<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
 											</header>
 										</div>
 									</article>	
 								</div>
+								
 							</div>
 							
 							<br />
@@ -719,8 +787,20 @@ some code here...
 								<div class="exercise-container">
 									<h4><span class="icon fa-edit"></span>Unit 4 Exercises</h4>
 									<ul>
-										<li></li>
-										<li></li>
+										<li>
+											Grab yourself and pen and paper create some random 4x4 (4 rows x 4 columns) matrices, and a couple of 1x4 (1 row x 4 columns) and do some good ol'fashioned matrix multiplication on them</li>
+										<li>
+											The order of transformation has no effect on the resultant vertex - i.e. it doesn't matter whether you rotate first then translate or translate first then rotate? Why or why not?
+										</li>
+										<li>
+											Modify  <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">demo 6.4</a> to rotate all triangle by +30 degrees on the Z-axis.
+										</li>
+										<li>
+											Modify  <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(2))">demo 6.3</a> to rotate each triangle being drawn by +25 degrees on the Z-axis and -112 degrees on the Y-axis.
+										</li>
+										<li>
+											<i class="icon fa-star"></i> <strong>Advanced</strong>: Modify  <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(4))">demo 6.5</a> so that you can use the keyboard to change the view of look UP and DOWN (the Y-axis) the up/down arrow keys respectively. <strong>Hint</strong>: you will need to play with View matrix to do this.
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -758,8 +838,13 @@ some code here...
 							<div class="exercise-container">
 								<h4><span class="icon fa-edit"></span> Unit 5 Exercises</h4>
 								<ul>
-									<li>Take some time to explore the 3<sup>rd</sup> party technologies mentioned in this unit. It will be help your understanding of what's happening in the demo code moving forward.</li>
-									<li>Familiarize yourself with the demo JS files in terms of the organization of the code. If you were the learning object author how would you organize the files in order to make learning for the student easier?</li>
+									<li>
+										There are many techniques available to you that you can use to do shading on 3D objects. Look 2 up and list the pros and cons of each. 
+									</li>
+									<li>
+										<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(6))">Demo 6.7</a> make use of ambient colour and directional colours. Trying playing around with the values and see what affects that produces.
+									</li>
+									<li><i class="icon fa-star"></i> <strong>Advanced</strong>: <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(6))">Demo 6.7</a> uses vertex-level shading which is not the most realistic way to do lighting. Try modifying the application to do the lighting calculations in the fragment shader.</li>
 								</ul>
 							</div>
 
@@ -885,16 +970,41 @@ some code here...
 												<li>
 													<div class="caption"><span class="icon fa-book"></span> Moving forward with WebGL</div>
 													<ul class="numbered">
-
-														<li></li>
+														<li><a href="https://www.shadertoy.com/" target="_blank">https://www.shadertoy.com/</a>: Play around and contribute GLSL shaders!</li>
+														<li><a href="http://pixelshaders.com/" target="_blank">http://pixelshaders.com/</a>: A shader tutorial site.</li>
+														<li><a href="http://glslsandbox.com/" target="_blank">http://glslsandbox.com/</a>: A pretty awesome site similar to shaderToy</li>
+														<li><a href="http://learningwebgl.com/blog/" target="_blank">http://learningwebgl.com/blog/</a>: A great learning series for WebGL.</li>
+												
 													</ul>
 												</li>
 											</ul>
 											<div class="exercise-container">
 												<h4><span class="icon fa-edit"></span> Unit 7 Exercises</h4>
 												<ul>
-													<li>Take some time to explore the 3<sup>rd</sup> party technologies mentioned in this unit. It will be help your understanding of what's happening in the demo code moving forward.</li>
-													<li>Familiarize yourself with the demo JS files in terms of the organization of the code. If you were the learning object author how would you organize the files in order to make learning for the student easier?</li>
+													<li>Play <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(7))">the pong game</a>!</li>
+													<li>
+														The Pong ball has a constant velocity. Modify the application so the velocity changes randomly on rebound.
+													</li>
+													<li>
+														The Pong ball has only one directional light source. Modify it to contain 2 sources.
+													</li>
+													<li>
+														We have not talked about adding textures but now we be a good time to learn. Your exercise will be to add a random texture of your choosing to the ball used in Pong. The good news is that the texture
+														coordinates are already supplied with <strong>createSphereVertexData()</strong> resultant values so you just need to figure out how to map the ball to that texture. Happy coding!
+													</li>
+													<li>
+														Find some awesome WebGL games and play them there are quite a few and you could use the break!
+													</li>
+													<li>
+														Modify the Pong game so that it contains a random number of balls (up to 3) after every game restart.
+													</li>
+													
+													<li>
+														Make the Pong two player!
+													</li>
+													<li>
+														Make the Pong two player over the network!
+													</li>
 												</ul>
 											</div>
 										</div>
