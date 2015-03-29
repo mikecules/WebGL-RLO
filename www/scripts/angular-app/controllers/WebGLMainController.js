@@ -892,7 +892,7 @@ angular.module('WebGLRLOApp')
               caption: '6.6: Animation of 3D Primitives (V2)',
               details:  '<strong>Version 2</strong>: 3D primitive models moving around in 3D-space using Orthographic Projection. ' +
                         'Notice how the objects appear to have lost their appearance of depth when compared against our previous version ' +
-                        'which uses perpesective projection.',
+                        'which uses Perspective projection.',
               appFn: animating3DPrimativesOrthoExample,
               screenShotURL: 'styles/app/images/demo5v2.png'
             }
