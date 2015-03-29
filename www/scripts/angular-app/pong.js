@@ -462,7 +462,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
               __isAppRunning = true,
               __keyPressed = {},
               __keyReleased = {},
-              __robotErrorPercentage = 33, // make the robot mess up 33% of the time
+              __robotErrorPercentage = 40, // make the robot mess up 40% of the time
               __robotVelocityPenalty = 0,
               __ROBOT_VELOCITY_PENALITY_PERCENTAGE = 1.0 - 9.0/10.0; // drop the robot's efficiency by this percentage. (10% of the delta time)
 
@@ -1260,7 +1260,7 @@ $demos.Pong = function Pong(canvasModalWidget, webGLDrawUtilities) {
             else {
               // penalize the robot by slowing it down if its made a mistake but
               // not so much the it the player looks too janky
-              player.update(Math.max(12, dt - __robotVelocityPenalty));
+              player.update(Math.max(10, dt - __robotVelocityPenalty));
             }
 
             // used to calculate who's potentially going to hit the ball
