@@ -239,7 +239,7 @@
 									<li>
 										<div class="caption pro"><span class="icon fa-thumbs-up"></span> Advantages of WebGL</div>
 										<ul class="disc">
-											<li>It's a royalty-free 3D hardware accelerated API you can use without browser plug-ins.</li>
+											<li>It's a royalty-free, cross-platform 3D hardware accelerated API you can use without browser plug-ins.</li>
 											<li><a href="https://www.khronos.org/registry/webgl/specs/1.0/" target="_blank">Based on the OpenGL ES 2.0 Standard</a> defined by the Khronos Group it is considered a web standard (not an HTML5 standard however) and is included in most modern browsers, including mobile devices.</li>
 											<li>It runs within the context of the browser so you can take advantage of the browser's built-in networking, audio, input and memory management.</li>
 											<li>Doesn't require as much development tooling - you just need a text editor and a WebGL-enabled browser.</li>
@@ -284,7 +284,7 @@
 
 						<p>
 							<div class="content text">
-								Before WebGL entered the browser scene developers wanting to make use of 3D technologies had to make use of 3<sup>rd</sup> party plug-ins such as Flash or Java applets (remember those!?). WebGL began it's humble beginnings in 2006 when <a href="http://en.wikipedia.org/wiki/Vladimir_Vuki%C4%87evi%C4%87">Vladimir Vukicevic</a> (working at Mozilla) began building a prototype to bridge OpenGL 3D contexts into the HTML5 Canvas element in order to bring the OpenGL to web developers (wikipedia, 2015). His prototype ended up being a great success and by the end of 2007 browser vendors Mozilla and Opera had implemented their own versions of the 3D canvas (wikipedia, 2015). In early 2009, the non-profit technology consortium Khronos Group created a WebGL working group which consisted of many of the big browser vendors of today which include Apple, Mozilla, Google and Opera (wikipedia, 2015). WebGL Version 1.0 was officially released March 2011 (khronos.org, 2015). This low-level 3D API was based on the the mobile-device friendly <a href="https://www.khronos.org/opengles/2_X/" target="_blank">OpenGL ES 2.0 API</a>. OpenGL ES 2.0 includes a C-style programming language called <a href="https://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf" target="_blank">GLSL ES</a> (OpenGL Shading Language). GLSL allows developers to create programs that run directly on dedicated 3D accelerated hardware. Work for WebGL 2.0 is already under way and will be based on the OpenGL ES 3.0 API (khronos.org, 2015). 
+								Before WebGL entered the browser scene developers wanting to make use of 3D technologies had to make use of 3<sup>rd</sup> party plug-ins such as Flash or Java applets (remember those!?). WebGL began it's humble beginnings in 2006 when <a href="http://en.wikipedia.org/wiki/Vladimir_Vuki%C4%87evi%C4%87">Vladimir Vukicevic</a> (working at Mozilla) began building a prototype to that would be able to tie HTML5 canvases to an OpenGL context. This prototype was done in attempt to give the then 2D-canvas the ability to provide 3D-capabilities (wikipedia, 2015). His prototype was well received by the browser vendor community resulting in two separate implementations (from Mozilla and Opera) of his purposed 3D-enabled canvas. This all occurred within the span of one year and was released by the end of 2007 (wikipedia, 2015). In early 2009, the non-profit technology consortium, Khronos Group created a WebGL working group which consisted of many of the big browser vendors of today including Apple, Mozilla, Google and Opera (wikipedia, 2015). WebGL Version 1.0 was officially released March 2011 (khronos.org, 2015). This low-level 3D API was based on the the mobile-device friendly <a href="https://www.khronos.org/opengles/2_X/" target="_blank">OpenGL ES 2.0 API</a>. Unlike previous incarnations of OpenGL ES, OpenGL ES 2.0 included a C-style programming language called <a href="https://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf" target="_blank">GLSL ES</a> (OpenGL Shading Language) that could be used to create specialized applications that had the capability of executing directly on dedicated 3D accelerated hardware, reducing the overall strain put on the CPU. As we speak development work is already under way for WebGL 2.0 specification. Version 2.0 will be based on the OpenGL ES 3.0 API, offering further improvements and functionality to the WebGL stack (khronos.org, 2015). 
 								<br />
 								<br />
 								<h3>References</h3>
@@ -315,7 +315,7 @@ Wikipedia. (2015). WebGL. Retrieved 28 March 2015, from <a href="http://en.wikip
 							<h3>The WebGL Context</h3>
 
 							<div class="content text">
-								As you may have seen earlier WebGL ties it's context to an <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 Canvas</a> element. The WebGL context is basically an interface to the WebGL subsystem. The context provides a reference to all the methods, and constants necessary to communicate between your JavaScript (JS) Code and the WebGL state machine. To say that WebGL is a state machine is to mean that once you modify any of WebGL's attributes (for example: setting the clear colour of the frame buffer) that modification persists until you modify that attribute again.
+								As you may have seen earlier WebGL ties it's context to an <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 Canvas</a> element. The WebGL context is basically an interface to the WebGL subsystem. The context provides a reference to all the methods, and constants necessary to communicate between your JavaScript (JS) Code and the WebGL state machine. To say that WebGL is a state machine is to infer that once you modify any of WebGL's inner attributes via a context-provided method call (for example: setting the clear colour of the frame buffer) the modification, or state, persists until you modify that attribute once again.
 								<br />
 								<br />
 								In a HTML/JS implementation one can retrieve the context using the follow incantation:
@@ -414,7 +414,7 @@ some code here...
 							</div>
 						</div>
 						<div class="content text">
-							As you can see the vertex and fragment shaders serve very important roles in the pipeline. The vertex shader's role includes performing mathematical transformations of a 3D object's vertices (<a href="#math" class="scrolly">see Math 101</a>) and creating new data that will be passed over to the fragment shader. The essence of the fragment shader's role is simple - converting the shape comprising of vertices into coloured pixels. These coloured will then be passed on to the remaining stages where it will finally get drawn out on your display. See a sample of a Vertex and Fragment Shader (taken from the 4<sup>th</sup> demo) below:
+							Vertex and fragment shaders serve very important roles in the pipeline. The vertex shader's responsibility includes performing mathematical transformations on a 3D object's vertices (<a href="#math" class="scrolly">see Math 101</a>) and creating new data that will be passed over to the fragment shader. The essence of the fragment shader's role is simple - converting the shape comprising of vertices into coloured pixels specified as a 4-component data structure that specifies values for red, green, blue, and opacity (or alpha). These coloured vertices are then passed on to the remaining stages in the pipeline where it finally gets drawn out on your display. See a sample of a Vertex and Fragment Shader (taken from the 4<sup>th</sup> demo) below:
 						</div>
 						<div class="content">
 							<div class="code-container">
@@ -454,7 +454,7 @@ some code here...
 						<h3>Shader Variables</h3>
 
 						<div class="content text">
-							As you can see from the above examples the shaders appear to be using variable data types that kind of look like types that would be used in the context of mathematical vectors (<a href="#math" class="scrolly">see Math 101</a>) and indeed this is the case. GLSL ES has many types of mathematical data structures baked into it that describe all kinds of mathematical constructs including varying dimensional vectors and matrices. These mathematical constructs are necessary to map your 3D models (which comprise of 3-dimensional/4-dimensional points in space) from a 3D coordinate space to it's final destination - your 2D screen (comprising of the contents of the <strong>Frame Buffer</strong>). In addition to these data types GLSL has different variable specifiers (<strong>attribute</strong>, <strong>uniform</strong> and <strong>varying</strong>). These specifiers have special meaning and can only be used in certain context. For example <strong>attributes</strong> and <strong>uniforms</strong> are writeable from your JS and can be used to apply values to your vertices in your vertex shader while Fragment shader's only allow uniform types to be passed on from your JS. Varying types can be created from your vertex shader and passed on to your fragment shader - but you cannot access them directly. <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">See demo 4</a>, <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">js code</a> and GLSL ES code (<strong>remember the shaders are in the source of this file</strong>) to see how the varying variable type can be used in both your vertex and fragment shader.  
+							As you can see from the above examples, the shaders appear to be using variable data types that kind of look like types that would be used in the context of 4D-vectors (<a href="#math" class="scrolly">see Math 101</a>) and indeed this is the case. GLSL ES has many types of mathematical data structures baked into it that describe all kinds of mathematical constructs. These types include various n-dimensional vectors and matrices. The provided mathematical constructs are necessary to map your 3D models (which comprise of 3-dimensional/4-dimensional points in space) from a 3D coordinate space to it's final destination - your 2D screen (which comprises of the contents of the <strong>Frame Buffer</strong>). In addition to these data types, GLSL ES allows the developer to specify the type of role that each variable will serve in your shader program (i.e. <strong>attribute</strong>, <strong>uniform</strong> and <strong>varying</strong>). These specifiers have special meaning and can only be used in certain contexts. For example, <strong>attributes</strong> and <strong>uniforms</strong> are writeable from JS and can be used to apply values to your vertices in your vertex shader. Fragment shaders on the other hand,  only allow uniform variables to be passed on from your JS code. <strong>Varying</strong> types can be created from your vertex shader and passed on to your fragment shader - but you cannot access them directly from your JS code. <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">See demo 4</a>, <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">js code</a> and GLSL ES code (<strong>remember the shaders are in the source of this file</strong>) to see how the <strong>varying</strong> variable type can be used in both your vertex and fragment shader.  
 						</div>
 						<div class="content">
 							<!-- Image Container used as a one off illustration -->
@@ -479,7 +479,7 @@ some code here...
 						<br />
 						<h3>WebGL Draw Modes</h3>
 						<div class="content text">
-							If you were keen earlier to delve into the demo code (as was recommended in the <a href="#prereqs" class="scrolly">Prerequisite Knowledge Unit</a>) supplied with this lesson you would have noticed a pattern in our demos where if we wish to a draw primitives (i.e. a triangle) we had to create a data buffer from the WebGL context, fill it with our vertices, bind it to an attribute (whose location we've queried for and stored earlier), enable that attribute (whew!) and then draw them out using the <strong>drawArrays()</strong> context method. WebGL provides several ways of interpreting vertices by ways of its draw mode. See the below illustration (Figure 3.4) showing the different draw mode types.
+							If you were keen earlier to delve into the demo code (as was recommended in the <a href="#prereqs" class="scrolly">Prerequisite Knowledge Unit</a>) supplied with this lesson you would have noticed a pattern of execution in our demos. For any primitive shape we wanted (i.e. a triangle) we had to first: create a data buffer from the WebGL context, fill it with our vertices, bind it to an attribute (whose location we've queried for and stored earlier), enable that attribute (whew!) and then draw it out using the <strong>drawArrays()</strong> context method. WebGL provides several ways of interpreting the relationship vertices possess in your vertex buffer via the specification of a draw mode. See the illustration (Figure 3.4) below to see the many ways WebGL can interpret vertex relationships based on your chosen draw mode.
 						</div>
 						<div class="content">
 							<!-- Image Container used as a one off illustration -->
@@ -544,8 +544,8 @@ some code here...
 							<br />
 							<h3>Coordinate Spaces in WebGL</h3>
 							<div class="content text">
-								As you are probably too familiar with now - WebGL deals with 2D/3D spaces. This means that you need to be able to make use of mathematical specific tools (vector operations, matrix math, etc.) to help navigate around these spaces. Our first stop on this mathematically themed voyage will be to discuss Cartesian Coordinate spaces and vectors. A Cartesian coordinate space is a mathematical construct to specify (what's my word count for math now?) an object's position in some space relative to an origin. 
-								A space in 2D/3D/nD is spanned by n-independent unit (i.e. it has a length or magnitude of 1) vectors. Remember, a vector is a mathematical construct which has a length and a direction in some space (a point is just a position in space). In our case for 2D we have 2 unit (or normalized) vectors x, y, where x = [1, 0] and y = [0, 1]. Alternatively, we can also negate our x, y vectors and also produce the same space (just reflected in the opposite direction). 3 dimensions comprise of 3 vectors: x, y, z or [1, 0, 0], [0, 1, 0], [0, 0, 1]. Rotation around an axis defined by x, y or z is positive when it's done counter-clockwise and negative when done clockwise. In WebGL the 3D coordinate space is conventionally seen as right-handed and spans from -1 to 1 across all axis (X, Y, Z). This means that our positive X axis moving in the right direction, our positive Y axis is pointing to the ceiling, and our positive Z-axis is pointing at you (i.e. out of the screen). A right-handed coordinate system means that we can determine not only the positive directions of our X, Y, Z axis, but also the positive and negative directions that rotations occur in. To illustrate look at the illustration below. For each axis on the (for the right-handed version) point your thumb in the positive direction of the axis. Now bend your hand inward toward your inner forearm (for the x-axis this will be in the direction of your biceps) - this will be the positive rotation direction for that axis. Now you can show everyone how cool you are because you know how to rotate objects in a positive direction 3D-space. This is great material for your next visit to Comic Con.
+								As you are probably too familiar with now - WebGL deals with 2D/3D spaces. This means that you need to be able to make use of mathematical specific tools (vector operations, matrix math, etc.) to help navigate around these spaces. Our first stop on this mathematically themed voyage will be to discuss Cartesian Coordinate spaces and vectors. A Cartesian coordinate space is a mathematical construct to specify (what's my word count for math now?) an object's position in space relative to an origin. 
+								A space in 2D/3D/nD is spanned by n-independent unit (i.e. it has a length or magnitude of 1) vectors. Remember, a vector is a mathematical construct which has a length and a direction in space (a point is just a position in space). In our case for 2D we have 2 unit (or normalized) vectors x, y, where x = [1, 0] and y = [0, 1]. Alternatively, it is also important to note that we can also negate our x, y vectors and produce the same space (albeit just reflected in the opposite direction). A 3-dimensional space comprises of 3 vectors: x, y, z or [1, 0, 0], [0, 1, 0], [0, 0, 1]. Rotation around x, y or z axes is called positive when it's done counter-clockwise and negative when done clockwise. In WebGL, the 3D coordinate space is conventionally seen as right-handed spanning from -1.0 to 1.0 across all axis (X, Y, Z) regardless of the height and width of your HTML5 Canvas. This means that our positive X axis is pointing in the right direction, our positive Y axis is pointing to the ceiling, and our positive Z-axis is pointing at you (i.e. out of the screen). A right-handed coordinate system means that we can determine not only the positive directions of our X, Y, Z axis, but also the positive and negative directions that our rotations occur in. To illustrate this fact you can look at the illustration below. Now, for each axis on the point your thumb in the positive direction of the axis. Once you are happy with your pointing gesture (don't do this in public!), bend your hand inward toward your inner forearm (for the x-axis this would be in the direction of your biceps). The orientation of your fist (as you bend it) is exactly the same way a 3D object would orient itself if it were rotated positively on the same axis. Now you can show everyone how cool you are because you know how to rotate objects in a positive direction 3D-space. This is certainly great material for your next visit to Comic Con.
 							</div>
 							<div class="content">
 								<!-- Image Container used as a one off illustration -->
@@ -605,6 +605,145 @@ some code here...
 											</header>
 										</div>
 									</article>	
+								</div>
+							</div>
+							<br />
+							<hr />
+							<br />
+							<h3>Tranformations in 3D</h3>
+							<div class="content text">
+								Transformations commonly used in WebGL come in three basic flavours: Translation, Scaling and Rotation. <strong>Translation</strong> refers to the movement of a vertex (or point) comprising of your 3D model (i.e. a series of 3D/4D points making up the surface of your object - normally this is called a <a target="_blank" ng-href="http://en.wikipedia.org/wiki/Polygon_mesh">polygon mesh</a>) by x, y and z units. <strong>Scaling</strong> involves multiplying each component of a vertex or vector (x, y, z) by a constant factor along each axis. The overall effect of a scale operation over the surface of a polygon mesh is to stretch or squish it in 3D space. <strong>Rotations</strong> involve the changing of an objects orientation in 3D space by X, Y, Z degrees. In WebGL rotations along all 3 axes are specified in radians. Matrices are the primary method of representing transformations in WebGL because you can concatenate (through matrix multiplication) several transformations that can then be copied to your vertex/fragment shaders to perform interesting operations (such as light shading, calculating shadows, etc.) on your data. Below is a cheat sheet for the transformations we mentioned here. Note that you may notice that the illustration below is a 4x4 matrix - why is this? Well one of the main reasons is so we can uniformly create transformation matrices that encompass all the necessary transformations (including projection which we will talk about later) into one nice little package. By the way the 4<sup>th</sup> coordinate is called the homogeneous coordinate system in case you are wondering and the variable that's commonly used to represent it is <strong>w</strong> - so in a homogeneous coordinate space we have (x, y, z, w), where w is usually (but not always) equal to 1.
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/3d_transformations.png" alt="" style="padding: 10px 10px; background-color: #fff;">
+											<header class="dark">
+												<h3>
+													Figure 1.1: 3D Transformation Matrices
+												</h3>
+												<em>
+													<a target="_blank" ng-href="http://www.c-jump.com/bcc/common/Talk3/Math/Matrices/const_images/3Dtransformations.png">
+														http://www.c-jump.com/bcc/common/Talk3/Math/Matrices/const_images/3Dtransformations.png
+													</a>
+												</em>
+											</header>
+										</div>
+									</article>	
+								</div>
+							</div>
+							<br />
+							<hr />
+							<br />
+							<h3>Understanding Model, View and Projection Spaces</h3>
+							<div class="content text">
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/gl_transform.png" alt="">
+											<header class="dark">
+												<h3>
+													Figure 1.1: The Model, View, Projection Coordinate Pipeline
+												</h3>
+												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+							</div>
+							<br />
+							<hr />
+							<br />
+							<h3>Understanding Perspective and Orthogonal Projection</h3>
+							<div class="content text">
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/camera_space.png" alt="" style="padding: 100px 100px; background-color: #fff;">
+											<header class="dark">
+												<h3>
+													Figure 1.1: Perspective Projection Space
+												</h3>
+												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/perspective_matrix.jpg" alt="">
+											<header class="dark">
+												<h3>
+													Figure 1.1: Perspective Projection Matrix
+												</h3>
+												<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+
+								
+
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/ortho_matrix.jpg" alt="">
+											<header class="dark">
+												<h3>
+													Figure 1.2: Orthographic Projection Matrix
+												</h3>
+												<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+							</div>
+							<br />
+							<hr />
+							<br />
+							<h3>Lambert Shading - A Basic Lighting Technique</h3>
+							<div class="content text">
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/lambert.png" alt="">
+											<header class="dark">
+												<h3>
+													Figure 1.1: Lambert Light Shading Model
+												</h3>
+												<em><a target="_blank" ng-href="http://buildnewgames.com/lighting/">http://buildnewgames.com/lighting/</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+
+
+							</div>
+							<br />
+							<hr />
+							<br />
+							<div class="content">
+								<div class="exercise-container">
+									<h4><span class="icon fa-edit"></span> Exercises</h4>
+									<ul>
+										<li></li>
+										<li></li>
+									</ul>
 								</div>
 							</div>
 						</p>
@@ -728,115 +867,26 @@ some code here...
 					</div>
 					-->
 					
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/lambert.png" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: Lambert Light Shading Model
-									</h3>
-									<em><a target="_blank" ng-href="http://buildnewgames.com/lighting/">http://buildnewgames.com/lighting/</a></em>
-								</header>
+
+
+						<p>
+							<div class="content text">
+								Congratulations, you finally made it to the end! I regret to inform you however that your journey into the world of 3D development has
+								just begun. You certainly have made good progress, but alas there is still a lot of work (and more math lessons - yay!) to get through before
+								you can truly call yourself a WebGL master. Don't fret however, there are plenty of resources out there for you to choose from, oh  and don't forgot - you are now one of them. Tread on graphics developer...tread on.
 							</div>
-						</article>	
-					</div>
+							<div class="content">
+								<ul class="info-grouping">
+									<li>
+										<div class="caption"><span class="icon fa-book"></span> Moving forward with WebGL</div>
+										<ul class="numbered">
 
-					
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/perspective_matrix.jpg" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: Perspective Projection Matrix
-									</h3>
-									<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/ortho_matrix.jpg" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.2: Orthographic Projection Matrix
-									</h3>
-									<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/camera_space.png" alt="" style="padding: 100px 100px; background-color: #fff;">
-								<header class="dark">
-									<h3>
-										Figure 1.1: WebGL's Camera Space
-									</h3>
-									<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					
-
-					
-					
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/3d_transformations.png" alt="" style="padding: 10px 10px; background-color: #fff;">
-								<header class="dark">
-									<h3>
-										Figure 1.1: 3D Transformation Matrices
-									</h3>
-									<em>
-										<a target="_blank" ng-href="http://www.c-jump.com/bcc/common/Talk3/Math/Matrices/const_images/3Dtransformations.png">
-											http://www.c-jump.com/bcc/common/Talk3/Math/Matrices/const_images/3Dtransformations.png
-										</a>
-									</em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/gl_transform.png" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: Model, View, Projection Coordinate Pipeline
-									</h3>
-									<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					
-
-
-						<p></p>
+											<li></li>
+										</ul>
+									</li>
+								</ul>
+							</content>
+						</p>
 
 					</div>
 				</div>
