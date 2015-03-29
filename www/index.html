@@ -71,7 +71,7 @@
 								</li>
 				
 								<li><i class="icon fa-check-square-o"></i> 
-									Gain an understanding of the WebGL Pipeline.
+									Gain a basic understanding of the WebGL and how it works.
 								</li>
 
 								<li><i class="icon fa-check-square-o"></i> 
@@ -205,12 +205,12 @@
 								</ul>
 
 								<div class="exercise-container">
-								<h4><span class="icon fa-edit"></span> Unit 0 Exercises</h4>
-								<ul>
-									<li>Take some time to explore the 3<sup>rd</sup> party technologies mentioned in this unit. It will be help your understanding of what's happening in the demo code moving forward.</li>
-									<li>Familiarize yourself with the demo JS files in terms of the organization of the code. If you were the learning object author how would you organize the files in order to make learning for the student easier?</li>
-								</ul>
-							</div>
+									<h4><span class="icon fa-edit"></span> Unit 0 Exercises</h4>
+									<ul>
+										<li>Take some time to explore the 3<sup>rd</sup> party technologies mentioned in this unit. It will be help your understanding of what's happening in the demo code moving forward.</li>
+										<li>Familiarize yourself with the demo JS files in terms of the organization of the code. If you were the learning object author how would you organize the files in order to make learning for the student easier?</li>
+									</ul>
+								</div>
 							</div>
 						
 						</p>
@@ -237,20 +237,34 @@
 									<li>
 										<div class="caption pro"><span class="icon fa-thumbs-up"></span> Advantages of WebGL</div>
 										<ul class="disc">
-											<li>a</li>
-											<li>a</li>
-											<li>a</li>
+											<li>It's a royalty-free 3D hardware accelerated API you can use without browser plug-ins.</li>
+											<li><a href="https://www.khronos.org/registry/webgl/specs/1.0/" target="_blank">Based on the OpenGL ES 2.0 Standard</a> defined by the Khronos Group it is considered a web standard (not an HTML5 standard however) and is included in most modern browsers, including mobile devices.</li>
+											<li>It runs within the context of the browser so you can take advantage of the browser's built-in networking, audio, input and memory management.</li>
+											<li>Doesn't require as much development tooling - you just need a text editor and a WebGL-enabled browser.</li>
+											<li>The interfacing language is JavaScript which most web developers already know (i.e. no need to learn a new programming language). In addition, you can mix and match the DOM, CSS3 and HTML5-enabled features to create an overall effect not possible on other platforms.</li>
 										</ul>
 									</li>
 								</ul>
 								<ul class="info-grouping">
 									<li>
 										<div class="caption con"><span class="icon fa-thumbs-down"></span> Disadvantages of WebGL</div>
-										<ul>
-											<li></li>
+										<ul class="disc">
+											<li>It's low-level and can be hard to learn/understand without the use of 3<sup>rd</sup> party libraries such as <a href="http://threejs.org/" target="_blank">three.js</a>.</li>
+											<li>Does not take accessibility into account (it's developer dependent). <span class="emphasis">Note that this is a problem with the HTML5 Canvas in general.</span></li>
+											<li>Limited by the current features of the browser you are running your application on.</li>
+											<li>Can be hard to debug.</li>
+											<li>A potential security risk because the shaders programs written in <a href="https://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf" target="_blank">OpenGL ES Shading Language</a> (this will be touched upon later) needs to be compiled by the browser and run directly on the graphics hardware.</li>
+											<li>Not compatible with older versions of browsers as well as some relatively recent ones (i.e. pre-Internet Explorer 11).</li>
 										</ul>
 									</li>
 								</ul>
+								<div class="exercise-container">
+									<h4><span class="icon fa-edit"></span> Unit 1 Exercises</h4>
+									<ul>
+										<li>Given the advantages/disadvantages of WebGL you have now learned about - what types of projects do you think would be applicable to justify the use of WebGL? Which projects would not be not be possible given WebGL's current limitations?</li>
+										<li>There has been a lot of talk about the potential security threat WebGL could open users up to. Given that WebGL has been adopted by most (modern) browsers (i.e. Chrome, Firefox, Safari, Opera, IE11+) do you agree with this concern? What can browser vendors do to protect users from malicious code?</li>
+									</ul>
+								</div>
 							</div>
 						</p>
 
@@ -266,7 +280,21 @@
 							<h2>A Brief History of WebGL</h2>
 						</header>
 
-						<p></p>
+						<p>
+							<div class="content text">
+								Before WebGL entered the browser scene developers wanting to make use of 3D technologies had to make use of 3<sup>rd</sup> party plug-ins such as Flash or Java applets (remember those!?). WebGL began it's humble beginnings in 2006 when <a href="http://en.wikipedia.org/wiki/Vladimir_Vuki%C4%87evi%C4%87">Vladimir Vukicevic</a> (working at Mozilla) began building a prototype to bridge OpenGL 3D contexts into the HTML5 Canvas element in order to bring the OpenGL to web developers (wikipedia, 2015). His prototype ended up being a great success and by the end of 2007 browser vendors Mozilla and Opera had implemented their own versions of the 3D canvas (wikipedia, 2015). In early 2009, the non-profit technology consortium Khronos Group created a WebGL working group which consisted of many of the big browser vendors of today which include Apple, Mozilla, Google and Opera (wikipedia, 2015). WebGL Version 1.0 was officially released March 2011 (khronos.org, 2015). This low-level 3D API was based on the the mobile-device friendly <a href="https://www.khronos.org/opengles/2_X/" target="_blank">OpenGL ES 2.0 API</a>. OpenGL ES 2.0 includes a C-style programming language called <a href="https://www.khronos.org/registry/gles/specs/2.0/GLSL_ES_Specification_1.0.17.pdf" target="_blank">GLSL ES</a> (OpenGL Shading Language). GLSL allows developers to create programs that run directly on dedicated 3D accelerated hardware. Work for WebGL 2.0 is already under way and will be based on the OpenGL ES 3.0 API (khronos.org, 2015). 
+								<br />
+								<br />
+								<h3>References</h3>
+								<br />
+								Khronos.org. (2015). Khronos Releases Final WebGL 1.0 Specification - Khronos Group Press Release. Retrieved 28 March 2015, from <a href="https://www.khronos.org/news/press/khronos-releases-final-webgl-1.0-specification" target="_blank">https://www.khronos.org/news/press/khronos-releases-final-webgl-1.0-specification</a>
+								<br /><br />
+								Khronos.org. (2015). WebGL 2 Specification. Retrieved 29 March 2015, from <a href="https://www.khronos.org/registry/webgl/specs/latest/2.0/" target="_blank">https://www.khronos.org/registry/webgl/specs/latest/2.0</a><br /><br />
+Students.science.uu.nl. (2015). History of WebGL. Retrieved 28 March 2015, from <a href="http://www.students.science.uu.nl/~3685632/content/history.html" target="_blank">http://www.students.science.uu.nl/~3685632/content/history.html</a><br /><br />
+
+Wikipedia. (2015). WebGL. Retrieved 28 March 2015, from <a href="http://en.wikipedia.org/wiki/WebGL" target="_blank">http://en.wikipedia.org/wiki/WebGL</a>
+							</div>
+						</p>
 
 					</div>
 				</section>
@@ -277,12 +305,49 @@
 
 						<header>
 							<h2 class="icon fa-gears"></h2>
-							<h2>Understanding WebGL</h2>
+							<h2>Unit 2: Understanding WebGL</h2>
 						</header>
 
 
 						<p>
-							<h3>Sub unit</h3>
+							<h3>The WebGL Context</h3>
+
+							<div class="content text">
+								As you may have seen earlier WebGL ties it's context to an <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 Canvas</a> element. The WebGL context is basically an interface to the WebGL subsystem. The context provides a reference to all the methods, and constants necessary to communicate between your JavaScript (JS) Code and the WebGL state machine. This is to say that once you modify any of WebGL's  attributes, (for example: setting the clear colour of the frame buffer) that modification persists until you modify that attribute again.
+								<br />
+								<br />
+								In WebGL one can retrieve the context using the follow JS:
+							</div>
+							<div class="content">
+									<div class="code-container">
+										<h4><span class="icon fa-code"></span> Initalizing the WebGL Context</h4>
+										<div><strong>HTML Code</strong>
+&lt;canvas id="the-canvas" width="640" height="480"&gt;&lt;/canvas&gt;
+
+-----
+
+<strong>JavaScript Code</strong>
+
+var canvas = document.getElementById('the-canvas');
+var gl = null;
+
+try {
+    // Try to get the context. If it fails, fallback to the old style of invoking it.
+    gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+  }
+  catch(e) {
+  	throw new Error(e);
+  }
+  
+  // If we don't have a GL context, give up now
+  if (!gl) {
+    throw new Error('Unable to initialize canvas context. Your browser may not support it.');
+    gl = null;
+  }
+some code here...
+									</div>
+								</div>
+						</div>
 
 							<div class="content">
 							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
@@ -322,34 +387,7 @@ some code here...
 
 							
 
-							<div class="code-container">
-								<h4><span class="icon fa-code"></span> Initalizing the WebGL Context</h4>
-								<div><strong>HTML Code</strong>
-&lt;canvas id="the-canvas" width="640" height="480"&gt;&lt;/canvas&gt;
 
------
-
-<strong>JavaScript Code</strong>
-
-var canvas = document.getElementById('the-canvas');
-var gl = null;
-
-try {
-    // Try to get the context. If it fails, fallback to the old style of invoking it.
-    gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-  }
-  catch(e) {
-  	throw new Error(e);
-  }
-  
-  // If we don't have a GL context, give up now
-  if (!gl) {
-    throw new Error('Unable to initialize canvas context. Your browser may not support it.');
-    gl = null;
-  }
-some code here...
-								</div>
-							</div>
 
 							
 
