@@ -279,7 +279,7 @@
 
 						<header>
 							<h2 class="icon fa-history"></h2>
-							<h2>A Brief History of WebGL</h2>
+							<h2>Unit 2: A Brief History of WebGL</h2>
 						</header>
 
 						<p>
@@ -307,7 +307,7 @@ Wikipedia. (2015). WebGL. Retrieved 28 March 2015, from <a href="http://en.wikip
 
 						<header>
 							<h2 class="icon fa-gears"></h2>
-							<h2>Unit 2: Understanding WebGL</h2>
+							<h2>Unit 3: Understanding WebGL</h2>
 						</header>
 
 
@@ -351,6 +351,7 @@ some code here...
 								</div>
 						</div>
 						<br />
+						<hr />
 						<br />
 						<h3>The WebGL Program</h3>
 						<div class="content text">
@@ -373,14 +374,47 @@ some code here...
 							</ul>
 						</div>
 						<br />
+						<hr />
 						<br />
 						<h3>Vertex and Fragment Shaders</h3>
 
 						<div class="content text">
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
+							As was mentioned earlier <a href="#history" class="scrolly">in the History unit</a> shaders are special programs written in a C-style language called GLSL ES which is based on the GLSL ES 2.0 shader language. These programs are compiled using the WebGL context methods and associated with your WebGL Program object. Once the WebGL context has been told you want to use a specific Program the WebGL state machine (through the browser) sends these compiled GLSL applications to your graphics hardware where they are executed in accordance to the WebGL programmable pipeline (see a screenshot of below).
 							
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							
+						</div>
+						<div class="content">
+							<!-- Image Container used as a one off illustration -->
+							<div class="image-container">
+								<article class="item">
+									<div class="image fit">
+										<img ng-src="styles/app/images/pipeline.jpg" alt="">
+										<header>
+											<h3>
+												Figure 3.1: WebGL Pipeline
+											</h3>
+											<em><a target="_blank" ng-href="https://dev.opera.com/articles/raw-webgl-part-1-getting-started/">https://dev.opera.com/articles/raw-webgl-part-1-getting-started</a></em>
+										</header>
+									</div>
+								</article>	
+							</div>
+							And another illustration for you...
+							<!-- Image Container used as a one off illustration -->
+							<div class="image-container">
+								<article class="item">
+									<div class="image fit">
+										<img ng-src="styles/app/images/graphics_pipeline.png" alt="">
+										<header class="dark">
+											<h3>
+												Figure 3.2: WebGL Pipeline
+											</h3>
+											<em><a target="_blank" ng-href="http://cn.cocos2d-x.org/uploads/201408151607565458.png">http://cn.cocos2d-x.org/uploads/201408151607565458.png</a></em>
+										</header>
+									</div>
+								</article>	
+							</div>
+						</div>
+						<div class="content text">
+							As you can see the vertex and fragment shaders serve very important roles in the pipeline. The vertex shader's role includes performing mathematical transformations of a 3D object's vertices (<a href="#math" class="scrolly">see Math 101</a>) and creating new data that will be passed over to the fragment shader. The essence of the fragment shader's role is simple - converting the shape comprising of vertices into coloured pixels. These coloured will then be passed on to the remaining stages where it will finally get drawn out on your display. See a sample of a Vertex and Fragment Shader (taken from the 4<sup>th</sup> demo) below:
 						</div>
 						<div class="content">
 							<div class="code-container">
@@ -414,31 +448,81 @@ some code here...
 								</div>
 							</div>
 						</div>
-							<div class="content">
+						<br />
+						<hr />
+						<br />
+						<h3>Shader Variables</h3>
+
+						<div class="content text">
+							As you can see from the above examples the shaders appear to be using variable data types that kind of look like types that would be used in the context of mathematical vectors (<a href="#math" class="scrolly">see Math 101</a>) and indeed this is the case. GLSL ES has many types of mathematical data structures baked into it that describe all kinds of mathematical constructs including varying dimensional vectors and matrices. These mathematical constructs are necessary to map your 3D models (which comprise of 3-dimensional/4-dimensional points in space) from a 3D coordinate space to it's final destination - your 2D screen (comprising of the contents of the <strong>Frame Buffer</strong>). In addition to these data types GLSL has different variable specifiers (<strong>attribute</strong>, <strong>uniform</strong> and <strong>varying</strong>). These specifiers have special meaning and can only be used in certain context. For example <strong>attributes</strong> and <strong>uniforms</strong> are writeable from your JS and can be used to apply values to your vertices in your vertex shader while Fragment shader's only allow uniform types to be passed on from your JS. Varying types can be created from your vertex shader and passed on to your fragment shader - but you cannot access them directly. <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">See demo 4</a>, <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">js code</a> and GLSL ES code (<strong>remember the shaders are in the source of this file</strong>) to see how the varying variable type can be used in both your vertex and fragment shader.  
+						</div>
+						<div class="content">
+							<!-- Image Container used as a one off illustration -->
+							<div class="image-container">
+								<article class="item">
+									<div class="image fit">
+										<img ng-src="styles/app/images/webgl_rendering_pipeline.png" alt="">
+										<header class="dark">
+											<h3>
+												Figure 3.3: Attributes, Uniform and Varying Variable Shader Flow
+											</h3>
+											<em><a target="_blank" ng-href="http://kaidu1982.github.io/2013-jco-webgl/reveal.js-master/img/webgl_rendering_pipeline.png">http://kaidu1982.github.io/2013-jco-webgl/reveal.js-master/img/webgl_rendering_pipeline.png</a>
+											</em>
+
+										</header>
+									</div>
+								</article>	
+							</div>
+						</div>
+						<br />
+						<hr />
+						<br />
+						<h3>WebGL Draw Modes</h3>
+						<div class="content text">
+							If you were keen earlier to delve into the demo code (as was recommended in the <a href="#prereqs" class="scrolly">Prerequisite Knowledge Unit</a>) supplied with this lesson you would have noticed a pattern in our demos where if we wish to a draw primitives (i.e. a triangle) we had to create a data buffer from the WebGL context, fill it with our vertices, bind it to an attribute (whose location we've queried for and stored earlier), enable that attribute (whew!) and then draw them out using the <strong>drawArrays()</strong> context method. WebGL provides several ways of interpreting vertices by ways of its draw mode. See the below illustration (Figure 3.4) showing the different draw mode types.
+						</div>
+						<div class="content">
+							<!-- Image Container used as a one off illustration -->
+							<div class="image-container">
+								<article class="item">
+									<div class="image fit">
+										<img ng-src="styles/app/images/draw_modes.jpg" alt="" style="padding: 10px 10px; background-color: #fff;">
+										<header class="dark">
+											<h3>
+												Figure 3.4: WebGL Draw Modes
+											</h3>
+											<em><a target="_blank" ng-href="http://www.informit.com/articles/article.aspx?p=2111395&seqNum=2">http://www.informit.com/articles/article.aspx?p=2111395&seqNum=2</a></em>
+										</header>
+									</div>
+								</article>	
+							</div>
+							<br />
 							<div class="exercise-container">
 								<h4><span class="icon fa-edit"></span> Exercises</h4>
 								<ul>
-									<li></li>
-									<li></li>
+									<li>If you have not done so already, please review the first four demos in <a href="./scripts/angular-app/controllers/WebGLMainController.js" target="_blank">WebGLMainController.js</a> and this file. You do not need to understand the math involved quite yet but try to pinpoint the areas where you send data to the vertex/fragment shaders and what those shaders do with that data. Run demos <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(0))">1</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(1))">2</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(2))">3</a>, <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(3))">4</a> and see the results that are produced by the code.</li>
+									<li>Given the example code from demos 1-4 see if you can figure out the purpose of attributes, uniforms and varying GLSL ES variable types. Confirm your hypothesis by looking at <a href="http://www.html5rocks.com/en/tutorials/webgl/shaders/#toc-4" target="_blank">this site</a>, refer to the GLSL ES 2.0 reference or alternatively you can Google it.</li>
+									<li>Notice the order that WebGL uses to draw vertices in Figure 3.4. In what order and what draw mode would you have to use to create an outline of a square?
 								</ul>
 							</div>
-
-							<div class="code-container">
-								<h4><span class="icon fa-code"></span> Code</h4>
-								<div>
+						</div>
+						<!-- 
+							<div class="content">
+								<div class="exercise-container">
+									<h4><span class="icon fa-edit"></span> Exercises</h4>
+									<ul>
+										<li></li>
+										<li></li>
+									</ul>
 								</div>
+
+								<div class="code-container">
+									<h4><span class="icon fa-code"></span> Code</h4>
+									<div>
+									</div>
+								</div>				
 							</div>
-
-							
-
-							
-
-
-
-							
-
-							
-			</div>
+						-->
 						</p>
 
 						
@@ -451,11 +535,79 @@ some code here...
 
 						<header>
 							<h2 class="icon fa-arrows"></h2>
-							<h2>A Brief Overview of 3D Mathematics</h2>
+							<h2>Unit 4: A (Relatively) Brief Overview of 3D Mathematics</h2>
 						</header>
 
 
-						<p></p>
+						<p>
+							Remember that one time when you said to yourself - &quot;when the &*##$@ am I ever going to use this stuff?!?&quot;.<br />This is one of those times. Brace yourself...
+							<br />
+							<h3>Coordinate Spaces in WebGL</h3>
+							<div class="content text">
+								As you are probably too familiar with now - WebGL deals with 2D/3D spaces. This means that you need to be able to make use of mathematical specific tools (vector operations, matrix math, etc.) to help navigate around these spaces. Our first stop on this mathematically themed voyage will be to discuss Cartesian Coordinate spaces and vectors. A Cartesian coordinate space is a mathematical construct to specify (what's my word count for math now?) an object's position in some space relative to an origin. 
+								A space in 2D/3D/nD is spanned by n-independent unit (i.e. it has a length or magnitude of 1) vectors. Remember, a vector is a mathematical construct which has a length and a direction in some space (a point is just a position in space). In our case for 2D we have 2 unit (or normalized) vectors x, y, where x = [1, 0] and y = [0, 1]. Alternatively, we can also negate our x, y vectors and also produce the same space (just reflected in the opposite direction). 3 dimensions comprise of 3 vectors: x, y, z or [1, 0, 0], [0, 1, 0], [0, 0, 1]. Rotation around an axis defined by x, y or z is positive when it's done counter-clockwise and negative when done clockwise. In WebGL the 3D coordinate space is conventionally seen as right-handed and spans from -1 to 1 across all axis (X, Y, Z). This means that our positive X axis moving in the right direction, our positive Y axis is pointing to the ceiling, and our positive Z-axis is pointing at you (i.e. out of the screen). A right-handed coordinate system means that we can determine not only the positive directions of our X, Y, Z axis, but also the positive and negative directions that rotations occur in. To illustrate look at the illustration below. For each axis on the (for the right-handed version) point your thumb in the positive direction of the axis. Now bend your hand inward toward your inner forearm (for the x-axis this will be in the direction of your biceps) - this will be the positive rotation direction for that axis. Now you can show everyone how cool you are because you know how to rotate objects in a positive direction 3D-space. This is great material for your next visit to Comic Con.
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/left_right_hand.gif" alt="">
+											<header class="dark">
+												<h3>
+													Figure 4.1: Left-handed vs Right-handed Coordinate System
+												</h3>
+												<em><a target="_blank" ng-href="http://www.learnopengles.com/understanding-opengls-matrices/left_right_hand/">http://www.learnopengles.com/understanding-opengls-matrices/left_right_hand/</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+							</div>
+							<div class="content text">
+								Another way of looking at the WebGL Coordinate System (as a cube of length 2 where (0,0,0) is a point right in the middle of the cuboid).
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/ogl_coord_object_space_cube.png" alt="" style="padding: 10px 10px; background-color: #fff;">
+											<header class="dark">
+												<h3>
+													Figure 1.1: WebGL's Cuboid Coordinate System
+												</h3>
+												<em><a target="_blank" ng-href="http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl">http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl</a></em>
+											</header>
+										</div>
+									</article>	
+								</div>
+							</div>
+							<div class="content text">
+								Now compare this with the 2D coordinate system used by a regular (non-WebGL) HTML5 Canvas.
+							</div>
+							<div class="content">
+								<!-- Image Container used as a one off illustration -->
+								<div class="image-container">
+									<article class="item">
+										<div class="image fit">
+											<img ng-src="styles/app/images/canvas_2d_coordinate.jpg" alt="">
+											<header class="dark">
+												<h3>
+													Figure 1.1: 2D HTML5 Canvas Coordinate System with an inverted Y-Axis<br />
+													The values also are positive and integer-based, spanning past 1 in both directions.<br />
+													This is modelled after traditional screen space.
+												</h3>
+												<em>
+													<a target="_blank" ng-href="http://www.onlywebpro.com/2011/06/25/html5-canvas-for-absolute-beginners-part-1/">
+														http://www.onlywebpro.com/2011/06/25/html5-canvas-for-absolute-beginners-part-1/
+													</a>
+												</em>
+											</header>
+										</div>
+									</article>	
+								</div>
+							</div>
+						</p>
 
 					</div>
 				</section>
@@ -468,7 +620,7 @@ some code here...
 
 						<header>
 							<h2 class="icon fa-th"></h2>
-							<h2>Demo Showcase</h2>
+							<h2>Unit 5: Demo Showcase</h2>
 						</header>
 
 						<p>Click on the below demos to run them in your browser.</p>
@@ -563,7 +715,7 @@ some code here...
 
 							<div class="container">
 								<div class="content">
-					<!-- Demo container used as one off illustration -->
+					<!-- Demo container used as one off illustration - ->
 					<div class="demo-container">
 						<article class="item" ng-init="demo =  demoRunner.getRLODemoByOrderInList(0)">
 							<a ng-href="javascript:void(0)" ng-click="demoRunner.run(demo)" class="image fit">
@@ -574,36 +726,8 @@ some code here...
 							</a>
 						</article>	
 					</div>
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/pipeline.jpg" alt="">
-								<header>
-									<h3>
-										Figure 1.1: WebGL Pipeline
-									</h3>
-									<em><a target="_blank" ng-href="https://dev.opera.com/articles/raw-webgl-part-1-getting-started/">https://dev.opera.com/articles/raw-webgl-part-1-getting-started</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/graphics_pipeline.png" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: WebGL Pipeline
-									</h3>
-									<em><a target="_blank" ng-href="http://cn.cocos2d-x.org/uploads/201408151607565458.png">http://cn.cocos2d-x.org/uploads/201408151607565458.png</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
-
+					-->
+					
 					<!-- Image Container used as a one off illustration -->
 					<div class="image-container">
 						<article class="item">
@@ -619,20 +743,7 @@ some code here...
 						</article>	
 					</div>
 
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/left_right_hand.gif" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: Left-handed vs Right-handed Coordinate System
-									</h3>
-									<em><a target="_blank" ng-href="http://www.learnopengles.com/understanding-opengls-matrices/left_right_hand/">http://www.learnopengles.com/understanding-opengls-matrices/left_right_hand/</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
+					
 
 					<!-- Image Container used as a one off illustration -->
 					<div class="image-container">
@@ -666,20 +777,7 @@ some code here...
 						</article>	
 					</div>
 
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/ogl_coord_object_space_cube.png" alt="" style="padding: 10px 10px; background-color: #fff;">
-								<header class="dark">
-									<h3>
-										Figure 1.1: WebGL's Cuboid Coordinate System
-									</h3>
-									<em><a target="_blank" ng-href="http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl">http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
+					
 
 					<!-- Image Container used as a one off illustration -->
 					<div class="image-container">
@@ -696,41 +794,9 @@ some code here...
 						</article>	
 					</div>
 
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/webgl_rendering_pipeline.png" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: Attributes, Uniform and Varying Variable Shader Flow
-									</h3>
-									<em><a target="_blank" ng-href="http://kaidu1982.github.io/2013-jco-webgl/reveal.js-master/img/webgl_rendering_pipeline.png">http://kaidu1982.github.io/2013-jco-webgl/reveal.js-master/img/webgl_rendering_pipeline.png</a>
-									</em>
+					
 
-								</header>
-							</div>
-						</article>	
-					</div>
-
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/canvas_2d_coordinate.jpg" alt="">
-								<header class="dark">
-									<h3>
-										Figure 1.1: 2D Canvas Coordinate System with an inverted Y-Axis
-									</h3>
-									<em>
-										<a target="_blank" ng-href="http://www.onlywebpro.com/2011/06/25/html5-canvas-for-absolute-beginners-part-1/">
-											http://www.onlywebpro.com/2011/06/25/html5-canvas-for-absolute-beginners-part-1/
-										</a>
-									</em>
-								</header>
-							</div>
-						</article>	
-					</div>
+					
 					
 
 					<!-- Image Container used as a one off illustration -->
@@ -767,23 +833,8 @@ some code here...
 						</article>	
 					</div>
 
-					<!-- Image Container used as a one off illustration -->
-					<div class="image-container">
-						<article class="item">
-							<div class="image fit">
-								<img ng-src="styles/app/images/draw_modes.jpg" alt="" style="padding: 10px 10px; background-color: #fff;">
-								<header class="dark">
-									<h3>
-										Figure 1.1: WebGL Draw Modes
-									</h3>
-									<em><a target="_blank" ng-href="http://www.informit.com/articles/article.aspx?p=2111395&seqNum=2">http://www.informit.com/articles/article.aspx?p=2111395&seqNum=2</a></em>
-								</header>
-							</div>
-						</article>	
-					</div>
+					
 
-
-						<a href="#" class="image featured"><img src="#" alt=""></a>
 
 						<p></p>
 

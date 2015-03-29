@@ -853,13 +853,13 @@ angular.module('WebGLRLOApp')
   	var _demos = [
         [
 	        {
-	          caption: 'Draw Fixed Points',
+	          caption: '5.1: Draw Fixed Points',
 	          details: 'Draw a 30 pixel dimensioned point on screen...',
 	          appFn: drawPointExample,
 	          screenShotURL: 'styles/app/images/demo1.png'
 	        },
 	        {
-	          caption: 'Free Draw Example',
+	          caption: '5.2: Free Draw Example',
 	          details: 'Hold down the mouse button to draw.',
 	          appFn: drawSimpleShapeWithMouseExample,
 	          screenShotURL: 'styles/app/images/demo2.png'
@@ -867,14 +867,14 @@ angular.module('WebGLRLOApp')
         ],
         [
 	        {
-	          caption: 'Draw Modes and Translations',
+	          caption: '5.3: Draw Modes and Translations',
 	          details: 	'Draw some trinagles using different draw modes and do some uniform translations to position the ' +
 	          			' vertices of a single triangle in 3 different locations in space.',
 	          appFn: shapesExample,
 	          screenShotURL: 'styles/app/images/demo3.png'
 	        },
 	         {
-	          caption: 'Fragment Shader Interpolation',
+	          caption: '5.4: Fragment Shader Interpolation',
 	          details: 'Using the Fragment shader\'s colour interpolation abilities we render a triangle.',
 	          appFn: shapesFragmentVaryingExample,
 	          screenShotURL: 'styles/app/images/demo4.png'
@@ -882,13 +882,13 @@ angular.module('WebGLRLOApp')
 	     ],
 	     [
 	         {
-	          caption: 'Animation of 3D Primitives',
+	          caption: '5.5: Animation of 3D Primitives',
 	          details: 'Here we finally show you some 3D primitive models moving around in 3D-space using Perspective Projection.',
 	          appFn: animating3DPrimativesExample,
 	          screenShotURL: 'styles/app/images/demo5.png'
 	        },
             {
-              caption: 'Animation of 3D Primitives (V2)',
+              caption: '5.6: Animation of 3D Primitives (V2)',
               details: 'Here we finally show you some 3D primitive models moving around in 3D-space using Orthographic Projection.',
               appFn: animating3DPrimativesOrthoExample,
               screenShotURL: 'styles/app/images/demo5v2.png'
@@ -897,14 +897,14 @@ angular.module('WebGLRLOApp')
         ],
         [
             {
-              caption: 'Lighting Example',
+              caption: '5.7: Lighting Example',
               details:  'An ambient and directional lighting example. The directional lighting is rotating around the ' +
                         ' Y and Z axis as the 3D primitives move around in virtual 3D space.',
               appFn: lightingExample,
               screenShotURL: 'styles/app/images/demo6.png'
             },
         	{
-	          caption: 'PongGL!',
+	          caption: '5.8: PongGL!',
 	          details: '<strong>Instructions</strong>: <ul>' +
 	          				'<li>Press &quot;<strong>Space Bar</strong>&quot; to pause the game.</li>' +
 	          				'<li>The &quot;<strong>left</strong>&quot; and &quot;<strong>right</strong>&quot; arrow keys to move your player.</li>' +
