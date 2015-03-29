@@ -574,7 +574,7 @@ some code here...
 											<img ng-src="styles/app/images/ogl_coord_object_space_cube.png" alt="" style="padding: 10px 10px; background-color: #fff;">
 											<header class="dark">
 												<h3>
-													Figure 1.1: WebGL's Cuboid Coordinate System
+													Figure 4.1: WebGL's Cuboid Coordinate System [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(0))">see Demo 6.1</a>]
 												</h3>
 												<em><a target="_blank" ng-href="http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl">http://www.matrix44.net/cms/notes/opengl-3d-graphics/coordinate-systems-in-opengl</a></em>
 											</header>
@@ -593,7 +593,7 @@ some code here...
 											<img ng-src="styles/app/images/canvas_2d_coordinate.jpg" alt="">
 											<header class="dark">
 												<h3>
-													Figure 1.1: 2D HTML5 Canvas Coordinate System with an inverted Y-Axis<br />
+													Figure 4.2: 2D HTML5 Canvas Coordinate System with an inverted Y-Axis<br />
 													The values also are positive and integer-based, spanning past 1 in both directions.<br />
 													This is modelled after traditional screen space.
 												</h3>
@@ -622,7 +622,7 @@ some code here...
 											<img ng-src="styles/app/images/3d_transformations.png" alt="" style="padding: 10px 10px; background-color: #fff;">
 											<header class="dark">
 												<h3>
-													Figure 1.1: 3D Transformation Matrices
+													Figure 4.3: 3D Transformation Matrices
 												</h3>
 												<em>
 													<a target="_blank" ng-href="http://www.c-jump.com/bcc/common/Talk3/Math/Matrices/const_images/3Dtransformations.png">
@@ -648,7 +648,7 @@ some code here...
 											<img ng-src="styles/app/images/gl_transform.png" alt="">
 											<header class="dark">
 												<h3>
-													Figure 1.1: The Model, View, Projection Coordinate Pipeline
+													Figure 4.4: The Model, View, Projection Coordinate Pipeline
 												</h3>
 												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
 											</header>
@@ -670,7 +670,7 @@ some code here...
 											<img ng-src="styles/app/images/camera_space.png" alt="" style="padding: 100px 100px; background-color: #fff;">
 											<header class="dark">
 												<h3>
-													Figure 1.1: Perspective Projection Space
+													Figure 4.5: Perspective Projection Space
 												</h3>
 												<em><a target="_blank" ng-href="http://www.songho.ca/opengl/gl_transform.html">http://www.songho.ca/opengl/gl_transform.html</a></em>
 											</header>
@@ -685,7 +685,7 @@ some code here...
 											<img ng-src="styles/app/images/perspective_matrix.jpg" alt="">
 											<header class="dark">
 												<h3>
-													Figure 1.1: Perspective Projection Matrix
+													Figure 4.6: Perspective Projection Matrix [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(4))">see Demo 6.5</a>]
 												</h3>
 												<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
 											</header>
@@ -702,7 +702,7 @@ some code here...
 											<img ng-src="styles/app/images/ortho_matrix.jpg" alt="">
 											<header class="dark">
 												<h3>
-													Figure 1.2: Orthographic Projection Matrix
+													Figure 4.7: Orthographic Projection Matrix [Please <a ng-href="javascript:void(0)" ng-click="demoRunner.run(demoRunner.getRLODemoByOrderInList(5))">see Demo 6.6</a>]
 												</h3>
 												<em><a target="_blank" ng-href="https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html">https://www.safaribooksonline.com/library/view/webgl-programming-guide/9780133364903/appc.html</a></em>
 											</header>
@@ -710,30 +710,7 @@ some code here...
 									</article>	
 								</div>
 							</div>
-							<br />
-							<hr />
-							<br />
-							<h3>Lambert Shading - A Basic Lighting Technique</h3>
-							<div class="content text">
-							</div>
-							<div class="content">
-								<!-- Image Container used as a one off illustration -->
-								<div class="image-container">
-									<article class="item">
-										<div class="image fit">
-											<img ng-src="styles/app/images/lambert.png" alt="">
-											<header class="dark">
-												<h3>
-													Figure 1.1: Lambert Light Shading Model
-												</h3>
-												<em><a target="_blank" ng-href="http://buildnewgames.com/lighting/">http://buildnewgames.com/lighting/</a></em>
-											</header>
-										</div>
-									</article>	
-								</div>
-
-
-							</div>
+							
 							<br />
 							<hr />
 							<br />
@@ -750,16 +727,50 @@ some code here...
 
 					</div>
 				</section>
+				<!-- Lighting -->
+				<section id="lighting" class="two">
+					<div class="container">
 
+						<header>
+							<h2 class="icon fa-sun-o"></h2>
+							<h2>Unit 5: An Overview of Lighting</h2>
+						</header><br />
+						<h3>Lambert Shading - A Basic Lighting Technique</h3>
+						<div class="content text">
+						</div>
+						<div class="content">
+							<!-- Image Container used as a one off illustration -->
+							<div class="image-container">
+								<article class="item">
+									<div class="image fit">
+										<img ng-src="styles/app/images/lambert.png" alt="">
+										<header class="dark">
+											<h3>
+												Figure 5.1: The Lambert Light Shading Technique
+											</h3>
+											<em><a target="_blank" ng-href="http://buildnewgames.com/lighting/">http://buildnewgames.com/lighting/</a></em>
+										</header>
+									</div>
+								</article>	
+							</div>
+
+
+						</div>
+
+
+						<p>
+						</p>
+					</div>
+				</section>
 
 			<!-- Demos -->
-				<section id="demos" class="two">
+				<section id="demos" class="three">
 					<div class="container">
 						
 
 						<header>
 							<h2 class="icon fa-th"></h2>
-							<h2>Unit 5: Demo Showcase</h2>
+							<h2>Unit 6: Demo Showcase</h2>
 						</header>
 
 						<p>Click on the below demos to run them in your browser.</p>
@@ -846,10 +857,10 @@ some code here...
 
 
 				<!-- More Resources -->
-				<section id="resources" class="three">
+				<section id="resources" class="four">
 						<header>
 							<h2 class="icon fa-book"></h2>
-							<h2>More Resources</h2>
+							<h2>Unit 7: More Resources</h2>
 						</header>
 
 							<div class="container">
@@ -972,8 +983,9 @@ some code here...
 								<li>
 									<a href="#math" id="math-link" class="skel-layers-ignoreHref"><span class="icon fa-arrows">Math 101</span></a>
 								</li>
-								
-								<!-- li><a href="#exercises" id="" class="skel-layers-ignoreHref"><span class="icon fa-edit">Exercises</span></a></li -->
+								<li>
+									<a href="#lighting" id="lighting-link" class="skel-layers-ignoreHref"><span class="icon fa-sun-o">Lighting</span></a>
+								</li>
 								<li><a href="#demos" id="demos-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Demo Showcase</span></a></li>
 								<li><a href="#resources" id="resources-link" class="skel-layers-ignoreHref"><span class="icon fa-book">More Resources</span></a></li>
 							</ul>
