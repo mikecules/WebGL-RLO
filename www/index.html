@@ -162,10 +162,10 @@
 									</div>
 								</article>	
 							</div>
-
 							<br />
 							If you are still good to go - the next step to mastering WebGL (and all the wonders that go along with it!) is to understand the technology and composition of the demos that you will be working with moving forward. The following sections will provide you with an overview of the demo files composition (i.e. where you can find the demo code, areas where you can add your own demo code, etc.) and 3<sup>rd</sup> party libraries used in the demos. Let's start with the 3<sup>rd</sup> party libraries and finish up with the demo code.
 							</div>
+							<br />
 							<div class="content">
 								<ul class="info-grouping">
 									<li>
@@ -196,9 +196,11 @@
 
 								<ul class="info-grouping">
 									<li>
-										<div class="caption"><span class="icon fa-file"></span> CSS/Image Demo Files Composition</div>
+										<div class="caption"><span class="icon fa-file"></span> HTML/CSS/Image Demo Files Composition</div>
 										<ul class="numbered">
+
 											<li><a href="./styles/app/app.css" target="_blank">styles/app/app.css</a>: Contains the basic styling used for the authored content (overriding some of HTML5 Up's styling and introducing some new ones) and the modal styling used to present the WebGL demos.</li>
+											<li><a ng-href="javascript:void(0)">index.html</a>: This is the current page your are viewing. Near the botton of the page (if you view this page's source) you will find the Vertex and Fragment GLSL ES programs. These programs can be found in &lt;script&gt; tags having the content-types of &quot;<strong>x-shader/x-vertex</strong>&quot; and &quot;<strong>x-shader/x-fragment</strong>&quot; respectively.</li>											
 											<li><a href="./styles/app/images" target="_blank">styles/app/images</a>: Contains the directory where all demo screenshots and 3<sup>rd</sup> party images are stored.</li>
 										</ul>
 									</li>
@@ -313,14 +315,14 @@ Wikipedia. (2015). WebGL. Retrieved 28 March 2015, from <a href="http://en.wikip
 							<h3>The WebGL Context</h3>
 
 							<div class="content text">
-								As you may have seen earlier WebGL ties it's context to an <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 Canvas</a> element. The WebGL context is basically an interface to the WebGL subsystem. The context provides a reference to all the methods, and constants necessary to communicate between your JavaScript (JS) Code and the WebGL state machine. This is to say that once you modify any of WebGL's  attributes, (for example: setting the clear colour of the frame buffer) that modification persists until you modify that attribute again.
+								As you may have seen earlier WebGL ties it's context to an <a href="http://diveintohtml5.info/canvas.html" target="_blank">HTML5 Canvas</a> element. The WebGL context is basically an interface to the WebGL subsystem. The context provides a reference to all the methods, and constants necessary to communicate between your JavaScript (JS) Code and the WebGL state machine. To say that WebGL is a state machine is to mean that once you modify any of WebGL's attributes (for example: setting the clear colour of the frame buffer) that modification persists until you modify that attribute again.
 								<br />
 								<br />
-								In WebGL one can retrieve the context using the follow JS:
+								In a HTML/JS implementation one can retrieve the context using the follow incantation:
 							</div>
 							<div class="content">
 									<div class="code-container">
-										<h4><span class="icon fa-code"></span> Initalizing the WebGL Context</h4>
+										<h4><span class="icon fa-code"></span> Initializing the WebGL Context</h4>
 										<div><strong>HTML Code</strong>
 &lt;canvas id="the-canvas" width="640" height="480"&gt;&lt;/canvas&gt;
 
@@ -348,29 +350,14 @@ some code here...
 									</div>
 								</div>
 						</div>
-
-							<div class="content">
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							
-
-							<div class="exercise-container">
-								<h4><span class="icon fa-edit"></span> Exercises</h4>
-								<ul>
-									<li>Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
-							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff</li>
-									<li>q2</li>
-								</ul>
-							</div>
-
-							<div class="code-container">
-								<h4><span class="icon fa-code"></span> Code</h4>
-								<div>// this is a comment
-some code here...
-								</div>
-							</div>
-
+						<br />
+						<br />
+						<h3>The WebGL Program</h3>
+						<div class="content text">
+							After gaining the WebGL context from the Canvas element you must then create a WebGL Program object using that context in JavaScript. This program object is an encapsulated piece of logic that includes a compiled vertex and fragment shader (we will talk about this shortly). Once the WebGL Program object has been fully initialized you can use the WebGL context to tell WebGL that you wish to use this program in the current run of your application. <br /><br />
+							See the high-level overview of bootstrapping your WebGL application below:
+						</div>
+						<div class="content">
 							<ul class="info-grouping">
 								<li>
 									<div class="caption"><span class="icon fa-comment"></span> Process to Bootstrap your WebGL Application</div>
@@ -384,15 +371,20 @@ some code here...
 									</ul>
 								</li>
 							</ul>
+						</div>
+						<br />
+						<br />
+						<h3>Vertex and Fragment Shaders</h3>
 
+						<div class="content text">
+							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
 							
-
-
-
+							Lorem ipsum stuff Lorem ipsum stuff Lorem ipsum stuff
 							
-
+						</div>
+						<div class="content">
 							<div class="code-container">
-								<h4><span class="icon fa-code"></span> Vertex and Fragment Shader Sample</h4>
+								<h4><span class="icon fa-code"></span> A Vertex and Fragment Shader Sample</h4>
 								<div><strong>&lt;script id="v-shader-demo4" type="x-shader/x-vertex"&gt;</strong>
 		  // attributes are accessible from JavaScript (but are write only - since we do most of our work in Javascript it doesn't matter)
 		  attribute vec4 a_Position; 
@@ -421,6 +413,31 @@ some code here...
 
 								</div>
 							</div>
+						</div>
+							<div class="content">
+							<div class="exercise-container">
+								<h4><span class="icon fa-edit"></span> Exercises</h4>
+								<ul>
+									<li></li>
+									<li></li>
+								</ul>
+							</div>
+
+							<div class="code-container">
+								<h4><span class="icon fa-code"></span> Code</h4>
+								<div>
+								</div>
+							</div>
+
+							
+
+							
+
+
+
+							
+
+							
 			</div>
 						</p>
 
