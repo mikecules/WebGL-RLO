@@ -6,6 +6,11 @@
 /**************************************************
  * Custom Web Page Styles
  **************************************************/
+
+ #nav {
+  overflow: auto;
+ }
+
 .demo.row .showcase-demos {
   margin: 0 auto; 
   width: 80%;
