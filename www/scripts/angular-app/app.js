@@ -10,16 +10,25 @@ angular.module('WebGLRLOApp', ['webGLUtilityModule'])
   .run(function() {
   	
   	var _navContainer = $('#nav'),
-  		_window = $(window);
+  		_window = $(window),
+  		_html = $('html');
 
   	_window
   		.on('resize.win', function(e){
   			
-  			var windowHeight = _window.height(),
+  			setTimeout(function() {
+
+  				if (_html.hasClass('mobile') || _html.hasClass('narrower')) {
+  					_navContainer.height('');
+  					return;
+  				}
+  				//console.log(e);
+  				var windowHeight = _window.height(),
   				logoContainerHeight = $('#logo').outerHeight(),
   				bottonHeight = $('.bottom').outerHeight();
 
-  			_navContainer.height(windowHeight - logoContainerHeight - bottonHeight - 100);
+  				_navContainer.height(windowHeight - logoContainerHeight - bottonHeight - 100);
+  			}, 100);
   			
   		});
 
